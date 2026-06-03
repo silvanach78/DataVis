@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Visualization and Communication for Managers</title>
+<style>
+:root {
+  --bg: #f7f8fa;
+  --panel: #ffffff;
+  --ink: #222831;
+  --muted: #5c6773;
+  --line: #d7dde5;
+  --accent: #0f6c7b;
+  --accent-soft: #e8f4f6;
+  --note-bg: #fff7e8;
+  --note-line: #e6cf95;
+    --note:#eef79a;
+  --note2:#f5f8ad;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+}
+
+a { color: #0b5ea8; }
+.layout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4px;
+}
+.sidebar {
+  position: sticky;
+  top: 4px;
+  align-self: start;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 18px 14px;
+  box-shadow: 0 6px 20px rgba(34,40,49,.06);
+}
+.sidebar h2 {
+  margin: 0 0 8px;
+  font-size: 1.45rem;
+}
+.sidebar p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: .95rem;
+}
+.toc-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.toc-list .toc-list {
+  padding-left: 10px;
+  margin-top: 4px;
+}
+.toc-list li {
+  margin: 3px 0;
+}
+.toc-list a {
+  display: block;
+  text-decoration: none;
+  color: #334155;
+  padding: 4px 6px;
+  border-radius: 8px;
+  font-size: .96rem;
+}
+.toc-list a:hover, .toc-list a.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.content {
+  min-width: 0;
+}
+.frontmatter, .module, .subsection {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px 10px;
+  box-shadow: 0 6px 18px rgba(34,40,49,.05);
+  margin-bottom: 15px;
+}
+.frontmatter h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1.15;
+}
+.subtitle {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+h2, h3, h4 {
+  scroll-margin-top: 24px;
+}
+.module > h2 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+.level-2 > h3 {
+  margin: 4px 0 12px;
+  font-size: 1.35rem;
+}
+.level-3 > h4 {
+  margin: 4px 0 10px;
+  font-size: 1.12rem;
+}
+.insight, .insights {
+  background: var(--accent-soft);
+  border-right: 4px solid var(--accent);
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.box-2 > h3 {
+  margin: 4px 0 12px;
+  font-size: 1.35rem;
+}
+
+.wrapper { max-width: 1180px; margin: 0 auto; }
+.card { background:#fff; border:1px solid #d7dde5; border-radius:16px; padding:16px; margin-bottom:22px; box-shadow:0 4px 14px rgba(0,0,0,.05); }
+.grid2 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid2 figure {
+  min-width: 0;
+}
+.grid2 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.chart {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.chart-wide {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chart-small {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+@media (min-width: 1300px) { .grid2 { grid-template-columns:1fr 1fr; } }
+
+.grid3 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid3 figure {
+  min-width: 0;
+}
+.grid3 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (min-width: 1100px) { .grid3 { grid-template-columns:1fr 1fr; } }
+@media (min-width: 1500px) { .grid3 { grid-template-columns:1fr 1fr 1fr; } }
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0 10px;
+  font-size: 1.05rem;
+}
+
+/* Header */
+th {
+  text-align: left;
+  font-weight: 700;
+  padding: 14px 12px;
+  border-bottom: 2px solid #cfd6de;
+  color: #222;
+  background: none;
+}
+
+/* Cells */
+td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #d9dfe6;
+  color: #222;
+  background: none;
+}
+
+
+th, td {
+  border-left: none;
+  border-right: none;
+}
+
+
+caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #111;
+}
+
+.table-note {
+  margin-top: 12px;
+  font-style: italic;
+  color: #444;
+  font-size: 1.05rem;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+   ========================= */
+
+@media (max-width: 600px) {
+
+  thead {
+    display: none;
+  }
+
+  table, tbody, tr, td {
+    display: block;
+    width: 100%;
+  }
+
+  tr {
+    margin-bottom: 14px;
+    padding: 12px;
+    border: 1px solid #d7dde5;
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  td {
+    border: none;
+    padding: 6px 0;
+    font-size: 0.95rem;
+  }
+
+  td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 2px;
+  }
+}
+
+sup { font-size:0.72em; color:#0f6c7b; vertical-align:super; line-height:0; }
+.chart-wrap {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  margin-top:10px;
+}
+
+p {
+  margin: 0 0 14px;
+}
+ul {
+  margin: 0 0 14px 1rem;
+}
+li { margin-bottom: 7px; }
+figure {
+  margin: 20px 0 18px;
+  text-align: center;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+figcaption {
+  margin-top: 10px;
+  font-size: .96rem;
+  color: #44515f;
+  font-style: italic;
+}
+.note {
+  background: var(--note-bg);
+  border-left: 4px solid var(--note-line);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: .95rem;
+  margin-bottom: 12px;
+}
+.source-entry {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+    font-size: .9rem;
+  border-bottom: 1px dashed var(--line);
+}
+.source-entry:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+  font-size: .9rem;
+}
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+    max-height: none;
+  }
+}
+
+.grid-notes {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:22px;
+  margin-top:14px;
+}
+
+@media (min-width:800px) {
+  .grid-notes { grid-template-columns:1fr 1fr; }
+}
+@media (min-width:1000px) {
+  .grid-notes { grid-template-columns:1fr 1fr 1fr; }
+}
+.sticky {
+  background:linear-gradient(180deg,var(--note2),var(--note));
+  border:1px solid #d7df7a;
+  min-height:230px;
+  padding:20px 18px 18px;
+  box-shadow:0 10px 16px rgba(0,0,0,.08);
+  transform:rotate(-1deg);
+  position:relative;
+}
+.sticky:nth-child(2) { transform:rotate(1deg); }
+.sticky:nth-child(3) { transform:rotate(-0.5deg); }
+.sticky:nth-child(4) { transform:rotate(0.8deg); }
+.sticky:nth-child(5) { transform:rotate(-1deg); }
+.sticky:nth-child(6) { transform:rotate(0.5deg); }
+.sticky:before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:22px;
+  background:rgba(255,255,255,.18);
+}
+.sticky h3 {
+  margin:4px 0 12px;
+  font-size:1.15rem;
+  line-height:1.15;
+  font-weight:700;
+  font-family: "Comic Sans MS", Chalkboard SE, Marker Felt, cursive; 
+}
+.sticky p, .sticky li {
+  font-size:0.95rem;
+  line-height:1.45;
+  font-family: "Comic Sans MS", Chalkboard SE, Marker Felt, cursive; 
+}
+.sticky ul {
+  margin:0 0 0 18px;
+  padding:0;
+}
+.chart-wrap {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  margin-top:10px;
+}
+.note {
+  background:#fff7e8;
+  border-left:4px solid #e6cf95;
+  padding:12px 14px;
+  border-radius:8px;
+  font-size:.97rem;
+  margin-top:10px;
+}
+.small {
+  font-size:.93rem;
+  color:#44515f;
+}
+
+/* Citation tooltips: fixed positioning prevents hidden tooltips from widening the page. */
+.cite-ref { position:relative; display:inline-block; cursor:help; }
+.cite-tooltip {
+  visibility:hidden;
+  opacity:0;
+  position:fixed;
+  left:50%;
+  top:24px;
+  transform:translateX(-50%);
+  width:min(360px, calc(100vw - 32px));
+  max-width:calc(100vw - 32px);
+  background:#1f2937;
+  color:#fff;
+  text-align:left;
+  border-radius:8px;
+  padding:10px 12px;
+  font-size:0.82rem;
+  line-height:1.35;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+  z-index:9999;
+  transition:opacity .18s ease, visibility .18s ease;
+}
+.cite-tooltip::after { content:none; }
+.cite-ref:hover .cite-tooltip, .cite-ref:focus .cite-tooltip, .cite-ref:focus-within .cite-tooltip { visibility:visible; opacity:1; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" aria-label="Table of contents">
+    <h2>Contents</h2>
+    <ul class="toc-list"><li><strong><a href="#about-this-document">About This Document</a></strong></li>
+<li><strong><a href="#choosing-the-right-visualization">Module 3: Choosing the Right Visualization</a></strong><ul class="toc-list"><li><a href="#introduction-3">Introduction</a></li><li><a href="#why-visualization-choice-matters">Why Visualization Choice Matters</a></li><li><a href="#types-of-analytical-questions">Types of Analytical Questions</a><ul class="toc-list"><li><a href="#comparisons">Comparisons</a></li><li><a href="#trends">Trends</a></li><li><a href="#distributions">Distributions</a></li><li><a href="#relationships">Relationships</a></li><li><a href="#composition">Composition</a></li></ul></li><li><a href="#when-common-charts-fail">When Common Charts Fail</a></li><li><a href="#managerial-justification-of-visualization-choices">Managerial Justification of Visualization Choices</a><ul class="toc-list"><li><a href="#practical-example">Practical Example</a></li></ul></li><li><a href="#key-takeaways-3">Key Takeaways</a></li><li><a href="#managerial-insight-3">Managerial Insight</a></li><li><a href="#key-sources-3">Key Sources</a></li></ul></ul>
+  </aside>
+  <main class="content">
+   <section class="frontmatter" id="about-this-document"><h1>Data Visualization and Communication for Managers</h1><h2>About This Document</h2><p>This document has been developed for students of Data Visualization and Communication for Managers. The topics contained herein have been carefully curated to help us accomplish the course goals; therefore, they are discussed at a high level rather than in depth. To learn about these topics more in-depth, I recommend that you visit the Sources listed at the end of each module.</p><p>This document reflects current research, simulated and real-world examples, and instructor-developed insights. <strong>Please do not share, reproduce, or distribute this document, or any part of it, outside of this class.</strong></p><p>This work is original and unique to this course, and as such, it is protected by copyright and the Digital Millennium Copyright Act (DMCA).</p>
+<p><strong>Copyright © 2026 Silvana Chambers.</strong></p></section>
+<section id="choosing-the-right-visualization" class="module level-1"><h2>Module 3: Choosing the Right Visualization</h2><section id="introduction-3" class="subsection level-2"><h3>Introduction</h3><p>Managers frequently encounter charts in dashboards, reports, and presentations. However, not all charts communicate information effectively. A poorly chosen visualization can obscure patterns, exaggerate relationships, or make comparisons difficult.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span><span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Cairo, A. (2016). <em>The truthful art: Data, charts, and maps for communication</em>. New Riders.</span></span></p><p>Choosing the right visualization is therefore an important managerial communication skill. Visualization design is not only a technical decision made by analysts; it is also a strategic decision that influences how managers interpret evidence and make decisions.</p><p>Different types of data require different visual structures.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Financial Times. (n.d.). <em>Visual Vocabulary</em>. https://ft-interactive.github.io/visual-vocabulary/</span></span> A chart that works well for comparing categories may fail when used to show trends over time. Similarly, charts that display proportions may be ineffective when the goal is to identify precise differences between values.</p><p>This module introduces a framework that helps managers evaluate whether a visualization is appropriate for the question being asked. By the end of the module, students should be able to assess visualization choices not only in technical terms but also in terms of their clarity, accuracy, and usefulness for managerial decision making.</p></section><section id="why-visualization-choice-matters" class="subsection level-2"><h3>Why Visualization Choice Matters</h3><p>Human perception is highly sensitive to specific visual cues, such as length, position, and direction. According to the theory of graphical perception, people interpret some visual encodings far more accurately than others.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Cleveland, W. S., &amp; McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <em>Journal of the American Statistical Association, 79</em>(387), 531–554.</span></span> Their research established a hierarchy of accuracy:</p><ul><li>Position along a common scale (e.g., bar charts, scatter plots) is the most accurately perceived; people can compare bar lengths easily.</li><li>They are less accurate when comparing angles (as in pie charts).<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Cleveland, W. S., &amp; McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <em>Journal of the American Statistical Association, 79</em>(387), 531–554.</span></span></li><li>Area, Volume, and Color Saturation are the least accurate cues for perceiving quantitative differences; people struggle even more when comparing areas and volumes.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Cleveland, W. S., &amp; McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <em>Journal of the American Statistical Association, 79</em>(387), 531–554.</span></span></li></ul><p>As a result, the same dataset can appear clearer or more confusing depending on the chart type used. For example, viewers can compare bar lengths easily, but they are significantly less accurate when comparing angles in a pie chart or the areas of bubbles in a map.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span> Stephen Few notes that effective visualizations allow viewers to perceive <strong>patterns</strong> and <strong>relationships</strong> quickly through <strong>preattentive processing</strong>, avoiding unnecessary cognitive load. For managers making decisions under time pressure, this clarity is essential to avoid being misled by low-accuracy encodings like 3D volumes or complex color gradients.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span> Understanding how different visualization types communicate information helps managers determine whether the evidence presented in reports or dashboards is easy to interpret or potentially misleading.</p></section><section id="types-of-analytical-questions" class="subsection level-2"><h3>Types of Analytical Questions</h3><p>Most managerial analyses involve a small number of common analytical questions. The Financial Times Visual Vocabulary<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Financial Times. (n.d.). <em>Visual Vocabulary</em>. https://ft-interactive.github.io/visual-vocabulary/</span></span> and the research by Cleveland and McGill<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Cleveland, W. S., &amp; McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <em>Journal of the American Statistical Association, 79</em>(387), 531–554.</span></span> offer clear guidance for choosing the right "visual language" by matching the task to the most accurate perceptual cue. The most common analytical tasks include:</p>
+<ul><li><strong>Comparisons.</strong> Showing magnitude between categories. These should prioritize position along a common scale (e.g., bar charts) for maximum accuracy</li><li><strong>Time series (trends).</strong>  Showing how a variable changes over time. Line charts are the standard because they leverage direction and position.</li>
+<li><strong>Distributions.</strong> Showing the frequency or spread of data. Histograms or box plots are effective for showing density.</li>
+<li><strong>Relationships.</strong> Showing correlations between variables. Scatter plots are the "gold standard" here as they rely on 2D position</li><li><strong>Composition.</strong> Showing how a total is broken down into parts. While pie charts are common, stacked bars are often preferred because they allow for comparison along a linear scale rather than an angle.</li></ul><p>Each task requires a different visual structure.</p><section id="comparisons" class="subsection level-3"><h4>Comparisons</h4><p>Comparison charts answer questions such as:</p><ul><li>Which department has the highest performance?</li><li>How do sales differ across product categories?</li><li>Which region generated the most revenue?</li></ul><p>These questions require viewers to compare values across categories. The most effective charts for comparisons include:</p><ul><li>Bar charts</li><li>Column charts</li><li>Dot plots</li></ul><p>Bar charts are particularly effective because humans are very good at comparing length along a common axis.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Cleveland, W. S., &amp; McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <em>Journal of the American Statistical Association, 79</em>(387), 531–554.</span></span> For example, a bar chart comparing quarterly revenue across regions allows managers to quickly identify the highest-performing market. In contrast, using a pie chart to show the same data would make comparisons more difficult because viewers must compare angles rather than lengths.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Cleveland, W. S., &amp; McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <em>Journal of the American Statistical Association, 79</em>(387), 531–554.</span></span><span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span></p>
+ 
+ <div class="card">
+  <div class="grid2">
+  <div class="chart-small">  
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-1 svg-desc-1" style="width:100%; height:auto; display:block;">
+<title id="svg-title-1">Comparison chart: quarterly revenue by region</title>
+<desc id="svg-desc-1">Column chart comparing quarterly revenue across four regions. North is 42 million dollars, South 38, West 47, and East 31. West is the highest-performing region.</desc>
+<rect width="560" height="360" fill="white"/>
+<text x="14" y="18" font-family="Segoe UI, Arial" font-size="20" fill="#222">Comparison: Quarterly Revenue by Region</text>
+<line x1="60" y1="305.0" x2="540" y2="305.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="52" y="309.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">0</text>
+<line x1="60" y1="253.6" x2="540" y2="253.6" stroke="#d7dde5" stroke-width="1"/>
+<text x="52" y="257.6" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">10</text>
+<line x1="60" y1="202.2" x2="540" y2="202.2" stroke="#d7dde5" stroke-width="1"/>
+<text x="52" y="206.2" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">20</text>
+<line x1="60" y1="150.8" x2="540" y2="150.8" stroke="#d7dde5" stroke-width="1"/>
+<text x="52" y="154.8" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">30</text>
+<line x1="60" y1="99.4" x2="540" y2="99.4" stroke="#d7dde5" stroke-width="1"/>
+<text x="52" y="103.4" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">40</text>
+<line x1="60" y1="48.0" x2="540" y2="48.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="52" y="52.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">50</text>
+<line x1="60" y1="48" x2="60" y2="305" stroke="#7a8694" stroke-width="1.5"/>
+<line x1="60" y1="305" x2="540" y2="305" stroke="#7a8694" stroke-width="1.5"/>
+<rect x="85.0" y="89.1" width="70" height="215.9" fill="#b9c3cf" rx="2"/>
+<text x="120.0" y="81.1" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">42</text>
+<text x="120.0" y="342" text-anchor="middle" font-size="14" font-family="Segoe UI, Arial" fill="#223">North</text>
+<rect x="205.0" y="109.7" width="70" height="195.3" fill="#b9c3cf" rx="2"/>
+<text x="240.0" y="101.7" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">38</text>
+<text x="240.0" y="342" text-anchor="middle" font-size="14" font-family="Segoe UI, Arial" fill="#223">South</text>
+<rect x="325.0" y="63.4" width="70" height="241.6" fill="#5b9bd5" rx="2"/>
+<text x="360.0" y="55.4" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">47</text>
+<text x="360.0" y="342" text-anchor="middle" font-size="14" font-family="Segoe UI, Arial" fill="#223">West</text>
+<rect x="445.0" y="145.7" width="70" height="159.3" fill="#b9c3cf" rx="2"/>
+<text x="480.0" y="137.7" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">31</text>
+<text x="480.0" y="342" text-anchor="middle" font-size="14" font-family="Segoe UI, Arial" fill="#223">East</text>
+<text x="14" y="36" font-size="14" font-family="Segoe UI, Arial" fill="#445">West has the highest quarterly revenue.</text>
+</svg><figcaption>Figure 3-1. Bar chart comparing quarterly revenue across regions.</figcaption></figure></div>
+<div class="chart-small">  
+<figure>
+<svg viewBox="0 0 700 450" role="img" aria-labelledby="svg-title-2 svg-desc-2" style="width:100%;max-width:800px;height:auto;display:block;">
+
+  <title id="svg-title-2">Sales by Associate – April 2026 Running Total</title>
+  <desc id="svg-desc-2">
+    Horizontal bar chart showing total sales by associate. Haru has the highest sales at approximately $900K, followed by Halley at about $780K and Mike at about $750K. Enrique has about $630K, and Tonya has the lowest at approximately $600K. The chart allows easy comparison of performance across associates.
+  </desc>
+  <!-- Background -->
+  <rect width="700" height="450" fill="white"/>
+  <!-- Title -->
+<text x="18" y="22.5" font-family="Segoe UI, Arial" font-size="25" fill="#222">Sales by Associate – April 2026 Running Total</text>
+<text x="18" y="50" font-size="17" font-family="Segoe UI, Arial" fill="#445">Haru is leading sales this month.</text>
+  <!-- Gridlines -->
+  <g stroke="#d9d9d9" stroke-width="1">
+    <line x1="140" y1="70" x2="140" y2="400"/>
+    <line x1="240" y1="70" x2="240" y2="400"/>
+    <line x1="340" y1="70" x2="340" y2="400"/>
+    <line x1="440" y1="70" x2="440" y2="400"/>
+    <line x1="540" y1="70" x2="540" y2="400"/>
+  </g>
+
+<g stroke="#ed5869" stroke-width="2" stroke-dasharray="8 8">
+   <line x1="640" y1="85" x2="640" y2="400"/> </g>
+   
+  <!-- X Axis -->
+  <line x1="140" y1="400" x2="640" y2="400" stroke="#444"/>
+
+  <!-- X Axis Labels -->
+  <g font-size="15" font-family="Segoe UI, Arial" fill="#333">
+    <text x="140" y="420" text-anchor="middle">$0</text>
+    <text x="240" y="420" text-anchor="middle">$200K</text>
+    <text x="340" y="420" text-anchor="middle">$400K</text>
+    <text x="440" y="420" text-anchor="middle">$600K</text>
+    <text x="540" y="420" text-anchor="middle">$800K</text>
+    <text x="640" y="420" text-anchor="end">$1M</text>
+  </g>
+  
+    <!-- Goal label -->
+  <g font-size="15" font-family="Segoe UI, Arial" fill="#333">
+    <text x="646" y="75" text-anchor="end">Goal</text>
+  </g>
+  <!-- Y Labels -->
+  <g font-size="18" font-family="Segoe UI, Arial" fill="#222">
+    <text x="120" y="110" text-anchor="end">Enrique</text>
+    <text x="120" y="175" text-anchor="end">Halley</text>
+    <text x="120" y="240" text-anchor="end">Haru</text>
+    <text x="120" y="305" text-anchor="end">Tonya</text>
+    <text x="120" y="370" text-anchor="end">Mike</text>
+  </g>
+
+  <g fill="#b9c3cf">
+    <rect x="140" y="85" width="317" height="45" rx="3"/>   <!-- Enrique (660k) -->
+    <rect x="140" y="150" width="379" height="45" rx="3"/>  <!-- Halley (790k) -->
+    <rect x="140" y="280" width="299" height="45" rx="3"/>  <!-- Tonya (560k) -->
+    <rect x="140" y="345" width="360" height="45" rx="3"/>  <!-- Mike (750k) -->
+  </g>
+  <g fill="#3059fc">
+      <rect x="140" y="215" width="442" height="45" rx="3"/>  <!-- Haru (920k) -->
+      </g>
+</svg>
+
+<figcaption>Figure 3-2. A horizontal bar chart allows quick comparison of sales performance across associates by using aligned lengths on a common scale.
+</figcaption>
+</figure></div>
+  </div>
+  <p class="note">Note: Vertical and horizontal bar charts are useful for comparing values across categories, such as which region generated the most revenue or which department has the highest performance.</p>
+  </div>
+ </section>
+ <section id="trends" class="subsection level-3"><h4>Trends</h4><p>Trend charts show how a variable changes over time. Typical managerial questions include:</p><ul><li>Are sales increasing or declining?</li><li>How has customer acquisition changed over the past year?</li><li>What patterns appear in monthly demand?</li></ul><p>The most common visualization for trends is the line chart. Line charts work well because they show continuity over time, allowing viewers to quickly identify patterns such as:</p><ul><li>upward trends</li><li>downward trends</li><li>seasonality</li><li>sudden changes</li></ul><p>For example, a line chart showing monthly sales revenue across two years can reveal seasonal patterns that might not be visible in a table of numbers.</p><p>Edward Tufte emphasizes that time-series data is often best communicated through line charts because they preserve the temporal structure of the data.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Tufte, E. R. (2001). <em>The visual display of quantitative information</em> (2nd ed.). Graphics Press.</span></span></p>
+  <div class="card">
+    <div class="grid2">
+    <div class="chart">  
+    <figure><svg viewBox="0 0 700 420" role="img" aria-labelledby="svg-title-3 svg-desc-3" style="width:100%;max-width:800px;height:auto;display:block;">
+
+  <title id="svg-title-3">U.S. Unemployment Rate Trend, February 2024 to February 2026</title>
+  <desc id="svg-desc-3">
+    Line chart showing the U.S. unemployment rate from February 2024 to February 2026. The rate starts at 3.9 percent, gradually increases through 2024, reaches approximately 4.5 percent in late 2025, and ends at 4.4 percent in February 2026. October 2025 data are missing.
+  </desc>
+  <rect width="700" height="420" fill="white"/>
+  <!-- Title -->
+  <text x="16" y="16" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#222">Unemployment rate, seasonally adjusted</text>
+
+  <text x="16" y="40" font-size="16" font-family="Segoe UI, Arial" fill="#555">
+    February 2024 – February 2026
+  </text>
+
+  <!-- Gridlines -->
+  <g stroke="#d9d9d9">
+    <line x1="80" y1="350" x2="680" y2="350"/>
+    <line x1="80" y1="300" x2="680" y2="300"/>
+    <line x1="80" y1="250" x2="680" y2="250"/>
+    <line x1="80" y1="200" x2="680" y2="200"/>
+    <line x1="80" y1="150" x2="680" y2="150"/>
+    <line x1="80" y1="100" x2="680" y2="100"/>
+  </g>
+
+  <!-- Y-axis -->
+  <line x1="80" y1="70" x2="80" y2="350" stroke="#444"/>
+
+  <!-- Y labels -->
+  <g font-size="12" font-family="Segoe UI, Arial">
+    <text x="70" y="355" text-anchor="end">3.0</text>
+    <text x="70" y="305" text-anchor="end">3.5</text>
+    <text x="70" y="255" text-anchor="end">4.0</text>
+    <text x="70" y="205" text-anchor="end">4.5</text>
+    <text x="70" y="155" text-anchor="end">5.0</text>
+    <text x="70" y="105" text-anchor="end">5.5</text>
+  </g>
+
+  <!-- Line -->
+  <path d="
+    M 80 260 L 105 260 L 130 260 L 155 260 L 180 240 L 205 230 L 230 230 L 255 240 L 280 240 L 305 230 L 330 240 L 355 250 L 380 230 L 405 230 L 430 230 L 455 220 L 480 240 L 505 220 L 530 220 L 555 210 M 605 200 L 630 210 L 655 220 L 680 210"
+  fill="none" stroke="#4a70c8" stroke-width="3"/>
+
+  <!-- Points -->
+  <g fill="#4a70c8">
+    <circle cx="80" cy="260" r="3.5"/>
+    <circle cx="105" cy="260" r="3.5"/>
+    <circle cx="130" cy="260" r="3.5"/>
+    <circle cx="155" cy="260" r="3.5"/>
+    <circle cx="180" cy="240" r="3.5"/>
+    <circle cx="205" cy="230" r="3.5"/>
+    <circle cx="230" cy="230" r="3.5"/>
+    <circle cx="255" cy="240" r="3.5"/>
+    <circle cx="280" cy="240" r="3.5"/>
+    <circle cx="305" cy="230" r="3.5"/>
+    <circle cx="330" cy="240" r="3.5"/>
+    <circle cx="355" cy="250" r="3.5"/>
+    <circle cx="380" cy="230" r="3.5"/>
+    <circle cx="405" cy="230" r="3.5"/>
+    <circle cx="430" cy="230" r="3.5"/>
+    <circle cx="455" cy="220" r="3.5"/>
+    <circle cx="480" cy="240" r="3.5"/>
+    <circle cx="505" cy="220" r="3.5"/>
+    <circle cx="530" cy="220" r="3.5"/>
+    <circle cx="555" cy="210" r="3.5"/>
+    <circle cx="605" cy="200" r="3.5"/>
+    <circle cx="630" cy="210" r="3.5"/>
+    <circle cx="655" cy="220" r="3.5"/>
+    <circle cx="680" cy="210" r="3.5"/>
+  </g>
+
+  <!-- X labels -->
+  <g font-size="12" font-family="Segoe UI, Arial">
+    <text x="80" y="380" text-anchor="middle">Feb-24</text>
+    <text x="230" y="380" text-anchor="middle">Aug-24</text>
+    <text x="380" y="380" text-anchor="middle">Feb-25</text>
+    <text x="530" y="380" text-anchor="middle">Aug-25</text>
+    <text x="670" y="380" text-anchor="middle">Feb-26</text>
+  </g>
+
+</svg>
+
+<figcaption>Figure 3-3. Real data trend example; this line chart uses unemployment data from the Bureau of Labor Statistics.<span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">U.S. Bureau of Labor Statistics. (n.d.). <em>Labor Force Statistics from the Current Population Survey</em>. https://www.bls.gov/cps/</span></span> It clearly shows the gradual increase in unemployment over time and demonstrates how missing data can be presented without disrupting interpretation.
+</figcaption>
+</figure></div>
+<div class="chart">  
+ <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420" role="img" aria-labelledby="svg-title-4 svg-desc-4" style="width:100%; height:auto; display:block;">
+<title id="svg-title-4">Trend Example: U.S. Trade in Goods Balance</title>
+<desc id="svg-desc-4">Line chart showing the U.S. trade in goods balance with the world from 2018 to 2024, in billions of dollars. Values are negative throughout, ranging from about negative 846 billion in 2019 to negative 1,205 billion in 2024. Despite fluctuation, the goods trade balance trends downward overall.</desc>
+<rect width="700" height="420" fill="white"/>
+<text x="16" y="16" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#222">Trend Example: U.S. Trade in Goods Balance</text>
+<text x="16" y="40" font-family="Segoe UI, Arial" font-size="16" fill="#5c6773">Annual totals, seasonally adjusted, 2018 to 2024 (Billions of U.S. dollars)</text>
+
+<line x1="80" y1="377.2" x2="640" y2="377.2" stroke="#d7dde5" stroke-width="1.2"/>
+<text x="76" y="382.2" text-anchor="end" font-family="Segoe UI, Arial" font-size="13" fill="#344">-1,300</text>
+
+<line x1="80" y1="345.9" x2="640" y2="345.9" stroke="#d7dde5" stroke-width="1.2"/>
+<text x="76" y="350.9" text-anchor="end" font-family="Segoe UI, Arial" font-size="13" fill="#344">-1,250</text>
+<line x1="80" y1="314.6" x2="640" y2="314.6" stroke="#d7dde5" stroke-width="1.2"/>
+<text x="76" y="319.6" text-anchor="end" font-family="Segoe UI, Arial" font-size="13" fill="#344">-1,200</text>
+<line x1="80" y1="283.3" x2="640" y2="283.3" stroke="#d7dde5" stroke-width="1.2"/>
+<text x="76" y="288.3" text-anchor="end" font-family="Segoe UI, Arial" font-size="13" fill="#344">-1,150</text>
+<line x1="80" y1="252.0" x2="640" y2="252.0" stroke="#d7dde5" stroke-width="1.2"/>
+<text x="76" y="257.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="13" fill="#344">-1,100</text>
+<line x1="80" y1="220.7" x2="640" y2="220.7" stroke="#d7dde5" stroke-width="1.2"/>
+<text x="76" y="225.7" text-anchor="end" font-family="Segoe UI, Arial" font-size="13" fill="#344">-1,050</text>
+<line x1="80" y1="189.3" x2="640" y2="189.3" stroke="#d7dde5" stroke-width="1.2"/>
+<text x="76" y="194.3" text-anchor="end" font-family="Segoe UI, Arial" font-size="13" fill="#344">-1,000</text>
+<line x1="80" y1="158.0" x2="640" y2="158.0" stroke="#d7dde5" stroke-width="1.2"/>
+<text x="76" y="163.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="13" fill="#344">-950</text>
+<line x1="80" y1="126.7" x2="640" y2="126.7" stroke="#d7dde5" stroke-width="1.2"/>
+<text x="76" y="131.7" text-anchor="end" font-family="Segoe UI, Arial" font-size="13" fill="#344">-900</text>
+<line x1="80" y1="95.3" x2="640" y2="95.3" stroke="#d7dde5" stroke-width="1.2"/>
+<text x="76" y="100.3" text-anchor="end" font-family="Segoe UI, Arial" font-size="13" fill="#344">-850</text>
+<line x1="80" y1="64.0" x2="640" y2="64.0" stroke="#d7dde5" stroke-width="1.2"/>
+<text x="76" y="69.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="13" fill="#344">-800</text>
+<line x1="80" y1="64" x2="80" y2="377.2" stroke="#444" stroke-width="1.4"/>
+<line x1="80" y1="377.2" x2="680" y2="377.2" stroke="#444" stroke-width="1.4"/>
+<text x="80" y="400" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#222">2018</text>
+<text x="160" y="400" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#222">2019</text>
+<text x="240" y="400" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#222">2020</text>
+<text x="320" y="400" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#222">2021</text>
+<text x="400" y="400" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#222">2022</text>
+<text x="480" y="400" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#222">2023</text>
+<text x="560" y="400" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#222">2024</text>
+<text x="640" y="400" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#222">2025</text>
+<path d="M 80 108.1 L 160 92.7 L 240 127.6 L 320 243.7 L 400 294.0 L 480 239.6 L 560 317.6 L 640 350" fill="none" stroke="#111" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="80" cy="108.1" r="4.2" fill="#111"/>
+<circle cx="160" cy="92.7" r="4.2" fill="#111"/>
+<circle cx="240" cy="127.6" r="4.2" fill="#111"/>
+<circle cx="320" cy="243.7" r="4.2" fill="#111"/>
+<circle cx="400" cy="294.0" r="4.2" fill="#111"/>
+<circle cx="480" cy="239.6" r="4.2" fill="#111"/>
+<circle cx="560" cy="317.6" r="4.2" fill="#111"/>
+<circle cx="640" cy="350" r="4.2" fill="#111"/>
+</svg><figcaption>Figure 3-4. Real-data trend example; this line chart uses official Census annual goods-trade balance totals<span aria-label="Source 9" class="cite-ref" tabindex="0"><sup>9</sup><span class="cite-tooltip" role="tooltip">U.S. Census Bureau. (n.d.). <em>U.S. International Trade in Goods and Services</em>. https://www.census.gov/foreign-trade/</span></span> and shows an overall downward trend toward a larger goods trade deficit by 2024.</figcaption></figure>
+  </div></div>
+  <p class="note">Note: Trend charts are especially useful when the managerial question concerns direction over time, such as whether a rate is rising or falling, whether seasonality is present, or whether a surplus or deficit is widening.</p>
+ </div>
+ </section><section id="distributions" class="subsection level-3"><h4>Distributions</h4><p>Distribution charts help managers understand how values are spread across a dataset. These charts answer questions such as:</p><ul><li>Are most customers clustered within a narrow price range?</li><li>Is employee performance evenly distributed or concentrated?</li><li>Are there outliers in operational metrics?</li></ul><p>Common visualizations for distributions include:</p><ul><li>Histograms</li><li>Box plots</li><li>Density plots</li></ul><p>For example, a histogram showing customer purchase amounts may reveal that most customers spend within a moderate range, while a small number of high-spending customers form a long tail in the distribution. Understanding distributions can help managers identify risk, variability, and unusual cases.<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Healy, K. (2018). <em>Data visualization: A practical introduction</em>. Princeton University Press.</span></span></p>
+ 
+  <div class="card">
+    <div class="grid2">
+    <div class="chart-small">
+  <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-5 svg-desc-5" style="width:100%; height:auto; display:block;">
+<title id="svg-title-5">Distribution chart: customer purchase amounts</title>
+<desc id="svg-desc-5">Histogram of customer purchase amounts. Most customers are concentrated in moderate spending ranges, while a small number fall in high purchase ranges, creating a long right tail.</desc>
+<rect width="560" height="360" fill="white"/>
+<text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Distribution: Customer Purchase Amounts</text>
+<line x1="55" y1="298.0" x2="540" y2="298.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="302.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">0</text>
+<line x1="55" y1="262.3" x2="540" y2="262.3" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="266.3" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2</text>
+<line x1="55" y1="226.6" x2="540" y2="226.6" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="230.6" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">4</text>
+<line x1="55" y1="190.9" x2="540" y2="190.9" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="194.9" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">6</text>
+<line x1="55" y1="155.1" x2="540" y2="155.1" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="159.1" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">8</text>
+<line x1="55" y1="119.4" x2="540" y2="119.4" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="123.4" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">10</text>
+<line x1="55" y1="83.7" x2="540" y2="83.7" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="87.7" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">12</text>
+<line x1="55" y1="48.0" x2="540" y2="48.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="52.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">14</text>
+<rect x="59.0" y="280.1" width="61.3" height="17.9" fill="#5b9bd5" rx="1"/>
+<text x="89.6" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">0–19</text>
+<rect x="128.3" y="173.0" width="61.3" height="125.0" fill="#5b9bd5" rx="1"/>
+<text x="158.9" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">20–39</text>
+<rect x="197.6" y="83.7" width="61.3" height="214.3" fill="#5b9bd5" rx="1"/>
+<text x="228.2" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">40–59</text>
+<rect x="266.9" y="244.4" width="61.3" height="53.6" fill="#5b9bd5" rx="1"/>
+<text x="297.5" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">60–79</text>
+<rect x="336.1" y="280.1" width="61.3" height="17.9" fill="#5b9bd5" rx="1"/>
+<text x="366.8" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">80–99</text>
+<rect x="405.4" y="298.0" width="61.3" height="0.0" fill="#ff5a5f" rx="1"/>
+<text x="436.1" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">100–119</text>
+<rect x="474.7" y="280.1" width="61.3" height="17.9" fill="#ff5a5f" rx="1"/>
+<text x="505.4" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">120–139</text>
+<text x="14" y="36" font-size="14" font-family="Segoe UI, Arial" fill="#445">Most purchases cluster in the middle range, with a long right tail of high spenders.</text>
+</svg><figcaption>Figure 3-5. This histogram answers the question: Are most purchases clustered within a narrow range? Histograms are useful for seeing whether values cluster within a narrow range, such as customer purchase amounts.</figcaption></figure></div>
+<div class="chart-small">  
+         <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-6 svg-desc-6" style="width:100%; height:auto; display:block;">
+<title id="svg-title-6">Density plot of operational cycle time</title>
+<desc id="svg-desc-6">Density plot of operational cycle times. Most values cluster around the low-to-mid 20s, while a long right tail indicates a few unusually high observations that may be outliers.</desc>
+<rect width="560" height="360" fill="white"/>
+<text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Density Plot: Operational Cycle Time</text>
+
+<line x1="99.1" y1="52" x2="99.1" y2="300" stroke="#eef2f6" stroke-width="1"/>
+<text x="99.1" y="340" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">10</text>
+<line x1="187.3" y1="52" x2="187.3" y2="300" stroke="#eef2f6" stroke-width="1"/>
+<text x="187.3" y="340" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">20</text>
+<line x1="275.5" y1="52" x2="275.5" y2="300" stroke="#eef2f6" stroke-width="1"/>
+<text x="275.5" y="340" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">30</text>
+<line x1="363.6" y1="52" x2="363.6" y2="300" stroke="#eef2f6" stroke-width="1"/>
+<text x="363.6" y="340" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">40</text>
+<line x1="451.8" y1="52" x2="451.8" y2="300" stroke="#eef2f6" stroke-width="1"/>
+<text x="451.8" y="340" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">50</text>
+<line x1="540.0" y1="52" x2="540.0" y2="300" stroke="#eef2f6" stroke-width="1"/>
+<text x="540.0" y="340" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">60</text>
+<line x1="55" y1="238.0" x2="540" y2="238.0" stroke="#d7dde5" stroke-width="1"/>
+<line x1="55" y1="176.0" x2="540" y2="176.0" stroke="#d7dde5" stroke-width="1"/>
+<line x1="55" y1="114.0" x2="540" y2="114.0" stroke="#d7dde5" stroke-width="1"/>
+<line x1="55" y1="52.0" x2="540" y2="52.0" stroke="#d7dde5" stroke-width="1"/>
+<path d="M 55.0 296.9 L 59.0 295.9 L 63.1 294.7 L 67.1 293.2 L 71.2 291.4 L 75.2 289.1 L 79.2 286.5 L 83.3 283.3 L 87.3 279.5 L 91.4 275.2 L 95.4 270.1 L 99.5 264.4 L 103.5 257.9 L 107.5 250.5 L 111.6 242.4 L 115.6 233.5 L 119.7 223.8 L 123.7 213.4 L 127.8 202.3 L 131.8 190.5 L 135.8 178.3 L 139.9 165.8 L 143.9 153.1 L 148.0 140.4 L 152.0 127.9 L 156.0 115.7 L 160.1 104.2 L 164.1 93.5 L 168.2 83.8 L 172.2 75.2 L 176.2 67.8 L 180.3 61.9 L 184.3 57.3 L 188.4 54.1 L 192.4 52.4 L 196.5 52.0 L 200.5 52.9 L 204.5 54.9 L 208.6 58.0 L 212.6 62.1 L 216.7 67.1 L 220.7 72.8 L 224.8 79.2 L 228.8 86.3 L 232.8 94.0 L 236.9 102.3 L 240.9 111.0 L 245.0 120.3 L 249.0 130.0 L 253.0 140.1 L 257.1 150.4 L 261.1 161.0 L 265.2 171.6 L 269.2 182.1 L 273.2 192.5 L 277.3 202.6 L 281.3 212.4 L 285.4 221.6 L 289.4 230.3 L 293.5 238.3 L 297.5 245.7 L 301.5 252.4 L 305.6 258.4 L 309.6 263.8 L 313.7 268.5 L 317.7 272.6 L 321.8 276.1 L 325.8 279.2 L 329.8 281.7 L 333.9 283.9 L 337.9 285.7 L 342.0 287.2 L 346.0 288.4 L 350.0 289.4 L 354.1 290.1 L 358.1 290.8 L 362.2 291.3 L 366.2 291.7 L 370.2 292.0 L 374.3 292.3 L 378.3 292.5 L 382.4 292.8 L 386.4 293.0 L 390.5 293.2 L 394.5 293.3 L 398.5 293.5 L 402.6 293.7 L 406.6 293.9 L 410.7 294.0 L 414.7 294.2 L 418.8 294.4 L 422.8 294.5 L 426.8 294.7 L 430.9 294.8 L 434.9 295.0 L 439.0 295.1 L 443.0 295.2 L 447.0 295.4 L 451.1 295.5 L 455.1 295.6 L 459.2 295.7 L 463.2 295.9 L 467.2 296.0 L 471.3 296.1 L 475.3 296.2 L 479.4 296.3 L 483.4 296.4 L 487.5 296.4 L 491.5 296.5 L 495.5 296.5 L 499.6 296.6 L 503.6 296.6 L 507.7 296.7 L 511.7 296.7 L 515.8 296.8 L 519.8 296.9 L 523.8 297.0 L 527.9 297.1 L 531.9 297.2 L 536.0 297.4 L 540.0 297.6 L 540.0 300.0 L 55.0 300.0 Z" fill="#b9d4ec" stroke="#5b9bd5" stroke-width="2"/>
+<rect x="363.6" y="52" width="176.4" height="248.0" fill="#ff5a5f" opacity="0.08"/>
+<text x="425.4" y="78.0" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#c0392b">High-end outlier region</text>
+<text x="14" y="36" font-size="14" font-family="Segoe UI, Arial" fill="#445">Most cycle times cluster around the low-to-mid 20s; a few outliers may be present.</text>
+</svg><figcaption>Figure 3-6. Density plots are useful for showing the overall shape of a distribution and whether a long tail or unusual values may be present. The long right tail in this distribution suggests a few unusually high values (outliers).</figcaption></figure>
+    </div>
+  </div></div>
+
+  <div class="card">
+    <div class="grid2">
+    <div class="chart-small">  
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-7 svg-desc-7" style="width:100%; height:auto; display:block;">
+<title id="svg-title-7">Histogram: Survey Results on Likelihood of Referrals</title>
+<desc id="svg-desc-7">Histogram of how likely customers are to refer the company to friends and family. Most responses cluster in the middle categories, with fewer responses at the extreme ends of the scale.</desc>
+<rect width="560" height="360" fill="white"/>
+<text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Histogram: Results from Net Promoter Survey</text>
+
+<line x1="55" y1="298.0" x2="540" y2="298.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="302.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">0</text>
+<line x1="55" y1="267.6" x2="540" y2="267.6" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="271.6" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">10</text>
+<line x1="55" y1="237.3" x2="540" y2="237.3" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="241.3" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">20</text>
+<line x1="55" y1="206.9" x2="540" y2="206.9" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="210.9" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">30</text>
+<line x1="55" y1="176.5" x2="540" y2="176.5" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="180.5" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">40</text>
+<line x1="55" y1="146.1" x2="540" y2="146.1" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="150.1" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">50</text>
+<line x1="55" y1="115.8" x2="540" y2="115.8" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="119.8" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">60</text>
+<line x1="55" y1="85.4" x2="540" y2="85.4" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="89.4" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">70</text>
+<line x1="55" y1="55.0" x2="540" y2="55.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="59.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">80</text>
+<rect x="58.0" y="298.0" width="54.6" height="0.0" fill="#b9c3cf" rx="1"/>
+<text x="85.3" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">1</text>
+<text x="85.3" y="352" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">(very unlikely)</text>
+<rect x="118.6" y="285.9" width="54.6" height="12.1" fill="#b9c3cf" rx="1"/>
+<text x="145.9" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">2</text>
+<rect x="179.2" y="197.8" width="54.6" height="100.2" fill="#b9c3cf" rx="1"/>
+<text x="206.6" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">3</text>
+<rect x="239.9" y="76.3" width="54.6" height="221.7" fill="#5b9bd5" rx="1"/>
+<text x="267.2" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">4</text>
+<rect x="300.5" y="121.9" width="54.6" height="176.1" fill="#5b9bd5" rx="1"/>
+<text x="327.8" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">5</text>
+<rect x="361.1" y="267.6" width="54.6" height="30.4" fill="#b9c3cf" rx="1"/>
+<text x="388.4" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">6</text>
+<rect x="421.8" y="291.9" width="54.6" height="6.1" fill="#b9c3cf" rx="1"/>
+<text x="449.1" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">7</text>
+<rect x="482.4" y="298.0" width="54.6" height="0.0" fill="#b9c3cf" rx="1"/>
+<text x="509.7" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">8</text>
+<text x="509.7" y="352" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#223">(very likely)</text>
+<text x="16" y="36" font-size="14" font-family="Segoe UI, Arial" fill="#445">Most customers are concentrated in the passive section.</text>
+</svg><figcaption> Figure 3-7. This histogram plots survey results for: How likely are you to recommend us to your friends and family?</figcaption></figure></div>
+<div class="chart-small">  
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 300" role="img" aria-labelledby="svg-title-8 svg-desc-8" style="width:100%; height:auto; display:block;">
+<title id="svg-title-8">Box plot of employee performance</title>
+<desc id="svg-desc-8">Box plot of employee performance scores. The box is relatively narrow, indicating that most scores are concentrated in a moderate range, with a few higher outliers beyond the upper whisker.</desc>
+<rect width="560" height="300" fill="white"/>
+<text x="14" y="16" font-family="Segoe UI, Arial" font-size="22" fill="#222">Box Plot: Employee Performance</text>
+
+<line x1="55.0" y1="52" x2="55.0" y2="240" stroke="#eef2f6" stroke-width="1"/>
+<text x="55.0" y="280" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">50</text>
+<line x1="152.0" y1="52" x2="152.0" y2="240" stroke="#eef2f6" stroke-width="1"/>
+<text x="152.0" y="280" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">60</text>
+<line x1="249.0" y1="52" x2="249.0" y2="240" stroke="#eef2f6" stroke-width="1"/>
+<text x="249.0" y="280" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">70</text>
+<line x1="346.0" y1="52" x2="346.0" y2="240" stroke="#eef2f6" stroke-width="1"/>
+<text x="346.0" y="280" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">80</text>
+<line x1="443.0" y1="52" x2="443.0" y2="240" stroke="#eef2f6" stroke-width="1"/>
+<text x="443.0" y="280" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">90</text>
+<line x1="540.0" y1="52" x2="540.0" y2="240" stroke="#eef2f6" stroke-width="1"/>
+<text x="540.0" y="280" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">100</text>
+<line x1="187.9" y1="165" x2="481.8" y2="165" stroke="#7a8694" stroke-width="2"/>
+<line x1="187.9" y1="143" x2="187.9" y2="187" stroke="#7a8694" stroke-width="2"/>
+<line x1="481.8" y1="143" x2="481.8" y2="187" stroke="#7a8694" stroke-width="2"/>
+<rect x="285.4" y="137" width="85.4" height="56" fill="#b9d4ec" stroke="#5b9bd5" stroke-width="2"/>
+<line x1="330.5" y1="137" x2="330.5" y2="193" stroke="#ff5a5f" stroke-width="3"/>
+<text x="14" y="36" font-size="14" font-family="Segoe UI, Arial" fill="#445">The relatively narrow box suggests performance is concentrated in a fairly tight range.</text>
+</svg><figcaption>Figure 3-8. This box plot answers the question: is employee performance evenly distributed or concentrated? Box plots are useful for seeing whether values are concentrated or spread out, and whether outliers are present.</figcaption></figure>
+    </div></div>
+      <p class="note">Note: Histograms, density plots and box plots are best used for demonstrating how values are spread across a dataset; they are particularly helpful for identifying risks and outliers. </p>
+  </div>
+ 
+ </section><section id="relationships" class="subsection level-3"><h4>Relationships</h4><p>Relationship charts help decision makers examine whether two variables are associated with one another. Typical managerial questions include:</p><ul><li>Does marketing spending correlate with revenue growth?</li><li>Is customer satisfaction related to retention?</li><li>Are employee training hours associated with productivity?</li></ul><p>The most common visualization used to explore relationships is the scatter plot.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Financial Times. (n.d.). <em>Visual Vocabulary</em>. https://ft-interactive.github.io/visual-vocabulary/</span></span><span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Healy, K. (2018). <em>Data visualization: A practical introduction</em>. Princeton University Press.</span></span> Scatter plots display pairs of observations and allow viewers to identify patterns such as:<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Healy, K. (2018). <em>Data visualization: A practical introduction</em>. Princeton University Press.</span></span></p><ul><li>positive relationships</li><li>negative relationships</li><li>clusters</li><li>outliers</li></ul><p>For example, a scatter plot comparing advertising spending and sales across markets may reveal whether higher marketing investment tends to produce greater revenue. For managers, such visualizations can highlight potential relationships that may require further investigation before strategic decisions are made.</p>
+ 
+  <div class="card">
+    <div class="grid2">
+    <div class="chart">  
+        <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" role="img" aria-labelledby="svg-title-9 svg-desc-9" style="width:100%; height:auto; display:block;">
+<title id="svg-title-9">Scatter Plot: Marketing Spending and Revenue Growth</title>
+<desc id="svg-desc-9">Scatter plot comparing marketing spending and revenue growth across business units. The points form an upward cloud, showing a realistic positive relationship with some variation: higher marketing spending tends to be associated with higher revenue growth.</desc>
+<rect width="560" height="380" fill="white"/>
+<text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Scatter Plot: Marketing Spending and Revenue Growth</text>
+<text x="14" y="36" font-family="Segoe UI, Arial" font-size="14" fill="#5c6773">Realistic positive relationship with moderate variation</text>
+<line x1="62.0" y1="58" x2="62.0" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="62.0" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">0</text>
+<line x1="157.6" y1="58" x2="157.6" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="157.6" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">7</text>
+<line x1="253.2" y1="58" x2="253.2" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="253.2" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">14</text>
+<line x1="348.8" y1="58" x2="348.8" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="348.8" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">21</text>
+<line x1="444.4" y1="58" x2="444.4" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="444.4" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">28</text>
+<line x1="540.0" y1="58" x2="540.0" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="540.0" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">35</text>
+<line x1="62" y1="320.0" x2="540" y2="320.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="324.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">4</text>
+<line x1="62" y1="267.6" x2="540" y2="267.6" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="271.6" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">8</text>
+<line x1="62" y1="215.2" x2="540" y2="215.2" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="219.2" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">11</text>
+<line x1="62" y1="162.8" x2="540" y2="162.8" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="166.8" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">15</text>
+<line x1="62" y1="110.4" x2="540" y2="110.4" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="114.4" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">18</text>
+<line x1="62" y1="58.0" x2="540" y2="58.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="62.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">22</text>
+<line x1="62" y1="58" x2="62" y2="320" stroke="#7a8694" stroke-width="1.5"/>
+<line x1="62" y1="320" x2="540" y2="320" stroke="#7a8694" stroke-width="1.5"/>
+<text x="301.0" y="376" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">Marketing spending ($ millions)</text>
+<text x="18" y="189.0" transform="rotate(-90 18 189.0)" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">Revenue growth (%)</text>
+<line x1="130.3" y1="261.8" x2="499.0" y2="101.7" stroke="#b9c3cf" stroke-width="2.4" stroke-dasharray="7 5"/>
+<circle cx="240.9" cy="193.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="143.9" cy="229.8" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="321.5" cy="178.8" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="310.6" cy="174.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="130.3" cy="267.6" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="150.8" cy="247.2" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="279.1" cy="189.0" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="202.7" cy="237.0" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="357.0" cy="133.7" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="268.2" cy="206.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="489.5" cy="60.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="227.3" cy="205.0" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="171.3" cy="228.3" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="429.4" cy="114.8" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="186.3" cy="260.3" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="258.7" cy="216.7" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="325.6" cy="165.7" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="195.8" cy="228.3" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="377.5" cy="165.7" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="340.6" cy="158.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="290.1" cy="200.6" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="384.3" cy="111.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="209.5" cy="247.2" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="451.2" cy="127.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="395.2" cy="155.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="161.7" cy="190.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="276.4" cy="194.8" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="303.7" cy="194.8" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+</svg><figcaption>Figure 3-9. This plot answers the question: Does marketing spending correlate with revenue growth? This chart shows a realistic <strong>positive relationship</strong>: the points trend upward, but not in a perfectly straight line.</figcaption></figure></div>
+<div class="chart">  
+     <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" role="img" aria-labelledby="svg-title-10 svg-desc-10" style="width:100%; height:auto; display:block;">
+<title id="svg-title-10">Scatter Plot: Training Hours and Productivity</title>
+<desc id="svg-desc-10">Scatter plot comparing employee training hours and productivity. Most points follow a realistic upward pattern, but several highlighted outliers stand away from the main trend: one unit has unusually high productivity despite low training, one has low productivity despite high training, and one has unusually low productivity for a moderate level of training.</desc>
+<rect width="560" height="380" fill="white"/>
+<text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Scatter Plot: Training Hours and Productivity</text>
+<text x="14" y="36" font-family="Segoe UI, Arial" font-size="14" fill="#5c6773">Positive relationship with multiple outliers</text>
+<line x1="62.0" y1="58" x2="62.0" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="62.0" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">0</text>
+<line x1="157.6" y1="58" x2="157.6" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="157.6" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">6</text>
+<line x1="253.2" y1="58" x2="253.2" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="253.2" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">13</text>
+<line x1="348.8" y1="58" x2="348.8" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="348.8" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">19</text>
+<line x1="444.4" y1="58" x2="444.4" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="444.4" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">26</text>
+<line x1="540.0" y1="58" x2="540.0" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="540.0" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">32</text>
+<line x1="62" y1="320.0" x2="540" y2="320.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="324.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">48</text>
+<line x1="62" y1="267.6" x2="540" y2="267.6" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="271.6" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">58</text>
+<line x1="62" y1="215.2" x2="540" y2="215.2" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="219.2" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">67</text>
+<line x1="62" y1="162.8" x2="540" y2="162.8" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="166.8" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">77</text>
+<line x1="62" y1="110.4" x2="540" y2="110.4" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="114.4" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">86</text>
+<line x1="62" y1="58.0" x2="540" y2="58.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="62.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">96</text>
+<line x1="62" y1="58" x2="62" y2="320" stroke="#7a8694" stroke-width="1.5"/>
+<line x1="62" y1="320" x2="540" y2="320" stroke="#7a8694" stroke-width="1.5"/>
+<text x="301.0" y="376" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">Training hours per employee</text>
+<text x="18" y="189.0" transform="rotate(-90 18 189.0)" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">Productivity index</text>
+<line x1="106.8" y1="276.3" x2="510.1" y2="101.7" stroke="#b9c3cf" stroke-width="2.4" stroke-dasharray="7 5"/>
+<circle cx="233.8" cy="225.6" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="154.6" cy="258.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="133.7" cy="270.3" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="457.8" cy="129.0" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="348.8" cy="169.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="236.8" cy="214.1" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="244.2" cy="197.2" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="507.1" cy="87.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="286.1" cy="210.8" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="135.2" cy="267.1" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="235.3" cy="228.3" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="159.1" cy="224.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="100.8" cy="261.1" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="153.1" cy="266.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="318.9" cy="168.8" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="501.2" cy="109.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="453.4" cy="138.2" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="245.7" cy="233.8" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="162.1" cy="253.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="417.5" cy="169.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="229.3" cy="222.3" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="504.2" cy="80.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="448.9" cy="124.6" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="401.1" cy="185.7" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="186.0" cy="262.1" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="103.8" cy="282.3" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="129.2" cy="93.5" r="5.3" fill="#ff5a5f" opacity="0.95"/>
+<circle cx="457.8" cy="249.0" r="5.3" fill="#ff5a5f" opacity="0.95"/>
+<circle cx="241.2" cy="295.4" r="5.3" fill="#ff5a5f" opacity="0.95"/>
+</svg><figcaption>Figure 3-10. This scatter plot helps us answer the question: Are employee training hours associated with productivity? This chart shows a generally <strong>positive relationship</strong> plus several clear <strong>outliers</strong> that would merit closer investigation.</figcaption></figure>
+  </div>
+    </div></div>
+ 
+ <div class="card">
+    <div class="grid2">
+    <div class="chart">  
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-9 svg-desc-9" style="width:100%; height:auto; display:block;">
+<title id="svg-title-9">Regional Unemployment and Employee Turnover</title>
+<desc id="svg-desc-9">Scatter plot for the relationship of regional unemployment and employee turnover. The points show a clearer negative relationship: higher employment in the region is generally associated with lower employee turnover.</desc>
+<rect width="560" height="360" fill="white"/>
+<text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Scatter Plot: Regional Unemployment and Employee Turnover</text>
+<text x="14" y="36" font-family="Segoe UI, Arial" font-size="14" fill="#5c6773">Higher unemployment in the region is associated with lower employee turnover.</text>
+<line x1="50.0" y1="58" x2="50.0" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="50.0" y="342" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">0%</text>
+<line x1="148.4" y1="58" x2="148.4" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="148.4" y="342" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">6%</text>
+<line x1="246.8" y1="58" x2="246.8" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="246.8" y="342" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">12%</text>
+<line x1="345.2" y1="58" x2="345.2" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="345.2" y="342" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">18%</text>
+<line x1="443.6" y1="58" x2="443.6" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="443.6" y="342" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">24%</text>
+<line x1="542.0" y1="58" x2="542.0" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="542.0" y="342" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">30%</text>
+<line x1="50" y1="308.0" x2="542" y2="308.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="312.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">0</text>
+<line x1="50" y1="258" x2="542" y2="245.5" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="262" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">1%</text>
+<line x1="50" y1="208" x2="542" y2="183.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="212" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2</text>
+<line x1="50" y1="158" x2="542" y2="120.5" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="162" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">3%</text>
+<line x1="50" y1="108" x2="542" y2="58.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="112" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">4%</text>
+<line x1="50" y1="58.0" x2="542" y2="58.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="62.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">5%</text>
+<line x1="50" y1="58" x2="50" y2="308" stroke="#7a8694" stroke-width="1.5"/>
+<line x1="50" y1="308" x2="542" y2="308" stroke="#7a8694" stroke-width="1.5"/>
+<text x="296.0" y="358" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">Employee Turnover</text>
+<text x="14" y="183.0" transform="rotate(-90 14 183.0)" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">Regional Turnover (1% –5%)</text>
+<circle cx="212.4" cy="104.9" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="307.5" cy="116.8" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="450.2" cy="181.1" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="458.4" cy="188.6" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="115.6" cy="80.5" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="258.3" cy="109.9" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="259.9" cy="126.1" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="304.2" cy="133.6" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="287.8" cy="123.0" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="391.1" cy="166.1" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="159.9" cy="98.6" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="360.0" cy="153.0" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="138.6" cy="94.2" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="127.1" cy="71.1" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="286.2" cy="151.8" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="323.9" cy="141.1" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="287.8" cy="136.1" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="259.9" cy="116.1" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="138.6" cy="106.8" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="112.3" cy="96.1" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="273.0" cy="109.9" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="274.7" cy="124.9" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="460.0" cy="189.2" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="369.8" cy="149.9" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="414.1" cy="168.6" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="333.7" cy="137.4" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="320.6" cy="144.2" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="384.6" cy="148.6" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="151.7" cy="92.4" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="248.4" cy="108.6" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="269.8" cy="125.5" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="233.7" cy="99.2" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="204.2" cy="99.2" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="268.1" cy="124.9" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="179.6" cy="116.8" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="337.0" cy="164.2" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="84.4" cy="75.5" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+
+<!--Additional-->
+<circle cx="500" cy="260" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="510" cy="264" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="524" cy="260" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="500" cy="250" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="530" cy="240" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="535" cy="255" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="530" cy="240" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="520" cy="230" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="505" cy="210" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="490" cy="220" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="500" cy="230" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="470" cy="230" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="500" cy="220" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="485" cy="240" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="455" cy="200" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="465" cy="200" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="460" cy="215" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="400" cy="190" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="380" cy="190" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="370" cy="185" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="380" cy="190" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="370" cy="170" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="390" cy="205" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="400" cy="205" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="420" cy="205" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="90" cy="65" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="120" cy="65" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="115" cy="70" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="135" cy="80" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="180" cy="100" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="160" cy="75" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="185" cy="105" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="185" cy="90" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="205" cy="110" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="220" cy="135" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="225" cy="125" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="250" cy="140" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="245" cy="120" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="265" cy="150" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="285" cy="180" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="295" cy="160" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="300" cy="180" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="315" cy="175" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="355" cy="185" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="380" cy="210" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="70" cy="70" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="95" cy="82" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="97" cy="62" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="107" cy="65" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="147" cy="62" r="4.2" fill="#5b9bd5" opacity="0.95"/>
+<line x1="80" y1="61" x2="530" y2="250" stroke="#b9c3cf" stroke-width="2" stroke-dasharray="7 5"/>
+
+</svg><figcaption>Figure 3-11. This scatter plot helps answer the question: Is unemployment in the region associated with turnover? The chart shows a clear negative relationship between the variables.</figcaption></figure></div>
+<div class="chart">  
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" role="img" aria-labelledby="svg-title-12 svg-desc-12" style="width:100%; height:auto; display:block;">
+<title id="svg-title-12">Scatter Plot: Customer Satisfaction and Retention</title>
+<desc id="svg-desc-12">Scatter plot comparing customer satisfaction and retention. The points form two clear clusters: one group at lower satisfaction and retention levels and another at higher levels. Overall, the pattern still suggests that higher satisfaction is associated with higher retention.</desc>
+<rect width="560" height="380" fill="white"/>
+<text x="14" y="28" font-family="Segoe UI, Arial" font-size="20" fill="#222">Scatter Plot: Customer Satisfaction and Retention</text>
+<text x="14" y="48" font-family="Segoe UI, Arial" font-size="14" fill="#5c6773">Distinct clusters plus an overall positive relationship</text>
+<line x1="62.0" y1="58" x2="62.0" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="62.0" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">50</text>
+<line x1="157.6" y1="58" x2="157.6" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="157.6" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">60</text>
+<line x1="253.2" y1="58" x2="253.2" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="253.2" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">70</text>
+<line x1="348.8" y1="58" x2="348.8" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="348.8" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">80</text>
+<line x1="444.4" y1="58" x2="444.4" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="444.4" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">90</text>
+<line x1="540.0" y1="58" x2="540.0" y2="320" stroke="#eef2f6" stroke-width="1"/>
+<text x="540.0" y="360" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#344">100</text>
+<line x1="62" y1="320.0" x2="540" y2="320.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="324.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">55</text>
+<line x1="62" y1="267.6" x2="540" y2="267.6" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="271.6" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">63</text>
+<line x1="62" y1="215.2" x2="540" y2="215.2" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="219.2" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">71</text>
+<line x1="62" y1="162.8" x2="540" y2="162.8" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="166.8" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">79</text>
+<line x1="62" y1="110.4" x2="540" y2="110.4" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="114.4" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">87</text>
+<line x1="62" y1="58.0" x2="540" y2="58.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="54" y="62.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">95</text>
+<line x1="62" y1="58" x2="62" y2="320" stroke="#7a8694" stroke-width="1.5"/>
+<line x1="62" y1="320" x2="540" y2="320" stroke="#7a8694" stroke-width="1.5"/>
+<text x="301.0" y="376" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">Customer satisfaction score</text>
+<text x="18" y="189.0" transform="rotate(-90 18 189.0)" text-anchor="middle" font-size="13" font-family="Segoe UI, Arial" fill="#223">Retention rate (%)</text>
+<ellipse cx="186.3" cy="247.9" rx="55" ry="34" fill="none" stroke="#b9c3cf" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="186.3" y="207.9" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#5c6773">Cluster 1</text>
+<ellipse cx="406.2" cy="130.1" rx="55" ry="34" fill="none" stroke="#b9c3cf" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="406.2" y="90.1" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#5c6773">Cluster 2</text>
+<line x1="119.4" y1="274.1" x2="482.6" y2="103.9" stroke="#b9c3cf" stroke-width="2.4" stroke-dasharray="7 5"/>
+<circle cx="248.4" cy="238.8" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="191.1" cy="282.0" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="213.0" cy="263.7" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="167.2" cy="281.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="144.2" cy="261.7" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="241.7" cy="301.0" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="123.2" cy="241.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="248.4" cy="232.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="105.0" cy="313.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="201.6" cy="266.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="138.5" cy="222.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="234.1" cy="244.0" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="196.8" cy="236.8" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="255.1" cy="231.6" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="208.3" cy="233.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="118.4" cy="214.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="442.5" cy="117.6" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="330.6" cy="144.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="438.7" cy="171.3" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="399.5" cy="106.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="356.4" cy="93.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="427.2" cy="133.3" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="418.6" cy="115.0" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="410.9" cy="103.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="381.3" cy="139.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="446.3" cy="129.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="372.7" cy="108.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="462.6" cy="140.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="353.6" cy="133.3" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="400.4" cy="136.6" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="459.7" cy="153.6" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="454.0" cy="158.9" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="272.3" cy="178.5" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="318.2" cy="175.2" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="300.0" cy="186.4" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+<circle cx="295.3" cy="179.8" r="4.3" fill="#5b9bd5" opacity="0.95"/>
+</svg><figcaption>Figure 3-12. This scatter plot reveals the relationship of customer satisfaction and retention rates. This chart shows two visible <strong>clusters</strong> plus an overall <strong>positive relationship</strong>. It suggests that observations may group into distinct segments.</figcaption></figure>
+    </div></div>
+      <p class="note">Note: The first scatterplot shows that this type of chart can reveal simple linear relationships. However, as you can see in the three other charts, real scatter plots usually contain variation. Positive and negative relationships are rarely perfect lines, clusters appear as dense groups of observations, and outliers are points that stand apart from the main pattern.</p>
+  </div>
+  
+ </section><section id="composition" class="subsection level-3"><h4>Composition</h4><p>Composition charts show how a total is divided among different components.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Financial Times. (n.d.). <em>Visual Vocabulary</em>. https://ft-interactive.github.io/visual-vocabulary/</span></span> These charts answer questions such as:</p><ul><li>What share of total revenue comes from each product line?</li><li>How is the marketing budget allocated across channels?</li><li>How has market share changed over time?</li></ul><p>Common charts for composition include:</p><ul><li>Stacked bar charts</li><li>Stacked area charts</li><li>Pie charts</li></ul><p>Although pie charts are widely used, they are often less effective than stacked bar charts because it is difficult to compare angles precisely.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Cleveland, W. S., &amp; McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <em>Journal of the American Statistical Association, 79</em>(387), 531–554.</span></span><span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span> As visualization experts frequently note, pie charts are most appropriate when there are only a few categories and the goal is simply to show proportions.</p></section></section><section id="when-common-charts-fail" class="subsection level-2"><h3>When Common Charts Fail</h3><p>Even commonly used charts can fail when applied incorrectly.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Cairo, A. (2016). <em>The truthful art: Data, charts, and maps for communication</em>. New Riders.</span></span> One frequent mistake involves using <strong>pie charts</strong> to compare too many categories. When a pie chart contains many slices, it becomes difficult to interpret relative proportions. Another common problem occurs when <strong>line charts</strong> are used for categorical data rather than time-series data. Because line charts imply continuity, using them for categories such as departments or product types can create misleading interpretations.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Tufte, E. R. (2001). <em>The visual display of quantitative information</em> (2nd ed.). Graphics Press.</span></span> Similarly, <strong>stacked charts</strong> may obscure comparisons between categories because only the bottom segment shares a common baseline.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span><span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Healy, K. (2018). <em>Data visualization: A practical introduction</em>. Princeton University Press.</span></span></p><p>These issues highlight an important principle of visualization: <strong>The chart type should match the analytical question.</strong></p></section><section id="managerial-justification-of-visualization-choices" class="subsection level-2"><h3>Managerial Justification of Visualization Choices</h3><p>In managerial settings, charts are often presented in dashboards, reports, or presentations prepared by analysts. Managers may not always create these visualizations themselves, but they must evaluate whether the chosen visualization clearly communicates the evidence needed for decision making.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span><span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Cairo, A. (2016). <em>The truthful art: Data, charts, and maps for communication</em>. New Riders.</span></span></p><p>Rather than focusing only on technical conventions, visualization choices should be justified in terms of decision relevance and interpretability. For example:</p><ul><li>A bar chart may be used because it allows managers to quickly compare sales across regions.</li><li>A line chart may be selected because it clearly reveals seasonal patterns in demand.</li><li>A scatter plot may be used to illustrate a potential relationship between customer satisfaction and retention.</li></ul><p>By framing visualization choices in terms of clarity, accuracy, and decision usefulness, organizations can ensure that charts support effective communication rather than simply displaying data.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span><span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Cairo, A. (2016). <em>The truthful art: Data, charts, and maps for communication</em>. New Riders.</span></span> Managers who understand these principles are better equipped to evaluate the visualizations presented to them and ensure that decisions are based on clear and interpretable evidence.</p></section>
+ <section id="practical-example" class="subsection level-2"><h3>Practical Example</h3><p>Suppose a manager wants to understand whether customer satisfaction is related to customer retention. The managerial question is not “What percentage of customers fall into each satisfaction category?” but rather “Do higher satisfaction scores tend to correspond with higher retention rates?” That difference matters because the analytical task is to examine a <strong>relationship</strong>, not a composition.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Financial Times. (n.d.). <em>Visual Vocabulary</em>. https://ft-interactive.github.io/visual-vocabulary/</span></span><span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Healy, K. (2018). <em>Data visualization: A practical introduction</em>. Princeton University Press.</span></span></p>
+
+<p>Several chart types could be used to display the same general topic, but only some support the decision clearly. A pie chart may show how customers are distributed across satisfaction groups, but it cannot show whether satisfaction and retention move together. A scatter plot, by contrast, places each customer segment or market as a point, with satisfaction on one axis and retention on the other. This allows the manager to see whether the relationship appears positive, negative, weak, or inconsistent.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Cleveland, W. S., &amp; McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <em>Journal of the American Statistical Association, 79</em>(387), 531–554.</span></span><span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Healy, K. (2018). <em>Data visualization: A practical introduction</em>. Princeton University Press.</span></span></p>
+
+<div class="card">
+<h4>Choosing the Chart Based on the Question</h4>
+<p>In the example below, the incorrect chart answers a different question than the manager asked. The correct chart aligns the visualization with the managerial decision: whether satisfaction is associated with retention and whether that pattern is strong enough to merit further investigation.</p>
+<div class="grid2">
+<div class="chart-small">
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="wrong-chart-title wrong-chart-desc" style="width:100%; height:auto; display:block;">
+<title id="wrong-chart-title">Less appropriate chart: pie chart of satisfaction groups</title>
+<desc id="wrong-chart-desc">Pie chart showing the share of customers in low, medium, and high satisfaction groups. The chart shows composition but does not reveal whether satisfaction is associated with retention.</desc>
+<rect width="560" height="360" fill="white"/>
+<text x="18" y="24" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#222">Less Appropriate: Satisfaction Mix</text>
+<text x="18" y="50" font-family="Segoe UI, Arial" font-size="14" fill="#5c6773">Shows composition, not the relationship with retention</text>
+<g transform="translate(250 185)">
+  <path d="M 0 0 L 0 -95 A 95 95 0 0 1 82.3 47.5 Z" fill="#b9c3cf"/>
+  <path d="M 0 0 L 82.3 47.5 A 95 95 0 0 1 -90.3 29.4 Z" fill="#7fa6c9"/>
+  <path d="M 0 0 L -90.3 29.4 A 95 95 0 0 1 0 -95 Z" fill="#d7dde5"/>
+</g>
+<rect x="385" y="125" width="16" height="16" fill="#d7dde5"/><text x="410" y="138" font-family="Segoe UI, Arial" font-size="14" fill="#333">Low satisfaction</text>
+<rect x="385" y="155" width="16" height="16" fill="#7fa6c9"/><text x="410" y="168" font-family="Segoe UI, Arial" font-size="14" fill="#333">Medium satisfaction</text>
+<rect x="385" y="185" width="16" height="16" fill="#b9c3cf"/><text x="410" y="198" font-family="Segoe UI, Arial" font-size="14" fill="#333">High satisfaction</text>
+<text x="280" y="318" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#555">Useful only if the question is about parts of a whole.</text>
+</svg>
+<figcaption>Figure 3-13. A pie chart shows how customers are divided among satisfaction groups, but it does not answer whether satisfaction is associated with retention.</figcaption>
+</figure>
+</div>
+<div class="chart-small">
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="right-chart-title right-chart-desc" style="width:100%; height:auto; display:block;">
+<title id="right-chart-title">More appropriate chart: scatter plot of satisfaction and retention</title>
+<desc id="right-chart-desc">Scatter plot with customer satisfaction on the horizontal axis and retention rate on the vertical axis. The points generally rise from lower left to upper right, suggesting a positive relationship between satisfaction and retention.</desc>
+<rect width="560" height="360" fill="white"/>
+<text x="18" y="24" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#222">More Appropriate: Satisfaction and Retention</text>
+<text x="18" y="50" font-family="Segoe UI, Arial" font-size="14" fill="#5c6773">Shows whether the two variables move together</text>
+<line x1="70" y1="300" x2="520" y2="300" stroke="#444" stroke-width="1.4"/>
+<line x1="70" y1="70" x2="70" y2="300" stroke="#444" stroke-width="1.4"/>
+<g stroke="#eef2f6" stroke-width="1">
+  <line x1="160" y1="70" x2="160" y2="300"/><line x1="250" y1="70" x2="250" y2="300"/><line x1="340" y1="70" x2="340" y2="300"/><line x1="430" y1="70" x2="430" y2="300"/>
+  <line x1="70" y1="250" x2="520" y2="250"/><line x1="70" y1="200" x2="520" y2="200"/><line x1="70" y1="150" x2="520" y2="150"/><line x1="70" y1="100" x2="520" y2="100"/>
+</g>
+<g fill="#3059fc" opacity=".82">
+  <circle cx="105" cy="260" r="6"/><circle cx="140" cy="245" r="6"/><circle cx="170" cy="230" r="6"/><circle cx="205" cy="220" r="6"/>
+  <circle cx="235" cy="205" r="6"/><circle cx="270" cy="190" r="6"/><circle cx="300" cy="170" r="6"/><circle cx="335" cy="165" r="6"/>
+  <circle cx="365" cy="145" r="6"/><circle cx="400" cy="132" r="6"/><circle cx="435" cy="115" r="6"/><circle cx="470" cy="102" r="6"/>
+</g>
+<line x1="100" y1="260" x2="475" y2="105" stroke="#111" stroke-width="2" stroke-dasharray="6 6" opacity=".65"/>
+<text x="295" y="338" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#333">Customer satisfaction score</text>
+<text x="22" y="190" text-anchor="middle" transform="rotate(-90 22 190)" font-family="Segoe UI, Arial" font-size="14" fill="#333">Retention rate</text>
+<text x="420" y="86" font-family="Segoe UI, Arial" font-size="13" fill="#111">Positive association</text>
+</svg>
+<figcaption>Figure 3-14. A scatter plot is more appropriate because it shows whether customer satisfaction and retention appear to be associated.</figcaption>
+</figure>
+</div>
+</div>
+<p class="note"><strong>Note.</strong> The best visualization is not the one that looks most familiar; it is the one that matches the analytical question. When the question is about association between two variables, a scatter plot is more useful than a pie chart because it preserves both variables and allows the relationship to be inspected directly.</p>
+</div>
+
+<p>Choosing the appropriate visualization therefore helps ensure that the chart communicates the relationship being examined and supports the managerial objective. In practice, managers should ask three questions before accepting a visualization: What question is the chart trying to answer? What visual structure best supports that question? What might the chosen chart hide or distort?<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span><span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Cairo, A. (2016). <em>The truthful art: Data, charts, and maps for communication</em>. New Riders.</span></span></p></section><section id="key-takeaways-3" class="subsection level-2"><h3>Key Takeaways</h3><ul><li>Effective visualization begins with understanding the analytical question.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Financial Times. (n.d.). <em>Visual Vocabulary</em>. https://ft-interactive.github.io/visual-vocabulary/</span></span></li><li>Different chart types are designed to answer different questions, such as comparisons, trends, distributions, relationships, and composition.</li><li>Selecting the appropriate visualization improves clarity, reduces cognitive effort, and allows managers to interpret evidence quickly when evaluating reports, dashboards, and presentations.</li><li>Poor chart selection, in contrast, can obscure patterns and lead to misinterpretation.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Cairo, A. (2016). <em>The truthful art: Data, charts, and maps for communication</em>. New Riders.</span></span></li><li>Managers who understand visualization principles are better equipped to evaluate reports, dashboards, and presentations that rely on data.</li></ul></section><section id="managerial-insight-3" class="insights box-2"><h3>Managerial Insight</h3><p>Different managerial questions require different types of visualizations. A chart that effectively shows a trend over time may be poorly suited for comparing categories or identifying relationships between variables.</p><p>Managers frequently rely on dashboards, reports, and presentations that summarize complex data across multiple areas of the organization. Understanding how different visualization types communicate information helps managers ask better questions about the evidence presented.</p><p>For example, if a dashboard uses a pie chart to compare many categories, the relative differences may be difficult to interpret. A bar chart might communicate the same information more clearly. Managers who understand these differences can ensure that the visualizations used in their organizations accurately support decision making.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span><span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Cairo, A. (2016). <em>The truthful art: Data, charts, and maps for communication</em>. New Riders.</span></span></p></section><section id="key-sources-3" class="subsection level-2"><h3>Key Sources</h3><div class="source-entry"><sup>1</sup> Financial Times. (n.d.). <em>Visual Vocabulary</em>. https://ft-interactive.github.io/visual-vocabulary/</div><div class="source-entry"><sup>2</sup> Cleveland, W. S., &amp; McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <em>Journal of the American Statistical Association, 79</em>(387), 531–554.</div><div class="source-entry"><sup>3</sup> Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</div><div class="source-entry"><sup>4</sup> Tufte, E. R. (2001). <em>The visual display of quantitative information</em> (2nd ed.). Graphics Press.</div><div class="source-entry"><sup>5</sup> Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</div><div class="source-entry"><sup>6</sup> Cairo, A. (2016). <em>The truthful art: Data, charts, and maps for communication</em>. New Riders.</div><div class="source-entry"><sup>7</sup> Healy, K. (2018). <em>Data visualization: A practical introduction</em>. Princeton University Press.</div><div class="source-entry"><sup>8</sup> U.S. Bureau of Labor Statistics. (n.d.). <em>Labor Force Statistics from the Current Population Survey</em>. https://www.bls.gov/cps/</div><div class="source-entry"><sup>9</sup> U.S. Census Bureau. (n.d.). <em>U.S. International Trade in Goods and Services</em>. https://www.census.gov/foreign-trade/</div></section></section></section>
+   </main>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const links = Array.from(document.querySelectorAll('.sidebar a'));
+  const sections = links
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.getAttribute('id');
+      const link = document.querySelector('.sidebar a[href="#' + id + '"]');
+      if (!link) return;
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(section => observer.observe(section));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Visualization and Communication for Managers</title>
+<style>
+:root {
+  --bg: #f7f8fa;
+  --panel: #ffffff;
+  --ink: #222831;
+  --muted: #5c6773;
+  --line: #d7dde5;
+  --accent: #0f6c7b;
+  --accent-soft: #e8f4f6;
+  --note-bg: #fff7e8;
+  --note-line: #e6cf95;
+    --note:#eef79a;
+  --note2:#f5f8ad;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+}
+
+a { color: #0b5ea8; }
+.layout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4px;
+}
+.sidebar {
+  position: sticky;
+  top: 4px;
+  align-self: start;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 18px 14px;
+  box-shadow: 0 6px 20px rgba(34,40,49,.06);
+}
+.sidebar h2 {
+  margin: 0 0 8px;
+  font-size: 1.45rem;
+}
+.sidebar p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: .95rem;
+}
+.toc-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.toc-list .toc-list {
+  padding-left: 10px;
+  margin-top: 4px;
+}
+.toc-list li {
+  margin: 3px 0;
+}
+.toc-list a {
+  display: block;
+  text-decoration: none;
+  color: #334155;
+  padding: 4px 6px;
+  border-radius: 8px;
+  font-size: .96rem;
+}
+.toc-list a:hover, .toc-list a.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.content {
+  min-width: 0;
+}
+.frontmatter, .module, .subsection {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px 10px;
+  box-shadow: 0 6px 18px rgba(34,40,49,.05);
+  margin-bottom: 15px;
+}
+.frontmatter h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1.15;
+}
+.subtitle {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+h2, h3, h4 {
+  scroll-margin-top: 24px;
+}
+.module > h2 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+.level-2 > h3 {
+  margin: 4px 0 12px;
+  font-size: 1.35rem;
+}
+.level-3 > h4 {
+  margin: 4px 0 10px;
+  font-size: 1.12rem;
+}
+.insight, .insights {
+  background: var(--accent-soft);
+  border-right: 4px solid var(--accent);
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.box-2 > h3 {
+  margin: 4px 0 12px;
+  font-size: 1.35rem;
+}
+
+.wrapper { max-width: 1180px; margin: 0 auto; }
+.card { background:#fff; border:1px solid #d7dde5; border-radius:16px; padding:16px; margin-bottom:22px; box-shadow:0 4px 14px rgba(0,0,0,.05); }
+.grid2 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid2 figure {
+  min-width: 0;
+}
+.grid2 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.chart {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.chart-wide {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chart-small {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+@media (min-width: 1300px) { .grid2 { grid-template-columns:1fr 1fr; } }
+
+.grid3 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid3 figure {
+  min-width: 0;
+}
+.grid3 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (min-width: 1100px) { .grid3 { grid-template-columns:1fr 1fr; } }
+@media (min-width: 1500px) { .grid3 { grid-template-columns:1fr 1fr 1fr; } }
+
+
+p {
+  margin: 0 0 14px;
+}
+ul {
+  margin: 0 0 14px 1rem;
+}
+li { margin-bottom: 7px; }
+figure {
+  margin: 20px 0 18px;
+  text-align: center;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+figcaption {
+  margin-top: 10px;
+  font-size: .96rem;
+  color: #44515f;
+  font-style: italic;
+}
+.note {
+  background: var(--note-bg);
+  border-left: 4px solid var(--note-line);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: .95rem;
+  margin-bottom: 12px;
+}
+.source-entry {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+    font-size: .9rem;
+  border-bottom: 1px dashed var(--line);
+}
+.source-entry:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+  font-size: .9rem;
+}
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+    max-height: none;
+  }
+}
+
+.grid-notes {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:22px;
+  margin-top:14px;
+}
+
+@media (min-width:800px) {
+  .grid-notes { grid-template-columns:1fr 1fr; }
+}
+@media (min-width:1000px) {
+  .grid-notes { grid-template-columns:1fr 1fr 1fr; }
+}
+.sticky {
+  background:linear-gradient(180deg,var(--note2),var(--note));
+  border:1px solid #d7df7a;
+  min-height:230px;
+  padding:20px 18px 18px;
+  box-shadow:0 10px 16px rgba(0,0,0,.08);
+  transform:rotate(-1deg);
+  position:relative;
+}
+.sticky:nth-child(2) { transform:rotate(1deg); }
+.sticky:nth-child(3) { transform:rotate(-0.5deg); }
+.sticky:nth-child(4) { transform:rotate(0.8deg); }
+.sticky:nth-child(5) { transform:rotate(-1deg); }
+.sticky:nth-child(6) { transform:rotate(0.5deg); }
+.sticky:before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:22px;
+  background:rgba(255,255,255,.18);
+}
+.sticky h3 {
+  margin:4px 0 12px;
+  font-size:1.15rem;
+  line-height:1.15;
+  font-weight:700;
+  font-family: "Comic Sans MS", Chalkboard SE, Marker Felt, cursive; 
+}
+.sticky p, .sticky li {
+  font-size:0.95rem;
+  line-height:1.45;
+  font-family: "Comic Sans MS", Chalkboard SE, Marker Felt, cursive; 
+}
+.sticky ul {
+  margin:0 0 0 18px;
+  padding:0;
+}
+.chart-wrap {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  margin-top:10px;
+}
+.note {
+  background:#fff7e8;
+  border-left:4px solid #e6cf95;
+  padding:12px 14px;
+  border-radius:8px;
+  font-size:.97rem;
+  margin-top:10px;
+}
+.small {
+  font-size:.93rem;
+  color:#44515f;
+}
+
+/* Citation tooltips: fixed positioning prevents hidden tooltips from widening the page. */
+.cite-ref { position:relative; display:inline-block; cursor:help; }
+.cite-tooltip {
+  visibility:hidden;
+  opacity:0;
+  position:fixed;
+  left:50%;
+  top:24px;
+  transform:translateX(-50%);
+  width:min(360px, calc(100vw - 32px));
+  max-width:calc(100vw - 32px);
+  background:#1f2937;
+  color:#fff;
+  text-align:left;
+  border-radius:8px;
+  padding:10px 12px;
+  font-size:0.82rem;
+  line-height:1.35;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+  z-index:9999;
+  transition:opacity .18s ease, visibility .18s ease;
+}
+.cite-tooltip::after { content:none; }
+.cite-ref:hover .cite-tooltip, .cite-ref:focus .cite-tooltip, .cite-ref:focus-within .cite-tooltip { visibility:visible; opacity:1; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" aria-label="Table of contents">
+    <h2>Contents</h2>
+    <ul class="toc-list"><li><strong><a href="#about-this-document">About This Document</a></strong></li>
+ <li><strong><a href="#storytelling-with-data">Module 5: Storytelling with Data</a></strong><ul class="toc-list"><li><a href="#introduction-5">Introduction</a></li><li><a href="#narrative-structure-in-data-storytelling">Narrative Structure in Data Storytelling</a><ul class="toc-list"><li><a href="#the-beginning-establishing-context">The Beginning: Establishing Context</a></li><li><a href="#the-middle-presenting-evidence">The Middle: Presenting Evidence</a></li><li><a href="#the-end-insight-and-recommended-action">The End: Insight and Recommended Action</a></li></ul></li><li><a href="#annotation-and-emphasis-in-data-stories">Annotation and Emphasis in Data Stories</a></li><li><a href="#communicating-uncertainty-and-limitations">Communicating Uncertainty and Limitations</a><ul class="toc-list"><li><a href="#visualizing-uncertainty">Visualizing Uncertainty</a></li><li><a href="#framing-uncertainty-without-undermining-credibility">Framing Uncertainty Without Undermining Credibility</a></li></ul></li><li><a href="#designing-a-data-story">Designing a Data Story</a></li><li><a href="#best-practices-for-data-storytelling">Best Practices for Data Storytelling</a></li><li><a href="#key-takeaways-5">Key Takeaways</a></li><li><a href="#managerial-insight-5">Managerial Insight</a></li><li><a href="#key-sources-5">Key Sources</a></li></ul></ul>
+  </aside>
+  <main class="content">
+   <section class="frontmatter" id="about-this-document"><h1>Data Visualization and Communication for Managers</h1><h2>About This Document</h2><p>This document has been developed for students of Data Visualization and Communication for Managers. The topics contained herein have been carefully curated to help us accomplish the course goals; therefore, they are discussed at a high level rather than in depth. To learn about these topics more in-depth, I recommend that you visit the Sources listed at the end of each module.</p><p>This document reflects current research, simulated and real-world examples, and instructor-developed insights. <strong>Please do not share, reproduce, or distribute this document, or any part of it, outside of this class.</strong></p><p>This work is original and unique to this course, and as such, it is protected by copyright and the Digital Millennium Copyright Act (DMCA).</p>
+<p><strong>Copyright © 2026 Silvana Chambers.</strong></p></section>
+<section id="storytelling-with-data" class="module level-1"><h2>Module 5: Storytelling with Data</h2><section id="introduction-5" class="subsection level-2"><h3>Introduction</h3><p>Effective data visualization is not simply about selecting the correct chart type or applying good design principles. While visual clarity is essential, charts alone rarely persuade decision makers. Managers and executives typically do not make decisions based solely on isolated graphs; they make decisions based on clear explanations that connect evidence to action.</p><p>This is where data storytelling becomes essential. Data storytelling is the process of combining data, visuals, and narrative to guide an audience toward understanding a problem and making an informed decision.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Cote, C. (2021). Data storytelling: How to effectively tell a story with data. <em>Harvard Business School Online</em>.</span></span> A strong data story does three things simultaneously:</p><ul><li>It provides context that explains why the information matters.</li><li>It presents evidence that supports a clear insight.</li><li>It leads the audience toward a recommended action or decision.</li></ul><p>Humans naturally understand and remember information better when it is structured as a story. Narrative structures have been used for centuries in literature, theater, and communication because they help audiences process complex information. Classic storytelling theory describes stories as having a beginning, middle, and end, a structure that introduces a situation, develops tension or conflict, and resolves the problem.</p><p>In the context of data communication, this narrative structure helps transform analytical findings into a clear, persuasive explanation that decision makers can understand and act upon.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Stackpole, B. (2020). The next chapter in analytics: Data storytelling. <em>MIT Sloan Management Review</em>.</span></span></p><p>Another important element of responsible data storytelling is the communication of uncertainty and limitations. Real-world data are rarely perfect. Effective analysts do not hide uncertainty; instead, they explain it clearly while still communicating the overall implications of the evidence.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Yau, N. (2018). Visualizing uncertainty in data. <em>FlowingData</em>.</span></span></p><p>This module explores how analysts can transform data analysis into compelling narratives that highlight key insights, guide interpretation, and support sound managerial decisions.</p></section><section id="narrative-structure-in-data-storytelling" class="subsection level-2"><h3>Narrative Structure in Data Storytelling</h3><p>One of the most effective ways to structure analytical communication is to use a narrative framework similar to the structure used in traditional storytelling. This framework consists of three main stages that precede the recommendation:</p><ul><li>context (beginning)</li><li>evidence (middle)</li><li>insight (before the conclusion)</li></ul><p>These stages are followed by a call to <strong>action or a recommendation</strong>, which is often presented at the end of the structure. This approach allows audiences to understand the reasoning behind a conclusion rather than simply being presented with an isolated result.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span> Figure 5-1 presents an example of how the storytelling structure may be used in a real-world business scenario.</p>
+ <div class="chart">
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 180" role="img" aria-labelledby="sb-t sb-d" style="width:100%;height:auto;display:block;">
+<title id="sb-t">Storytelling flow diagram with context, evidence, insight, and action</title>
+<desc id="sb-d">Horizontal flow diagram with four connected boxes labeled Context, Evidence, Insight, and Action. The annotations explain that traffic increased, mobile checkout drop-off rose, the mobile user experience is the issue, and the recommended action is to prioritize mobile checkout.</desc>
+<rect width="560" height="180" fill="white"/>
+
+    <text x="1" y="16" font-size="18" font-family="Segoe UI, Arial" fill="#222">Storytelling Flow Diagram Example: Beginning → Middle → End</text>
+    <text x="1" y="36" font-size="14" font-family="Segoe UI, Arial" fill="#5c6773">A managerial data story moves from context to action.</text>
+    <rect x="1" y="84" width="120" height="78" rx="16" fill="#e8f4f6" stroke="#0f6c7b"/>
+    <circle cx="15" cy="98" r="14" fill="#0f6c7b"/><text x="15" y="102" text-anchor="middle" font-size="14" font-family="Segoe UI, Arial" fill="white">1</text>
+    <text x="33" y="104" font-size="16" font-family="Segoe UI, Arial" fill="#222">Context</text>
+    <text x="10" y="130" font-size="12" font-family="Segoe UI, Arial" fill="#44515f">Traffic is up, but</text>
+    <text x="10" y="145" font-size="12" font-family="Segoe UI, Arial" fill="#44515f">conversions fell</text>
+    <line x1="121" y1="123" x2="147" y2="123" stroke="#7a8694" stroke-width="3"/><polygon points="147,123 134.3,116 134.3,130" fill="#7a8694"/>
+    <rect x="147" y="84" width="120" height="78" rx="16" fill="#f7f8fa" stroke="#7a8694"/>
+    <circle cx="161" cy="98" r="14" fill="#5b9bd5"/><text x="161" y="102" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="white">2</text>
+    <text x="179" y="104" font-size="16" font-family="Segoe UI, Arial" fill="#222">Evidence</text>
+    <text x="155" y="130" font-size="12" font-family="Segoe UI, Arial" fill="#44515f">Mobile checkout</text>
+    <text x="155" y="145" font-size="12" font-family="Segoe UI, Arial" fill="#44515f">drop-off increased</text>
+    <line x1="267" y1="123" x2="294" y2="123" stroke="#7a8694" stroke-width="3"/><polygon points="294,123 282,116 282,130" fill="#7a8694"/>
+    <rect x="293.4" y="84" width="120" height="78" rx="16" fill="#f7f8fa" stroke="#7a8694"/>
+    <circle cx="308" cy="98" r="14" fill="#5b9bd5"/><text x="308" y="102" text-anchor="middle" font-size="14" font-family="Segoe UI, Arial" fill="white">3</text>
+    <text x="328" y="104" font-size="16" font-family="Segoe UI, Arial" fill="#222">Insight</text>
+    <text x="302" y="130" font-size="12" font-family="Segoe UI, Arial" fill="#44515f">The issue is mobile</text>
+    <text x="302" y="145" font-size="12" font-family="Segoe UI, Arial" fill="#44515f">user experience</text>
+    <line x1="412" y1="123" x2="438" y2="123" stroke="#7a8694" stroke-width="3"/><polygon points="438,123 425.4,116 425.4,130" fill="#7a8694"/>
+    <rect x="438" y="84" width="120" height="78" rx="16" fill="#fff7e8" stroke="#c99b2b"/>
+    <circle cx="453" cy="98" r="14" fill="#c99b2b"/><text x="453" y="102" text-anchor="middle" font-size="14" font-family="Segoe UI, Arial" fill="white">4</text>
+    <text x="471" y="104" font-size="16" font-family="Segoe UI, Arial" fill="#222">Action</text>
+    <text x="445" y="130" font-size="12" font-family="Segoe UI, Arial" fill="#44515f">Prioritize mobile</text>
+    <text x="445" y="145" font-size="12" font-family="Segoe UI, Arial" fill="#44515f">checkout</text>
+    
+</svg><figcaption>Figure 5-1. Managers rarely need every detail of the analysis. Storytelling serves as a logical path from problem to recommendation.</figcaption></figure>
+
+</div>
+ <section id="the-beginning-establishing-context" class="subsection level-3"><h4>The Beginning: Establishing Context</h4><p>The beginning of a data story establishes the context of the analysis and explains why the audience should care about the information being presented. In storytelling terms, this stage introduces the setting, the main characters, and the problem or imbalance that needs to be addressed. In a business setting, this often includes:</p><ul><li>the business situation</li><li>the relevant time period</li><li>the decision that needs to be made</li><li>the question the analysis seeks to answer</li></ul><p>Providing context is important because audiences rarely interpret data correctly without understanding the background of the problem. For example, imagine presenting a graph showing declining sales without explaining the broader context. Decision makers may interpret the chart incorrectly or fail to understand its significance. A better introduction might be:</p><p>“Over the past six months, online traffic has increased significantly following the launch of our new marketing campaign. However, overall sales have not increased at the same rate. This raises an important question: are we attracting visitors who are less likely to purchase?” This <strong>framing</strong> helps the audience understand both the problem and the purpose of the analysis.</p><p>Research on effective data communication emphasizes that analysts should focus on <strong>explanatory analysis when presenting findings</strong>.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span> Instead of showing every exploratory step taken during analysis, the goal is to present the information necessary to support the central message.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span></p>
+
+     <div class="grid2">
+          <div class="chart">
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" role="img" aria-labelledby="fp-t fp-d" style="width:100%;height:auto;display:block;">
+<title id="fp-t">Monthly conversion rate shown without framing</title>
+<desc id="fp-d">Line chart of monthly conversion rate from January through June. The line declines steadily, but the chart provides little business context and does not explain why the trend matters.</desc>
+<rect width="560" height="320" fill="white"/>
+<text x="14" y="26" font-size="20" font-family="Segoe UI, Arial" fill="#222">Monthly Conversion Rate</text>
+<text x="14" y="46" font-size="14" font-family="Segoe UI, Arial" fill="#5c6773"></text>
+<line x1="52" y1="274.0" x2="542" y2="274.0" stroke="#d7dde5"/>
+<text x="44" y="278.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.2%</text>
+<line x1="52" y1="209.2" x2="542" y2="209.2" stroke="#d7dde5"/>
+<text x="44" y="213.2" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.5%</text>
+<line x1="52" y1="144.4" x2="542" y2="144.4" stroke="#d7dde5"/>
+<text x="44" y="148.4" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.8%</text>
+<line x1="52" y1="79.6" x2="542" y2="79.6" stroke="#d7dde5"/>
+<text x="44" y="83.6" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">3.1%</text>
+<line x1="52" y1="58" x2="52" y2="274" stroke="#7a8694"/>
+<line x1="52" y1="274" x2="542" y2="274" stroke="#7a8694"/>
+<polyline points="52.0,79.6 150.0,101.2 248.0,122.8 346.0,166.0 444.0,209.2 542.0,230.8" fill="none" stroke="#5b9bd5" stroke-width="3"/>
+<circle cx="52.0" cy="79.6" r="4" fill="#5b9bd5"/>
+<text x="52.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Jan</text>
+<circle cx="150.0" cy="101.2" r="4" fill="#5b9bd5"/>
+<text x="150.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Feb</text>
+<circle cx="248.0" cy="122.8" r="4" fill="#5b9bd5"/>
+<text x="248.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Mar</text>
+<circle cx="346.0" cy="166.0" r="4" fill="#5b9bd5"/>
+<text x="346.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Apr</text>
+<circle cx="444.0" cy="209.2" r="4" fill="#5b9bd5"/>
+<text x="444.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">May</text>
+<circle cx="542.0" cy="230.8" r="4" fill="#5b9bd5"/>
+<text x="542.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Jun</text>
+</svg><figcaption>Figure 5-2. <strong>Poor framing:</strong> the chart shows a trend, but it does not tell the audience why the trend matters.</figcaption></figure></div>
+           <div class="chart"><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" role="img" aria-labelledby="fg-t fg-d" style="width:100%;height:auto;display:block;">
+<title id="fg-t">Why did conversion fall after traffic increased?</title>
+<desc id="fg-d">The same monthly conversion-rate line chart, now framed with a question and a subtitle explaining that traffic increased after a digital campaign while checkout performance worsened. The framing directs attention to the business problem.</desc>
+<rect width="560" height="320" fill="white"/>
+<text x="14" y="26" font-size="20" font-family="Segoe UI, Arial" fill="#222">Why did conversion fall after traffic increased?</text>
+<text x="14" y="46" font-size="14" font-family="Segoe UI, Arial" fill="#5c6773">Digital campaign drove more visits, but checkout performance worsened</text>
+<line x1="52" y1="274.0" x2="542" y2="274.0" stroke="#d7dde5"/>
+<text x="44" y="278.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.2%</text>
+<line x1="52" y1="209.2" x2="542" y2="209.2" stroke="#d7dde5"/>
+<text x="44" y="213.2" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.5%</text>
+<line x1="52" y1="144.4" x2="542" y2="144.4" stroke="#d7dde5"/>
+<text x="44" y="148.4" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.8%</text>
+<line x1="52" y1="79.6" x2="542" y2="79.6" stroke="#d7dde5"/>
+<text x="44" y="83.6" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">3.1%</text>
+<line x1="52" y1="58" x2="52" y2="274" stroke="#7a8694"/>
+<line x1="52" y1="274" x2="542" y2="274" stroke="#7a8694"/>
+<polyline points="52.0,79.6 150.0,101.2 248.0,122.8 346.0,166.0 444.0,209.2 542.0,230.8" fill="none" stroke="#5b9bd5" stroke-width="3"/>
+<circle cx="52.0" cy="79.6" r="4" fill="#5b9bd5"/>
+<text x="52.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Jan</text>
+<circle cx="150.0" cy="101.2" r="4" fill="#5b9bd5"/>
+<text x="150.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Feb</text>
+<circle cx="248.0" cy="122.8" r="4" fill="#5b9bd5"/>
+<text x="248.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Mar</text>
+<circle cx="346.0" cy="166.0" r="4" fill="#5b9bd5"/>
+<text x="346.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Apr</text>
+<circle cx="444.0" cy="209.2" r="4" fill="#5b9bd5"/>
+<text x="444.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">May</text>
+<circle cx="542.0" cy="230.8" r="4" fill="#5b9bd5"/>
+<text x="542.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Jun</text>
+</svg><figcaption>Figure 5-3. <strong>Better framing:</strong> the same chart becomes more useful when the title, subtitle, and business context guide interpretation.</figcaption></figure>
+    </div></div>
+    <p class="note">Note: While both charts present the same trend, the first may leave the audience wondering why it matters or may lead them to ignore it altogether. The second chart includes a title and subtitle that clearly frame the problem and provide the context for the purpose of the analysis.</p>
+ </section><section id="the-middle-presenting-evidence" class="subsection level-3"><h4>The Middle: Presenting Evidence</h4><p>Once the context is established, the next step is to present the evidence that supports the key insight. This stage typically contains the visualizations and analyses that explain what is happening in the data. However, effective storytelling requires more than simply showing charts. Analysts must guide the audience through the reasoning process that connects the data to the conclusion. This can include:</p><ul><li>highlighting trends or comparisons</li><li>identifying relationships between variables</li><li>comparing current results to historical benchmarks</li><li>incorporating relevant external context</li></ul><p>For example, a data story about declining conversion rates might include several visuals showing:</p><ul><li>website traffic trends</li><li>conversion rates across different devices</li><li>user drop-off points during the checkout process</li></ul><p>Each visualization should contribute to building the overall explanation. A <strong>common mistake</strong> in analytical presentations is <strong>attempting to show too much analysis</strong>. Analysts sometimes feel compelled to display every chart they created as evidence of the work performed. However, this often overwhelms the audience and obscures the central message. Effective communicators instead select the smallest set of visuals necessary to support the key insight.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Walsh, D. (2021). Presenting about data to your board: Six tips from experts. <em>MIT Sloan Management Review</em>.</span></span></p>
+ <div class="chart">
+     <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" role="img" aria-labelledby="db-t db-d" style="width:100%;height:auto;display:block;">
+<title id="db-t">Dashboard overload versus focused narrative</title>
+<desc id="db-d">Side-by-side illustration comparing a cluttered dashboard with a focused narrative. The left panel contains multiple small charts competing for attention. The right panel shows a reduced set of visuals and a note stating that mobile checkout is the most likely bottleneck.</desc>
+<rect width="560" height="320" fill="white"/>
+
+                     <text x="18" y="26" font-size="22" font-family="Segoe UI, Arial" fill="#222">Too Much vs. Just Enough</text>
+                     <text x="18" y="46" font-size="14" font-family="Segoe UI, Arial" fill="#5c6773">Select the smallest set of visuals needed to support the point</text>
+                     <rect x="20" y="68" width="235" height="220" rx="12" fill="#f7f8fa" stroke="#d7dde5"/>
+                     
+                     <text x="32" y="88" font-size="16" font-family="Segoe UI, Arial" fill="#222">Dashboard overload</text>
+                     <rect x="34" y="100" width="90" height="54" fill="#fff" stroke="#cfd8e3"/><rect x="144" y="100" width="90" height="54" fill="#fff" stroke="#cfd8e3"/>
+                     
+                     <rect x="34" y="168" width="90" height="54" fill="#fff" stroke="#cfd8e3"/><rect x="144" y="168" width="90" height="54" fill="#fff" stroke="#cfd8e3"/>
+                     <rect x="34" y="236" width="200" height="36" fill="#fff" stroke="#cfd8e3"/>
+                     
+                     <line x1="40" y1="146" x2="118" y2="108" stroke="#5b9bd5" stroke-width="2"/><line x1="150" y1="146" x2="228" y2="134" stroke="#ff5a5f" stroke-width="2"/>
+                     <rect x="42" y="176" width="18" height="36" fill="#b9c3cf"/><rect x="68" y="188" width="18" height="24" fill="#b9c3cf"/><rect x="94" y="170" width="18" height="42" fill="#b9c3cf"/>
+                     <circle cx="170" cy="184" r="4" fill="#5b9bd5"/><circle cx="190" cy="174" r="4" fill="#5b9bd5"/><circle cx="212" cy="202" r="4" fill="#5b9bd5"/>  
+                     <rect x="305" y="68" width="235" height="220" rx="12" fill="#f7f8fa" stroke="#d7dde5"/>     
+                     <text x="317" y="88" font-size="16" font-family="Segoe UI, Arial" fill="#222">Focused narrative</text>
+                     <rect x="319" y="104" width="205" height="74" fill="#fff" stroke="#cfd8e3"/>
+                     <line x1="334" y1="162" x2="500" y2="128" stroke="#5b9bd5" stroke-width="3"/>
+                     <rect x="319" y="192" width="95" height="62" fill="#fff" stroke="#cfd8e3"/>
+                     <rect x="428" y="192" width="95" height="62" fill="#fff" stroke="#cfd8e3"/>
+                     <rect x="330" y="208" width="18" height="36" fill="#b9c3cf"/><rect x="356" y="220" width="18" height="24" fill="#b9c3cf"/><rect x="382" y="202" width="18" height="42" fill="#ff5a5f"/>
+                     
+                     
+<circle cx="55" cy="255" r="14" fill="#6e9bc5"/>
+<path d="M 55 255 L 55 241 A 14 14 0 0 1 61 268 Z" fill="#d889b7"/>
+
+<circle cx="105" cy="255" r="14" fill="#6e9bc5"/>
+<path d="M 105 255 L 105 241 A 14 14 0 0 1 118 262 Z" fill="#d889b7"/>
+
+<circle cx="160" cy="255" r="14" fill="#6e9bc5"/>
+<path d="M 160 255 L 160 241 A 14 14 0 0 1 174 255 Z" fill="#d889b7"/>
+
+<circle cx="212" cy="255" r="14" fill="#6e9bc5"/>
+<path d="M 212 255 L 212 241 A 14 14 0 0 1 217 268 Z" fill="#d889b7"/>
+    
+                     <text x="319" y="276" font-size="12" font-family="Segoe UI, Arial" fill="#0f6c7b">Key message: mobile checkout is the most likely bottleneck.</text>
+                     
+</svg><figcaption>Figure 5-4. Avoid using too many charts; your narrative should include only a few selected charts rather than resemble a full-blown monitoring dashboard.</figcaption></figure>
+ </div>
+ </section><section id="the-end-insight-and-recommended-action" class="subsection level-3"><h4>The End: Insight and Recommended Action</h4><p>The final stage of the narrative communicates the key insight and its implications for decision making. At this stage, the audience should clearly understand:</p><ul><li>what the data reveal</li><li>why the finding matters</li><li>what action should follow</li></ul><p>For example: “The analysis shows that the decline in conversions is primarily driven by mobile users abandoning the checkout page. Improving the mobile checkout experience could increase conversion rates by an estimated 7–10%.”</p><p>The conclusion should be <strong>concise and action-oriented</strong>. Many effective presentations reinforce the narrative by briefly summarizing the problem introduced at the beginning and explaining how the analysis resolved it. See the practical examples below.</p></section></section><section id="annotation-and-emphasis-in-data-stories" class="subsection level-2"><h3>Annotation and Emphasis in Data Stories</h3><p>Even well-designed charts may fail to communicate insights if the audience does not immediately recognize the key message. One of the most important techniques in data storytelling is guiding the audience’s attention toward the most important information in a visualization. This can be accomplished through:</p><ul><li>annotations</li><li>highlighting</li><li>labeling key values</li><li>color emphasis</li><li>directional cues</li></ul><p>Human perception is highly sensitive to visual differences. Elements that differ in color, size, or position tend to draw attention automatically. These visual cues are often referred to as <strong>pre-attentive attributes</strong> because they are processed by the brain almost instantly. Pre-attentive attributes are covered in more detail in <strong>Module 2.</strong></p><p>Effective data storytelling uses these perceptual mechanisms intentionally to direct the audience toward the most important insight. For example, a chart showing several years of sales data might highlight one specific year in a different color to emphasize a sudden decline.</p><p><strong>Annotations</strong> can further strengthen interpretation by adding short explanations directly to the visualization. For example: “Conversion rates dropped sharply after the checkout redesign in April.”</p><p>Annotations <strong>transform the chart from a passive display into an active explanation of the insight.</strong><span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">Storytelling with Data. (n.d.). Blog: Annotation and emphasis examples.</span></span></p>
+     <div class="grid2">
+     <div class="chart">
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" role="img" aria-labelledby="ab-t ab-d" style="width:100%;height:auto;display:block;">
+<title id="ab-t">Monthly Conversion Rate</title>
+<desc id="ab-d">Plain line chart of monthly conversion rate from January through June. The line declines over time, but no point is highlighted or annotated.</desc>
+<rect width="560" height="320" fill="white"/>
+<text x="14" y="26" font-size="20" font-family="Segoe UI, Arial" fill="#222">Monthly Conversion Rate</text>
+<text x="14" y="46" font-size="14" font-family="Segoe UI, Arial" fill="#5c6773">Plain version</text>
+<line x1="52" y1="274.0" x2="542" y2="274.0" stroke="#d7dde5"/>
+<text x="44" y="278.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.2%</text>
+<line x1="52" y1="209.2" x2="542" y2="209.2" stroke="#d7dde5"/>
+<text x="44" y="213.2" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.5%</text>
+<line x1="52" y1="144.4" x2="542" y2="144.4" stroke="#d7dde5"/>
+<text x="44" y="148.4" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.8%</text>
+<line x1="52" y1="79.6" x2="542" y2="79.6" stroke="#d7dde5"/>
+<text x="44" y="83.6" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">3.1%</text>
+<line x1="52" y1="58" x2="52" y2="274" stroke="#7a8694"/>
+<line x1="52" y1="274" x2="542" y2="274" stroke="#7a8694"/>
+<polyline points="52.0,79.6 150.0,101.2 248.0,122.8 346.0,166.0 444.0,209.2 542.0,230.8" fill="none" stroke="#5b9bd5" stroke-width="3"/>
+<circle cx="52.0" cy="79.6" r="4" fill="#5b9bd5"/>
+<text x="52.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Jan</text>
+<circle cx="150.0" cy="101.2" r="4" fill="#5b9bd5"/>
+<text x="150.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Feb</text>
+<circle cx="248.0" cy="122.8" r="4" fill="#5b9bd5"/>
+<text x="248.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Mar</text>
+<circle cx="346.0" cy="166.0" r="4" fill="#5b9bd5"/>
+<text x="346.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Apr</text>
+<circle cx="444.0" cy="209.2" r="4" fill="#5b9bd5"/>
+<text x="444.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">May</text>
+<circle cx="542.0" cy="230.8" r="4" fill="#5b9bd5"/>
+<text x="542.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Jun</text>
+</svg><figcaption>Figure 5-5. Without an annotation, the viewer has to work harder to find the key point.</figcaption></figure>
+</div>
+
+          <div class="chart">
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" role="img" aria-labelledby="aa-t aa-d" style="width:100%;height:auto;display:block;">
+<title id="aa-t">Monthly Conversion Rate</title>
+<desc id="aa-d">Annotated line chart of monthly conversion rate from January through June. The June point is emphasized in red and labeled as the lowest conversion rate to direct attention to the key takeaway.</desc>
+<rect width="560" height="320" fill="white"/>
+<text x="14" y="26" font-size="20" font-family="Segoe UI, Arial" fill="#222">Monthly Conversion Rate</text>
+<text x="14" y="46" font-size="14" font-family="Segoe UI, Arial" fill="#5c6773">Annotated version</text>
+<line x1="52" y1="274.0" x2="542" y2="274.0" stroke="#d7dde5"/>
+<text x="44" y="278.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.2%</text>
+<line x1="52" y1="209.2" x2="542" y2="209.2" stroke="#d7dde5"/>
+<text x="44" y="213.2" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.5%</text>
+<line x1="52" y1="144.4" x2="542" y2="144.4" stroke="#d7dde5"/>
+<text x="44" y="148.4" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">2.8%</text>
+<line x1="52" y1="79.6" x2="542" y2="79.6" stroke="#d7dde5"/>
+<text x="44" y="83.6" text-anchor="end" font-size="12" font-family="Segoe UI, Arial" fill="#344">3.1%</text>
+<line x1="52" y1="58" x2="52" y2="274" stroke="#7a8694"/>
+<line x1="52" y1="274" x2="542" y2="274" stroke="#7a8694"/>
+<polyline points="52.0,79.6 150.0,101.2 248.0,122.8 346.0,166.0 444.0,209.2 542.0,230.8" fill="none" stroke="#5b9bd5" stroke-width="3"/>
+<circle cx="52.0" cy="79.6" r="4" fill="#5b9bd5"/>
+<text x="52.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Jan</text>
+<circle cx="150.0" cy="101.2" r="4" fill="#5b9bd5"/>
+<text x="150.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Feb</text>
+<circle cx="248.0" cy="122.8" r="4" fill="#5b9bd5"/>
+<text x="248.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Mar</text>
+<circle cx="346.0" cy="166.0" r="4" fill="#5b9bd5"/>
+<text x="346.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Apr</text>
+<circle cx="444.0" cy="209.2" r="4" fill="#5b9bd5"/>
+<text x="444.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">May</text>
+<circle cx="542.0" cy="230.8" r="6" fill="#ff5a5f"/>
+<text x="542.0" y="308" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial" fill="#223">Jun</text>
+<text x="560" y="172.8" text-anchor="end" font-size="16" font-family="Segoe UI, Arial" fill="#ff5a5f">Lowest Conversion Rate</text>
+<text x="552" y="192.8" text-anchor="end" font-size="16" font-family="Segoe UI, Arial" fill="#ff5a5f">- 29% YTD</text>
+</svg><figcaption>Figure 5-6. The annotation and emphasis direct attention to the key message immediately.</figcaption></figure>
+    </div></div>
+ </section><section id="communicating-uncertainty-and-limitations" class="subsection level-2"><h3>Communicating Uncertainty and Limitations</h3><p>One of the most challenging aspects of data communication is explaining uncertainty. All empirical analyses contain some degree of uncertainty due to factors such as:</p><ul><li>sampling variability</li><li>measurement error</li><li>incomplete information</li><li>model assumptions</li></ul><p>Failing to communicate uncertainty can create a misleading impression of precision. Visualization research emphasizes that uncertainty is an inherent component of most data analyses and should be communicated explicitly.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Midway, S. R. (2020). Principles of effective data visualization. <em>Patterns, 1</em>(9).</span></span> However, we must strike a balance between transparency and clarity. Excessively technical discussions of uncertainty may confuse the audience, while ignoring uncertainty may undermine credibility.</p><section id="visualizing-uncertainty" class="subsection level-3"><h4>Visualizing Uncertainty</h4><p>Uncertainty can often be communicated visually through techniques such as:</p><ul><li>confidence intervals</li><li>error bars</li><li>shaded confidence bands</li><li>scenario ranges</li></ul><p>For example, a forecast chart might show a projected trend line accompanied by a shaded region representing the likely range of outcomes. These visual cues allow audiences to understand the degree of variability in the estimate without requiring advanced statistical knowledge.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Yau, N. (2018). Visualizing uncertainty in data. <em>FlowingData</em>.</span></span></p>
+ <div class="chart">
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" role="img" aria-labelledby="u-t u-d" style="width:100%;height:auto;display:block;">
+<title id="u-t">Forecast with confidence band</title>
+<desc id="u-d">Forecast line chart with a shaded confidence band surrounding the projected values. The shaded area is labeled as the likely range, and the central line is labeled as the point estimate.</desc>
+<rect width="560" height="320" fill="white"/>
+
+                       <text x="14" y="26" font-size="20" font-family="Segoe UI, Arial" fill="#222">Forecast with Confidence Band</text>
+                       <text x="14" y="46" font-size="14" font-family="Segoe UI, Arial" fill="#5c6773">Show likely range, not just a single number.</text>
+                       <line x1="50" y1="272" x2="540" y2="272" stroke="#7a8694"/>
+                       <line x1="50" y1="70" x2="50" y2="272" stroke="#7a8694"/>
+                       <line x1="50" y1="232" x2="540" y2="232" stroke="#d7dde5"/>
+                       <line x1="50" y1="192" x2="540" y2="192" stroke="#d7dde5"/>
+                       <line x1="50" y1="152" x2="540" y2="152" stroke="#d7dde5"/>
+                       <line x1="50" y1="112" x2="540" y2="112" stroke="#d7dde5"/>
+                       <path d="M 70 200 L 130 186 L 190 170 L 250 155 L 310 142 L 370 136 L 430 126 L 490 118 
+                                L 490 162 L 430 168 L 370 176 L 310 186 L 250 198 L 190 212 L 130 224 L 70 238 Z"
+                             fill="#cfe2f3" opacity="0.8" stroke="none"/>
+                       <polyline points="70,219 130,205 190,191 250,176 310,165 370,156 430,147 490,139"
+                                 fill="none" stroke="#5b9bd5" stroke-width="3"/>
+                       <text x="430" y="112" font-size="12" font-family="Segoe UI, Arial" fill="#5c6773">Likely range</text>
+                       <text x="430" y="136" font-size="12" font-family="Segoe UI, Arial" fill="#5b9bd5">Point estimate</text>
+                       <text x="70" y="292" font-size="12" font-family="Segoe UI, Arial" fill="#223">Q1</text>
+                       <text x="190" y="292" font-size="12" font-family="Segoe UI, Arial" fill="#223">Q2</text>
+                       <text x="310" y="292" font-size="12" font-family="Segoe UI, Arial" fill="#223">Q3</text>
+                       <text x="430" y="292" font-size="12" font-family="Segoe UI, Arial" fill="#223">Q4</text>
+                       
+</svg><figcaption>Figure 5-7. This figure highlights a key takeaway of the module: the importance of transparency. Adding confidence bands or error bars communicates the message without overstating forecast precision.</figcaption></figure>
+</div>
+ </section><section id="framing-uncertainty-without-undermining-credibility" class="subsection level-3"><h4>Framing Uncertainty Without Undermining Credibility</h4><p>When discussing uncertainty, it is important to frame limitations in a way that maintains confidence in the overall conclusion. For example, an analyst might say:</p><p>“Although the exact magnitude of the effect varies across models, all analyses indicate that customer churn is increasing.”</p><p>This statement acknowledges uncertainty while still communicating the core finding.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Yau, N. (2018). Visualizing uncertainty in data. <em>FlowingData</em>.</span></span></p><p>In contrast, overly vague statements such as “the results may not be reliable” can unnecessarily weaken the audience’s trust in the analysis. Effective analysts communicate both:</p><ul><li>what is uncertain</li><li>what the data strongly support.</li></ul>
+
+        <div class="chart">
+        <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 200" role="img" aria-labelledby="h-t h-d" style="width:100%;height:auto;display:block;">
+<title id="h-t">Good versus bad uncertainty framing</title>
+<desc id="h-d">Two side-by-side headline boxes comparing poor and better ways to frame uncertainty. The first says the results may not be reliable. The second says that all models indicate increasing churn, although the range varies.</desc>
+<rect width="560" height="200" fill="white"/>
+                     <text x="14" y="16" font-size="20" font-family="Segoe UI, Arial" fill="#222">Example: Framing Uncertainty</text>
+                     <rect x="18" y="36" width="245" height="145" rx="16" fill="#fff5f5" stroke="#e9b6ba"/>
+                     <text x="30" y="58" font-size="18" font-family="Segoe UI, Arial" fill="#c0392b">✕ Poor framing</text>
+                     <text x="30" y="95" font-size="16" font-family="Segoe UI, Arial" fill="#222">Results may not be reliable</text>
+                     <text x="30" y="135" font-size="13" font-family="Segoe UI, Arial" fill="#5c6773">This headline is vague, defensive, and</text>
+                     <text x="30" y="154" font-size="13" font-family="Segoe UI, Arial" fill="#5c6773">does not tell the audience what the</text>
+                     <text x="30" y="171" font-size="13" font-family="Segoe UI, Arial" fill="#5c6773">analysis still supports.</text>
+                     <rect x="296" y="36" width="245" height="145" rx="16" fill="#f3fbf7" stroke="#b9dfca"/>
+                     <text x="312" y="58" font-size="18" font-family="Segoe UI, Arial" fill="#2c7a4b">✓ Better framing</text>
+                     <text x="312" y="95" font-size="16" font-family="Segoe UI, Arial" fill="#222">All models indicate increasing</text>
+                     <text x="312" y="117" font-size="16" font-family="Segoe UI, Arial" fill="#222">churn (range varies)</text>
+                     <text x="312" y="145" font-size="13" font-family="Segoe UI, Arial" fill="#5c6773">This version keeps the core message,</text>
+                     <text x="312" y="163" font-size="13" font-family="Segoe UI, Arial" fill="#5c6773">but still communicates uncertainty.</text>        
+</svg><figcaption>Figure 5-8. Uncertainty should inform judgment, not erase the message; and as the figure shows, uncertainty can be communicated clearly without making the message vague or unhelpful.</figcaption></figure></div>
+ 
+ </section></section><section id="designing-a-data-story" class="subsection level-2"><h3>Designing a Data Story</h3><p>Creating an effective data story typically involves several steps.</p><h4>Identify the Core Insight</h4><p>Before designing visuals or slides, analysts should identify the single most important message the audience should remember. This message is sometimes referred to as the <strong>Big Idea</strong>.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span> A useful exercise is to imagine explaining the insight in a <strong>single sentence</strong>. For example: “Mobile users abandon the checkout process at a much higher rate than desktop users.”</p><p>Once this core message is identified, the rest of the narrative can be organized around <strong>supporting evidence.</strong></p>
+ <div class="chart">
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" role="img" aria-labelledby="bi-t bi-d" style="width:100%;height:auto;display:block;">
+<title id="bi-t">Messy analysis to one-sentence insight</title>
+<desc id="bi-d">Diagram showing several small charts feeding into an arrow, which points to a single takeaway box containing one sentence.</desc>
+<rect width="560" height="320" fill="white"/>
+
+                    <text x="14" y="26" font-size="20" font-family="Segoe UI, Arial" fill="#222">Big Idea Identification</text>
+                    <text x="14" y="46" font-size="14" font-family="Segoe UI, Arial" fill="#5c6773">Move from multiple signals to one sentence the audience should remember.</text>
+                    <rect x="24" y="82" width="88" height="58" fill="#fff" stroke="#cfd8e3"/>
+                    <rect x="24" y="154" width="88" height="58" fill="#fff" stroke="#cfd8e3"/>
+                    <rect x="24" y="226" width="88" height="58" fill="#fff" stroke="#cfd8e3"/>
+                    <line x1="34" y1="129" x2="100" y2="105" stroke="#5b9bd5" stroke-width="2"/>
+                    <rect x="34" y="168" width="14" height="30" fill="#b9c3cf"/><rect x="54" y="178" width="14" height="20" fill="#b9c3cf"/><rect x="74" y="160" width="14" height="38" fill="#ff5a5f"/>
+                    <circle cx="42" cy="258" r="3.5" fill="#5b9bd5"/><circle cx="62" cy="248" r="3.5" fill="#5b9bd5"/><circle cx="84" cy="238" r="3.5" fill="#5b9bd5"/>
+                    <line x1="132" y1="183" x2="220" y2="183" stroke="#7a8694" stroke-width="4"/><polygon points="220,183 206,175 206,191" fill="#7a8694"/>
+                    <rect x="244" y="126" width="286" height="116" rx="16" fill="#e8f4f6" stroke="#0f6c7b"/>
+                    <text x="262" y="154" font-size="18" font-family="Segoe UI, Arial" fill="#0f6c7b">One-sentence insight</text>
+                    <text x="262" y="184" font-size="16" font-family="Segoe UI, Arial" fill="#222">Mobile friction is the main reason</text>
+                    <text x="262" y="208" font-size="16" font-family="Segoe UI, Arial" fill="#222">traffic growth did not produce</text>
+                    <text x="262" y="232" font-size="16" font-family="Segoe UI, Arial" fill="#222">better conversion results.</text>
+                    
+</svg><figcaption>Figure 5-9. The key takeaway of the Big Idea when designing a story is that every piece of the analysis should support the one sentence.</figcaption></figure>
+</div>
+ <h4>Storyboarding the Narrative</h4><p>Many communication experts recommend outlining the narrative before building slides or visualizations. Storyboarding involves <strong>sketching the sequence of ideas</strong> that will guide the audience through the analysis.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Stackpole, B. (2020). The next chapter in analytics: Data storytelling. <em>MIT Sloan Management Review</em>.</span></span> This process helps ensure that the presentation has a clear logical flow rather than becoming a collection of disconnected charts.</p><p>Communication research suggests that starting with software tools such as presentation slides can sometimes lead analysts to focus on visuals before clarifying the message.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Walsh, D. (2021). Presenting about data to your board: Six tips from experts. <em>MIT Sloan Management Review</em>.</span></span> Instead, sketching the narrative structure first can improve clarity and coherence.</p><h4>Align the Story with the Audience</h4><p>Effective data stories are designed with the audience’s perspective in mind. You should consider:</p><ul><li>what the audience already knows</li><li>what concerns or biases they may have</li><li>what decisions they need to make</li></ul><p>Tailoring the narrative to the audience increases the likelihood that the message will resonate and lead to action.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Walsh, D. (2021). Presenting about data to your board: Six tips from experts. <em>MIT Sloan Management Review</em>.</span></span></p></section>
+  <section id="storyboarding" class="subsection level-3">
+ <h3>Practical Example: Storyboarding</h3>
+    <p>This example is design to give you a clear idea of how storyboarding can be used to organize your ideas into a <strong>managerial story</strong>. This example uses a sticky-note style storyboard to show how a messy business problem can be organized into a narrative that moves from issue to recommendation.</p>
+    <div class="note"><strong>Scenario:</strong> Advertising expenses are increasing, but conversion results are weakening because budget allocation has not kept pace with changes in where the target demographic actually spends time. The company is still spending heavily on platforms that many younger consumers use less frequently, while underinvesting in platforms that now shape discovery and purchase behavior.</div>
+
+    <div class="grid-notes">
+      <div class="sticky">
+        <h3>Issue</h3>
+        <p>Advertising spend is growing, but conversions are not improving.</p>
+        <p>Part of the problem may be that the budget is still concentrated on platforms our target demographic has moved away from.</p>
+      </div>
+
+      <div class="sticky">
+        <h3>Demonstrate the issue</h3>
+        <p>Show platform-level conversion results and examine how spend relates to conversion patterns across channels.</p>
+        <p>The goal is not to prove causation, but to identify where current spend appears least aligned with outcomes.</p>
+      </div>
+
+      <div class="sticky">
+        <h3>Ideas for overcoming the issue</h3>
+        <ul>
+          <li>Shift more budget toward Instagram and TikTok.</li>
+          <li>Reduce reliance on X and older Facebook-heavy targeting for this audience.</li>
+          <li>Test search and creator-led campaigns differently rather than treating all platforms the same.</li>
+        </ul>
+      </div>
+
+      <div class="sticky">
+        <h3>Describe the pilot</h3>
+        <p>Run a 90-day pilot that reallocates part of the budget toward platforms with stronger engagement from the target demographic.</p>
+        <p>Track spend, conversion rate, cost per acquisition, and assisted purchases by platform.</p>
+      </div>
+
+      <div class="sticky">
+        <h3>Show the supporting evidence</h3>
+        <p>Use a correlation-style view to compare how platform patterns move together.</p>
+        <p>Illustrative takeaway: TikTok and Instagram align more positively with conversion goals, while X and some legacy allocations appear less aligned.</p>
+      </div>
+
+      <div class="sticky">
+        <h3>Recommendation</h3>
+        <p>The pilot should justify a broader reallocation of budget if results confirm better conversion efficiency on high-relevance platforms.</p>
+        <p>Longer term, invest in AI-assisted conversational commerce partnerships so future media decisions adapt faster to shifts in audience behavior.</p>
+      </div></div>
+      <figcaption>Figure 5-10. Using sticky notes to storyboard the narrative allows the story-teller to easily re-arrange pieces of the story.</figcaption>
+ 
+ </section><section id="best-practices-for-data-storytelling" class="subsection level-2"><h3>Best Practices for Data Storytelling</h3><p>Several principles consistently appear in research on effective data communication.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Midway, S. R. (2020). Principles of effective data visualization. <em>Patterns, 1</em>(9).</span></span></p><ul><li>Focus on clarity and simplicity. The narrative should highlight the most important insights rather than overwhelming the audience with excessive detail.</li><li>Visuals should be used strategically to support the narrative, not replace it. Charts are most effective when they are integrated into a coherent explanation.</li><li>Use annotations and emphasis techniques to guide interpretation and ensure that the key message is immediately visible.<span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">Storytelling with Data. (n.d.). Blog: Annotation and emphasis examples.</span></span></li><li>Responsible communicators should acknowledge uncertainty and limitations while clearly explaining the overall implications of the analysis.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Yau, N. (2018). Visualizing uncertainty in data. <em>FlowingData</em>.</span></span></li></ul></section>
+ <section id="practical example 5" class="subsection level-2">
+    <h3>Practical Example: From Charts to Storytelling</h3>
+    <p>This example is designed to demonstrate how we can transition from charts to a focused managerial story. Instead of reporting everything visible in the dashboard, the storyteller selects the pieces of evidence that best support a recommendation.<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Our World in Data. (n.d.). Data insights.</span></span></p>
+    <div class="note"><strong>Story logic:</strong> the more useful managerial story is not simply that the workforce changed. It is that <strong>we may be losing employees from strategically important and costly talent pools</strong>, especially in R&amp;D and among highly educated employees, which supports a recommendation for a targeted retention program.</div>
+
+  <div class="card">
+  <div class="chart">
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 500" role="img" aria-labelledby="ba2-t ba2-d" style="width:100%;height:auto;display:block;">
+<title id="ba2-t">Focused story page highlighting retention risk in R&amp;D</title>
+<desc id="ba2-d">Single-panel story page showing a focused workforce-retention message. The page emphasizes the loss of key talent in R and D, includes an exit trend chart, an education breakdown, and a recommendation to implement a retention plan for key talent.</desc>
+<rect width="550" height="500" fill="white"/>
+
+    <text x="5" y="44" font-size="36" font-family="Segoe UI, Arial" fill="#111">BEFORE</text>
+
+    <!-- Left dashboard -->
+    <rect x="5" y="70" width="540" height="410" fill="#fbfbfb" stroke="#d7dde5"/>
+    <rect x="5" y="70" width="540" height="28" fill="#111"/>
+    <text x="15" y="90" font-size="16" font-family="Segoe UI, Arial" fill="white">Workforce Dashboard</text>
+        <rect x="465" y="77" width="70" height="15" fill="#d9dde2"/>
+        <text x="400" y="89" font-size="10" font-family="Segoe UI, Arial" fill="white">Select Month</text>
+         <text x="470" y="89" font-size="10" font-family="Segoe UI, Arial">&#9660; April 2026</text>       
+    <rect x="15" y="108" width="70" height="24" fill="#d9dde2" stroke="#c5ccd4"/><text x="50" y="124" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#555">Operations</text>
+    <rect x="92" y="108" width="70" height="24" fill="#bdc1c7" stroke="#c5ccd4"/><text x="127" y="124" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#555">R&amp;D</text>
+    <rect x="171" y="108" width="70" height="24" fill="#d9dde2" stroke="#c5ccd4"/><text x="208" y="124" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#555">Finance</text>
+    <rect x="249" y="108" width="70" height="24" fill="#d9dde2" stroke="#c5ccd4"/><text x="284" y="124" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#555">Sales</text>
+        <rect x="328" y="108" width="70" height="24" fill="#d9dde2" stroke="#c5ccd4"/><text x="363" y="124" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#555">HR</text>
+    <rect x="406" y="108" width="70" height="24" fill="#d9dde2" stroke="#c5ccd4"/><text x="440" y="124" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#555">Legal</text>
+        <rect x="482" y="108" width="60" height="24" fill="#d9dde2" stroke="#c5ccd4"/><text x="512" y="124" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#555">QA</text>
+
+    <rect x="15" y="146" width="160" height="46" fill="#eef3f5" stroke="#d7dde5"/>
+    <text x="24" y="168" font-size="24" font-family="Segoe UI, Arial" fill="#0f6c7b">862</text>
+    <text x="24" y="185" font-size="12" font-family="Segoe UI, Arial" fill="#555">Headcount</text>
+
+    <rect x="182" y="146" width="150" height="46" fill="#eef3f5" stroke="#d7dde5"/>
+    <text x="189" y="168" font-size="24" font-family="Segoe UI, Arial" fill="#0f6c7b">$8.11M</text>
+    <text x="189" y="185" font-size="12" font-family="Segoe UI, Arial" fill="#555">Costs</text>
+
+    <rect x="338" y="146" width="130" height="46" fill="#eef3f5" stroke="#d7dde5"/>
+    <text x="341" y="168" font-size="24" font-family="Segoe UI, Arial" fill="#0f6c7b">18</text>
+    <text x="341" y="185" font-size="12" font-family="Segoe UI, Arial" fill="#555">Exits</text>
+    
+        <rect x="474" y="146" width="67" height="46" fill="#eef3f5" stroke="#d7dde5"/>
+    <text x="481" y="168" font-size="24" font-family="Segoe UI, Arial" fill="#0f6c7b">0</text>
+    <text x="481" y="185" font-size="12" font-family="Segoe UI, Arial" fill="#555">New Hires</text>
+      
+    <rect x="15" y="214" width="220" height="95" fill="white" stroke="#d7dde5"/>
+    <text x="27" y="230" font-size="11" font-family="Segoe UI, Arial" fill="#555">Exits by</text>
+        <text x="27" y="245" font-size="11" font-family="Segoe UI, Arial" fill="#555">Education Level</text>
+        <line x1="605" y1="392" x2="845" y2="392" stroke="#c9ced6"/>
+    <line x1="605" y1="282" x2="605" y2="392" stroke="#c9ced6"/>
+    <path d="M 369 190 L 376 175 L 388 155 L 400 150.2 L 412 158.2 L 424 156.6 L 436 159.8 L 448 167 L 460 167" fill="none" stroke="#159f79" stroke-width="3"/>
+    <circle cx="460" cy="167" r="3" fill="#159f79"/>
+    
+    <path d="M 238 185 L 246 184 L 256 183 L 266 180 L 276 178 L 286 175 L 296 173 L 306 170 L 316 160 L 326 150" fill="none" stroke="#159f79" stroke-width="3"/>
+        <circle cx="326" cy="150" r="3" fill="#159f79"/>
+ 
+     <path d="M 88 175 L 96 161 L 106 157 L 116 165 L 126 163 L 136 155 L 146 179 L 160 177 L 170 173.8" fill="none" stroke="#159f79" stroke-width="3"/>
+        <circle cx="170" cy="173.8" r="3" fill="#159f79"/>
+ 
+    <rect x="84" y="295" width="20" height="4" fill="#6ea8a3"/>
+    <rect x="112" y="291" width="20" height="10" fill="#6ea8a3"/>
+    <rect x="140" y="220" width="20" height="81" fill="#6ea8a3"/>
+    <rect x="168" y="239" width="20" height="62" fill="#6ea8a3"/>
+    <rect x="196" y="261" width="20" height="40" fill="#6ea8a3"/>   
+
+    <rect x="245" y="214" width="190" height="95" fill="white" stroke="#d7dde5"/>
+    <text x="251" y="230" font-size="11" font-family="Segoe UI, Arial" fill="#555">Department detail</text>
+    <circle cx="272" cy="278" r="6" fill="#dcefed"/><circle cx="302" cy="271" r="6" fill="#dcefed"/><circle cx="330" cy="285" r="6" fill="#dcefed"/>
+    <circle cx="364" cy="257" r="6" fill="#dcefed"/><circle cx="390" cy="275" r="6" fill="#dcefed"/><circle cx="420" cy="249" r="6" fill="#dcefed"/>
+    
+        <rect x="445" y="214" width="96" height="95" fill="white" stroke="#d7dde5"/>
+    <text x="450" y="230" font-size="11" font-family="Segoe UI, Arial" fill="#555">Labor Costs</text>
+        <text x="450" y="245" font-size="11" font-family="Segoe UI, Arial" fill="#555">Breakdown</text>
+
+    <rect x="460" y="255" width="25" height="35" fill="#6ea8a3"/>
+    <rect x="502" y="270" width="25" height="20" fill="#6ea8a3"/>
+            <text x="452" y="300" font-size="9" font-family="Segoe UI, Arial" fill="#555">Employee</text>
+                        <text x="495" y="300" font-size="9" font-family="Segoe UI, Arial" fill="#555">Contractor</text>
+
+    <rect x="15" y="327" width="220" height="140" fill="white" stroke="#d7dde5"/>
+    <text x="27" y="344" font-size="11" font-family="Segoe UI, Arial" fill="#555">Salary by department</text>
+    <rect x="54" y="356" width="170" height="10" fill="#2f5f8f"/>
+        <text x="27" y="364" font-size="9" font-family="Segoe UI, Arial" fill="#555">R&amp;D</text>
+    <rect x="54" y="371" width="42" height="10" fill="#dfe9ee"/>
+            <text x="27" y="378" font-size="9" font-family="Segoe UI, Arial" fill="#555">Sales</text>
+    <rect x="54" y="386" width="28" height="10" fill="#dfe9ee"/>
+            <text x="27" y="394" font-size="9" font-family="Segoe UI, Arial" fill="#555">QA</text>
+    <rect x="54" y="401" width="22" height="10" fill="#dfe9ee"/>
+            <text x="27" y="409" font-size="9" font-family="Segoe UI, Arial" fill="#555">Fin.</text>
+    <rect x="54" y="416" width="16" height="10" fill="#dfe9ee"/>
+            <text x="27" y="424" font-size="9" font-family="Segoe UI, Arial" fill="#555">Ops.</text>
+    <rect x="54" y="431" width="12" height="10" fill="#dfe9ee"/>
+            <text x="27" y="439" font-size="9" font-family="Segoe UI, Arial" fill="#555">HR</text>
+    <rect x="54" y="446" width="8" height="10" fill="#dfe9ee"/>
+            <text x="27" y="454" font-size="9" font-family="Segoe UI, Arial" fill="#555">Legal</text>
+
+    <rect x="250" y="327" width="290" height="140" fill="white" stroke="#d7dde5"/>
+    <text x="259" y="344" font-size="11" font-family="Segoe UI, Arial" fill="#555">Gender &amp; education mix</text>
+
+    <circle cx="395" cy="404" r="32" fill="#6e9bc5"/><path d="M 395 404 L 395 372 A 32 32 0 0 1 419 424 Z" fill="#d889b7"/>
+    <circle cx="475" cy="404" r="32" fill="#6e9bc5"/><path d="M 475 404 L 475 372 A 32 32 0 0 1 499 424 Z" fill="#d889b7"/>
+
+    <circle cx="305" cy="404" r="32" fill="#6e9bc5"/><path d="M 305 404 L 305 372 A 32 32 0 0 1 329 424 Z" fill="#d889b7"/>
+
+</svg><figcaption>Figure 5-11. This figure shows a dashboard view with multiple charts. While every chart included in the dashboard serves its purpose, they are not all necessary for the managerial story. The dashboard is labeled "BEFORE" because this is the starting point from which we select support for our recommendation.</figcaption></figure>
+</div>
+</div>
+ <div class="card">
+  <div class="chart">
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 500" role="img" aria-labelledby="ba-t ba-d" style="width:100%;height:auto;display:block;">
+<title id="ba-t">Selecting Charts for a Cohesive Story</title>
+<desc id="ba-d">A faded dashboard from figure 5-10 as a background layer for overlays of the sticky notes that select the charts that will be used for a managerial story as well as why they were selected.</desc>
+
+<rect width="550" height="500" fill="#ffffff"/>
+
+<text x="5" y="44" font-size="36" font-family="Segoe UI, Arial" fill="#111">BUILDING THE STORY</text>
+
+<!-- Main container -->
+<rect x="5" y="70" width="540" height="410" fill="#fbfbfb" stroke="#f0f0f0"/>
+
+<!-- Header -->
+<rect x="5" y="70" width="540" height="28" fill="#f2f2f2"/>
+<text x="15" y="90" font-size="16" font-family="Segoe UI, Arial" fill="#d6d6d6">Workforce Dashboard</text>
+
+<rect x="465" y="77" width="70" height="15" fill="#eeeeee"/>
+<text x="400" y="89" font-size="10" font-family="Segoe UI, Arial" fill="#dcdcdc">Select Month</text>
+<text x="470" y="89" font-size="10" font-family="Segoe UI, Arial" fill="#cfcfcf">&#9660; April 2026</text>
+
+<!-- Tabs -->
+<rect x="15" y="108" width="70" height="24" fill="#f2f2f2" stroke="#eeeeee"/>
+<rect x="92" y="108" width="70" height="24" fill="#eaeaea" stroke="#eeeeee"/>
+<rect x="171" y="108" width="70" height="24" fill="#f2f2f2" stroke="#eeeeee"/>
+<rect x="249" y="108" width="70" height="24" fill="#f2f2f2" stroke="#eeeeee"/>
+<rect x="328" y="108" width="70" height="24" fill="#f2f2f2" stroke="#eeeeee"/>
+<rect x="406" y="108" width="70" height="24" fill="#f2f2f2" stroke="#eeeeee"/>
+<rect x="482" y="108" width="60" height="24" fill="#f2f2f2" stroke="#eeeeee"/>
+
+<!-- KPI Cards -->
+<rect x="15" y="146" width="160" height="46" fill="#f9f9f9" stroke="#eeeeee"/>
+<text x="24" y="168" font-size="24" font-family="Segoe UI, Arial" fill="#cfcfcf">862</text>
+
+<rect x="182" y="146" width="150" height="46" fill="#f9f9f9" stroke="#eeeeee"/>
+<text x="189" y="168" font-size="24" font-family="Segoe UI, Arial" fill="#cfcfcf">$8.11M</text>
+
+<rect x="338" y="146" width="130" height="46" fill="#f9f9f9" stroke="#eeeeee"/>
+<text x="341" y="168" font-size="24" font-family="Segoe UI, Arial" fill="#cfcfcf">18</text>
+
+<rect x="474" y="146" width="67" height="46" fill="#f9f9f9" stroke="#eeeeee"/>
+<text x="481" y="168" font-size="24" font-family="Segoe UI, Arial" fill="#cfcfcf">0</text>
+
+<!-- Charts -->
+<rect x="15" y="214" width="220" height="95" fill="#fbfbfb" stroke="#f0f0f0"/>
+
+<!-- Line charts -->
+<path d="M 88 175 L 96 161 L 106 157 L 116 165 L 126 163 L 136 155 L 146 179 L 160 177 L 170 173.8"
+      fill="none" stroke="#d6d6d6" stroke-width="3"/>
+
+<path d="M 238 185 L 246 184 L 256 183 L 266 180 L 276 178 L 286 175 L 296 173 L 306 170 L 316 160 L 326 150"
+      fill="none" stroke="#d6d6d6" stroke-width="3"/>
+
+<path d="M 369 190 L 376 175 L 388 155 L 400 150.2 L 412 158.2 L 424 156.6 L 436 159.8 L 448 167 L 460 167"
+      fill="none" stroke="#d6d6d6" stroke-width="3"/>
+
+<!-- Bars -->
+<rect x="84" y="295" width="20" height="4" fill="#eeeeee"/>
+<rect x="112" y="291" width="20" height="10" fill="#eeeeee"/>
+<rect x="140" y="220" width="20" height="81" fill="#eeeeee"/>
+<rect x="168" y="239" width="20" height="62" fill="#eeeeee"/>
+<rect x="196" y="261" width="20" height="40" fill="#eeeeee"/>
+
+<!-- Middle cards -->
+<rect x="245" y="214" width="190" height="95" fill="#fbfbfb" stroke="#f0f0f0"/>
+<circle cx="272" cy="278" r="6" fill="#e5e5e5"/>
+<circle cx="302" cy="271" r="6" fill="#e5e5e5"/>
+<circle cx="330" cy="285" r="6" fill="#e5e5e5"/>
+<circle cx="364" cy="257" r="6" fill="#e5e5e5"/>
+<circle cx="390" cy="275" r="6" fill="#e5e5e5"/>
+<circle cx="420" cy="249" r="6" fill="#e5e5e5"/>
+
+<rect x="445" y="214" width="96" height="95" fill="#fbfbfb" stroke="#f0f0f0"/>
+<rect x="460" y="255" width="25" height="35" fill="#eeeeee"/>
+<rect x="502" y="270" width="25" height="20" fill="#eeeeee"/>
+
+<!-- Bottom charts -->
+<rect x="15" y="327" width="220" height="140" fill="#fbfbfb" stroke="#f0f0f0"/>
+
+<rect x="54" y="356" width="170" height="10" fill="#dcdcdc"/>
+<rect x="54" y="371" width="42" height="10" fill="#eeeeee"/>
+<rect x="54" y="386" width="28" height="10" fill="#eeeeee"/>
+<rect x="54" y="401" width="22" height="10" fill="#eeeeee"/>
+<rect x="54" y="416" width="16" height="10" fill="#eeeeee"/>
+<rect x="54" y="431" width="12" height="10" fill="#eeeeee"/>
+<rect x="54" y="446" width="8" height="10" fill="#eeeeee"/>
+
+<rect x="250" y="327" width="290" height="140" fill="#fbfbfb" stroke="#f0f0f0"/>
+
+<circle cx="395" cy="404" r="32" fill="#e0e0e0"/>
+<circle cx="475" cy="404" r="32" fill="#e0e0e0"/>
+<circle cx="305" cy="404" r="32" fill="#e0e0e0"/>
+ 
+<!-- sticky 1 -->
+<g transform="rotate(-4 315 210)">
+  <path d="M 35 195 L 205 195 L 220 295 L 202 312 L 35 312 Z" fill="#e8de82" stroke="#d0c15d"/>
+  <path d="M 205 195 L 220 295 L 202 312 L 195 292 Z" fill="#d7cd6a"/>
+  <text x="50" y="222" font-size="13" font-weight="700" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">EXIT RISK:</text>
+  <text x="50" y="244" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">Losing hard-to-replace</text>
+  <text x="50" y="262" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">key employees in R&amp;D;</text>
+  <text x="50" y="280" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">high turnover creates</text>
+  <text x="50" y="298" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">strategic risk.</text>
+</g>
+
+<!-- sticky 2 -->
+<g transform="rotate(2 190 405)">
+  <path d="M 310 340 L 480 340 L 482 438 L 465 456 L 310 456 Z" fill="#e8de82" stroke="#d0c15d"/>
+  <path d="M 480 340 L 482 438 L 465 456 L 458 438 Z" fill="#d7cd6a"/>
+  <text x="324" y="366" font-size="13" font-weight="700" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">EDUCATION:</text>
+  <text x="324" y="388" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">Bachelor, Master, and</text>
+  <text x="324" y="406" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">PhD roles dominate</text>
+  <text x="324" y="424" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">replacement risk.</text>
+</g>
+
+<!-- sticky 3 -->
+<g transform="rotate(-2 430 120)">
+  <path d="M 350 192 L 520 192 L 530 285 L 512 302 L 350 302 Z" fill="#e8de82" stroke="#d0c15d"/>
+  <path d="M 520 192 L 530 285 L 512 302 L 508 284 Z" fill="#d7cd6a"/>
+  <text x="362" y="218" font-size="13" font-weight="700" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">ROI: LABOR COSTS</text>
+  <text x="362" y="240" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">R&amp;D is the largest labor</text>
+  <text x="362" y="258" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">cost area; talent loss</text>
+  <text x="362" y="276" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">raises costs sharply.</text>
+</g>
+
+<!-- sticky 4 -->
+<g transform="rotate(2 120 120)">
+  <path d="M 240 65 L 410 65 L 412 158 L 395 176 L 240 176 Z" fill="#e8de82" stroke="#d0c15d"/>
+  <path d="M 410 65 L 412 158 L 395 176 L 388 157 Z" fill="#d7cd6a"/>
+  <text x="254" y="91" font-size="13" font-weight="700" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">STORY MOVE:</text>
+  <text x="254" y="113" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">Select only the charts</text>
+  <text x="254" y="131" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">that support the</text>
+  <text x="254" y="149" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">retention argument.</text>
+</g>
+
+<!-- sticky 5 -->
+<g transform="rotate(-4 315 210)">
+  <path d="M 35 380 L 205 380 L 220 480 L 202 495 L 35 495 Z" fill="#e8de82" stroke="#d0c15d"/>
+  <path d="M 205 380 L 220 480 L 202 495 L 195 492 Z" fill="#d7cd6a"/>
+  <text x="50" y="422" font-size="13" font-weight="700" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">RECOMMENDATION:</text>
+  <text x="50" y="444" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">Implement retention plan.</text>
+  <text x="50" y="462" font-size="11" font-family="Comic Sans MS, Chalkboard SE, Marker Felt, cursive" fill="#111">for key talent</text>
+</g>
+</svg>
+<figcaption>Figure 5-12. The sticky notes model how a presenter can decide which dashboard elements matter for the story and why they were chosen.</figcaption>
+</figure>
+</div>
+</div>
+<div class="card">
+  <div class="chart">
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 500" role="img" aria-labelledby="ba-t ba-d" style="width:100%;height:auto;display:block;">
+<title id="ba-t">Before and after example showing move from dashboard to story</title>
+<desc id="ba-d">Two-panel illustration. The left panel shows a crowded workforce dashboard with many charts and metrics. The right panel shows a focused story page that highlights a retention opportunity using an exit trend, an education breakdown, and a clear recommendation.</desc>
+
+<rect width="550" height="500" fill="white"/>
+    <text x="30" y="44" font-size="36" font-family="Segoe UI, Arial" fill="#111">AFTER</text>
+    <rect x="5" y="70" width="540" height="410" fill="#fbfbfb" stroke="#d7dde5"/>
+    <text x="25" y="98" font-size="24" font-weight="700" font-family="Segoe UI, Arial" fill="#333">We are losing key talent in R&amp;D</text>
+
+    <text x="25" y="120" font-size="14" font-family="Segoe UI, Arial" fill="#555">We continue to lose key employees, and this is increasing labor costs.</text>
+  
+    <rect x="20" y="130" width="260" height="150" fill="#fff" stroke="#d7dde5"/>
+        <rect x="20" y="130" width="260" height="23" fill="#333" stroke="#333"/>
+    
+    <text x="25" y="148" font-size="14" font-family="Segoe UI, Arial" fill="#fff">Exit Trend in R&amp;D (Key Talent)</text>
+        <text x="25" y="164" font-size="10" font-family="Segoe UI, Arial" fill="#333">Talent are leaving at a 2% + monthly rate</text>
+    <line x1="29" y1="265" x2="265" y2="265" stroke="#c9ced6"/>
+    <line x1="29" y1="175" x2="29" y2="265" stroke="#c9ced6"/>
+    <path d="M 30 265 L 40 242 L 70 192 L 100 180 L 130 200 L 160 196 L 190 204 L 220 223 L 250 223" fill="none" stroke="#a3a3a3" stroke-width="3"/>
+    <circle cx="100" cy="180" r="6" fill="#159f79"/>
+    <circle cx="250" cy="223" r="6" fill="#159f79"/>
+    <text x="109" y="180" font-size="11" font-family="Segoe UI, Arial" fill="#159f79">3%</text>
+    <text x="245" y="214" font-size="11" font-family="Segoe UI, Arial" fill="#159f79">2%</text>
+    <text x="35" y="275" font-size="10" font-family="Segoe UI, Arial" fill="#666">Apr</text>
+    <text x="90" y="275" font-size="10" font-family="Segoe UI, Arial" fill="#666">Jul</text>
+    <text x="140" y="275" font-size="10" font-family="Segoe UI, Arial" fill="#666">Oct</text>
+    <text x="190" y="275" font-size="10" font-family="Segoe UI, Arial" fill="#666">Jan</text>
+        <text x="240" y="275" font-size="10" font-family="Segoe UI, Arial" fill="#666">Apr</text>
+
+    <rect x="290" y="130" width="245" height="150" fill="#fff" stroke="#d7dde5"/>
+        <rect x="290" y="130" width="245" height="23" fill="#333" stroke="#333"/>
+ <text x="296" y="148" font-size="14" font-family="Segoe UI, Arial" fill="#fff">R&amp;D Labor Costs Trend</text>
+        <text x="296" y="164" font-size="10" font-family="Segoe UI, Arial" fill="#333">Labor costs have almost doubled in the past year</text>
+        <line x1="300" y1="265" x2="525" y2="265" stroke="#c9ced6"/>
+    <line x1="300" y1="175" x2="300" y2="265" stroke="#c9ced6"/>
+        <text x="305" y="275" font-size="10" font-family="Segoe UI, Arial" fill="#666">Apr</text>
+    <text x="360" y="275" font-size="10" font-family="Segoe UI, Arial" fill="#666">Jul</text>
+    <text x="410" y="275" font-size="10" font-family="Segoe UI, Arial" fill="#666">Oct</text>
+    <text x="460" y="275" font-size="10" font-family="Segoe UI, Arial" fill="#666">Jan</text>
+        <text x="510" y="275" font-size="10" font-family="Segoe UI, Arial" fill="#666">Apr</text>
+    
+     <text x="460" y="180" font-weight="700" font-size="14" font-family="Segoe UI, Arial" fill="#222">&#9650;  87% </text>
+                <text x="474" y="195" font-size="12" font-family="Segoe UI, Arial" fill="#222">YoY</text>
+    <path d="M 300 260 L 324 257.55 L 348 255.1 L 372 247.75 L 396 242.85 L 420 235.5 L 444 230.6 L 468 223.25 L 492 198.75 L 516 174.25" fill="none" stroke="#159f79" stroke-width="3"/>
+        <circle cx="516" cy="174.25" r="5" fill="#159f79"/>
+        <circle cx="300" cy="260" r="3" fill="#159f79"/>
+        
+        
+   <text x="25" y="340" font-size="13" font-weight="700" font-family="Segoe UI, Arial" fill="#333">Loss of highly educated R&amp;D employees</text>
+   <text x="25" y="360" font-size="13" font-weight="700" font-family="Segoe UI, Arial" fill="#333">creates risks that are not visible from</text>      
+       <text x="25" y="380" font-size="13" font-weight="700" font-family="Segoe UI, Arial" fill="#333">headline KPIs alone.</text>      
+    <rect x="290" y="292" width="245" height="145" fill="#fff" stroke="#d7dde5"/>
+        <rect x="290" y="292" width="245" height="23" fill="#333" stroke="#333"/>
+    
+    <text x="296" y="313" font-size="14" font-family="Segoe UI, Arial" fill="#fff">Exits by Education Level</text>
+    <text x="296" y="326" font-size="10" font-family="Segoe UI, Arial" fill="#333">Highly educated employees leaving at higher rates</text>
+    <line x1="305" y1="420" x2="520" y2="420" stroke="#c9ced6"/>
+    <rect x="316" y="418" width="22" height="2" fill="#6ea8a3"/>
+    <rect x="356" y="416" width="22" height="4" fill="#6ea8a3"/>
+    <rect x="396" y="344" width="22" height="76" fill="#6ea8a3"/>
+    <rect x="436" y="360" width="22" height="60" fill="#6ea8a3"/>
+    <rect x="476" y="384" width="22" height="38" fill="#6ea8a3"/>
+    <text x="327" y="430" text-anchor="middle" font-size="10" font-family="Segoe UI, Arial" fill="#333">HS</text>
+    <text x="367" y="430" text-anchor="middle" font-size="10" font-family="Segoe UI, Arial" fill="#333">Assoc.</text>
+    <text x="407" y="430" text-anchor="middle" font-size="10" font-family="Segoe UI, Arial" fill="#333">Bachelor</text>
+    <text x="447" y="430" text-anchor="middle" font-size="10" font-family="Segoe UI, Arial" fill="#333">Master</text>
+    <text x="488" y="430" text-anchor="middle" font-size="10" font-family="Segoe UI, Arial" fill="#333">PhD</text>
+    <text x="407" y="340" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#333">39%</text>
+    <text x="447" y="357" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#333">32%</text>
+    <text x="488" y="378" text-anchor="middle" font-size="11" font-family="Segoe UI, Arial" fill="#333">18%</text>
+
+
+    <text x="25" y="446" font-size="14" font-family="Segoe UI, Arial" fill="#222">Recommendation:</text>
+    <text x="25" y="468" font-size="18" font-weight="700" font-family="Segoe UI, Arial" fill="#333">Launch a retention program for critical R&amp;D roles</text>
+
+</svg><figcaption>Figure 5-13. The "AFTER" figure shows how charts must be selected carefully to support the recommendation.</figcaption></figure>
+</div>
+</div>
+</section>
+ <section id="key-takeaways-5" class="subsection level-2"><h3>Key Takeaways</h3><ul><li>Data visualization alone does not guarantee effective communication. Decision makers need clear narratives that connect evidence to insight and action.</li><li>Effective data stories follow a logical narrative structure, typically including context (beginning), evidence (middle), and insight with recommended action (end).</li><li>Establishing context is essential because audiences cannot interpret data accurately without understanding the problem being analyzed and why it matters.</li><li>The goal of analytical communication is not to present all exploratory analysis but to present explanatory evidence that supports the central insight.</li><li>Visualizations should guide interpretation through annotation, labeling, and visual emphasis so that the audience immediately understands the most important message.</li><li>Human perception quickly detects differences in color, size, and position, which can be used strategically to direct attention to critical insights.</li><li>Effective analysts communicate uncertainty transparently rather than hiding it. Responsible data communication acknowledges limitations while clearly explaining what the evidence supports.</li><li>Uncertainty can be communicated visually through techniques such as confidence intervals, error bars, or scenario ranges, which help audiences understand the range of possible outcomes.</li><li>Analysts should identify the core message or “big idea” before creating visualizations. Once the main insight is clear, the supporting narrative and visuals can be structured around that message.</li><li>Storyboarding the narrative before building slides or charts helps ensure that the presentation follows a clear logical flow rather than becoming a collection of disconnected visuals.</li><li>Effective data storytelling focuses on the audience’s needs and decision context, ensuring that the message supports the decisions that managers must make.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Walsh, D. (2021). Presenting about data to your board: Six tips from experts. <em>MIT Sloan Management Review</em>.</span></span></li></ul></section><section id="managerial-insight-5" class="insights box-2"><h3>Managerial Insight</h3><p>Even the most sophisticated analysis will have limited impact if decision makers cannot clearly understand its implications. Managers often need to make decisions quickly, and they rarely have the time to interpret complex statistical outputs or lengthy technical reports.</p><p>Data storytelling bridges the gap between analysis and action.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Cote, C. (2021). Data storytelling: How to effectively tell a story with data. <em>Harvard Business School Online</em>.</span></span> By structuring insights as a narrative, explaining the context, presenting evidence, and recommending a course of action, we help decision-makers focus on the most important implications of the data.</p><p>At the same time, responsible managers recognize that all analyses contain uncertainty. Effective communication acknowledges limitations while still conveying the strength of the evidence. When we combine clear storytelling with transparent discussion of uncertainty, we enable decision-makers to make informed decisions even in the presence of imperfect information.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Yau, N. (2018). Visualizing uncertainty in data. <em>FlowingData</em>.</span></span></p></section><section id="key-sources-5" class="subsection level-2"><h3>Key Sources</h3>
+<div class="source-entry"><sup>1</sup> Cote, C. (2021, November 23). Data storytelling: How to effectively tell a story with data. <em>Harvard Business School Online</em>. <a href="https://online.hbs.edu/blog/post/data-storytelling" target="_blank" rel="noopener">https://online.hbs.edu/blog/post/data-storytelling</a></div>
+<div class="source-entry"><sup>2</sup> Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</div>
+<div class="source-entry"><sup>3</sup> Stackpole, B. (2020). The next chapter in analytics: Data storytelling. <em>MIT Sloan Management Review</em>. <a href="https://mitsloan.mit.edu/ideas-made-to-matter/next-chapter-analytics-data-storytelling" target="_blank" rel="noopener">https://mitsloan.mit.edu/ideas-made-to-matter/next-chapter-analytics-data-storytelling</a></div>
+<div class="source-entry"><sup>4</sup> Walsh, D. (2021). Presenting about data to your board: Six tips from experts. <em>MIT Sloan Management Review</em>. <a href="https://mitsloan.mit.edu/ideas-made-to-matter/presenting-about-data-to-your-board-6-tips-experts" target="_blank" rel="noopener">https://mitsloan.mit.edu/ideas-made-to-matter/presenting-about-data-to-your-board-6-tips-experts</a></div>
+<div class="source-entry"><sup>5</sup> Midway, S. R. (2020). Principles of effective data visualization. <em>Patterns, 1</em>(9). <a href="https://doi.org/10.1016/j.patter.2020.100141" target="_blank" rel="noopener">https://doi.org/10.1016/j.patter.2020.100141</a></div>
+<div class="source-entry"><sup>6</sup> Yau, N. (2018). Visualizing uncertainty in data. <em>FlowingData</em>. <a href="https://flowingdata.com/2018/01/08/visualizing-the-uncertainty-in-data" target="_blank" rel="noopener">https://flowingdata.com/2018/01/08/visualizing-the-uncertainty-in-data</a></div>
+<div class="source-entry"><sup>7</sup> Our World in Data. (n.d.). Data insights. <a href="https://ourworldindata.org/data-insights" target="_blank" rel="noopener">https://ourworldindata.org/data-insights</a></div>
+<div class="source-entry"><sup>8</sup> Storytelling with Data. (n.d.). Blog: Annotation and emphasis examples. <a href="https://www.storytellingwithdata.com/blog" target="_blank" rel="noopener">https://www.storytellingwithdata.com/blog</a></div></section></section>
+  </main>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const links = Array.from(document.querySelectorAll('.sidebar a'));
+  const sections = links
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.getAttribute('id');
+      const link = document.querySelector('.sidebar a[href="#' + id + '"]');
+      if (!link) return;
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(section => observer.observe(section));
+});
+</script>
+</body>
+</html>

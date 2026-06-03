@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en"><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Module 1: Micro-Assignment</title>
+<style>
+body { font-family: "Segoe UI", Arial, sans-serif; color:#222831; line-height:1.5; margin:24px; background:#ffffff; }
+h1 { margin-bottom: 0.2rem; }
+h2 { color:#0f6c7b; margin-top: 0; }
+h3 { margin-top: 1rem; }
+.assignment { border:1px solid #d7dde5; border-radius:14px; padding:18px; margin-bottom:26px; background:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.04); }
+.note { background:#f7fbfc; border-left:4px solid #0f6c7b; font-size: 1.02rem;  padding:10px 12px; margin:12px 0; border-radius:6px; }
+.wrapper { max-width: 1180px; margin: 0 auto; }
+.card { background:#fff; border:1px solid #d7dde5; border-radius:16px; padding:16px; margin-bottom:22px; box-shadow:0 4px 14px rgba(0,0,0,.05); }
+.grid2 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid2 figure {
+  min-width: 0;
+}
+.grid2 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.chart {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.chart-wide {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chart-small {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+@media (min-width: 1200px) { .grid2 { grid-template-columns:1fr 1fr; } }
+figure { margin:0; }
+figcaption { margin-top:8px; font-size:0.95rem; color:#44515f; }
+table { width:100%; border-collapse:collapse; margin-top:10px; margin-bottom:20px; }
+th, td { border:1px solid #d7dde5; padding:8px 10px; text-align:left; }
+th { background:#e8f4f6; }
+small { color:#5c6773; }
+</style>
+</head><body>
+<h2>Module 4 Applied Analysis: Visualizing Uncertainty and Communicating It Ethically</h2>
+    <p>An online retailer is testing two email subject lines to determine which one generates more purchases from customers who receive the email.</p>
+<p>The experiment is still in progress, but it has reached 65% of the planned sample size. The current results are:</p>
+    <ul>
+      <li><strong>Subject Line A:</strong> 2,146 purchases</li>
+      <li><strong>Subject Line B:</strong> 2,081 purchases</li>
+    </ul>
+    <p>The data collected so far includes all customer segments, and there is no evidence that the remaining 35% of the audience will behave differently.</p>
+<p>The executive team will be meeting this week and have asked for an update on the current results and the likely outcome of the experiment.</p><p>Below is a visualization developed by a junior analyst in your team; while accurate, it does facilitate decision-making. You know that you are expected to recommend whether to stop the test early or continue collecting data. </p>
+<div class="card">
+  <div class="chart-small">
+    <figure>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 452" role="img" aria-labelledby="chart-title chart-desc" style="width:100%;height:auto;display:block;">
+  <title id="chart-title">Email Campaign Performance Results</title>
+  <desc id="chart-desc">
+    Horizontal bar chart titled "Email Campaign Performance Results." The x-axis ranges from 0 to 2,500 with tick marks every 500. Two bars are shown. Line A has about 2,146 purchases and is slightly longer than Line B, which has about 2,081 purchases. The chart suggests Line A is performing slightly better than Line B.
+  </desc>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="760" height="452" fill="#fff"/>
+
+  <!-- Plot area -->
+  <g transform="translate(83,77)">
+    <!-- Gridlines -->
+    <g stroke="#cfcfcf" stroke-width="2">
+      <line x1="0" y1="0" x2="0" y2="330"/>
+      <line x1="124.6" y1="0" x2="124.6" y2="330"/>
+      <line x1="249.2" y1="0" x2="249.2" y2="330"/>
+      <line x1="373.8" y1="0" x2="373.8" y2="330"/>
+      <line x1="498.4" y1="0" x2="498.4" y2="330"/>
+      <line x1="623" y1="0" x2="623" y2="330"/>
+    </g>
+
+    <!-- Bars -->
+    <rect x="0" y="30" width="518.6" height="105" fill="#177da4"/>
+    <rect x="0" y="195" width="534.8" height="105" fill="#177da4"/>
+
+    <!-- Y labels -->
+    <g font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#222">
+      <text x="-14" y="88" text-anchor="end" dominant-baseline="middle">Line B</text>
+      <text x="-14" y="253" text-anchor="end" dominant-baseline="middle">Line A</text>
+    </g>
+
+    <!-- X-axis tick labels -->
+    <g font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#222">
+      <text x="0" y="356" text-anchor="middle">0</text>
+      <text x="124.6" y="356" text-anchor="middle">500</text>
+      <text x="249.2" y="356" text-anchor="middle">1,000</text>
+      <text x="373.8" y="356" text-anchor="middle">1,500</text>
+      <text x="498.4" y="356" text-anchor="middle">2,000</text>
+      <text x="623" y="356" text-anchor="middle">2,500</text>
+    </g>
+  </g>
+
+  <!-- Title -->
+  <text x="380" y="43" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="30" font-weight="400" fill="#111">
+    Email Campaign Performance Results
+  </text>
+</svg>
+
+      <figcaption><strong>Note:</strong> Results of the ongoing experiment at 65% of the planned sample.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<div class="note">
+  <h3>Your Task:</h3>
+<p>Create one executive-ready visualization that communicates both the likely outcome of the test and the uncertainty that remains. Then write a brief executive explanation and an ethical reflection.</p>
+
+<p><strong>Part 1. Simulation or projection</strong></p>
+Using Excel or R, estimate the likely final outcome under the assumption that the remaining 35% behaves like the data already observed. You should calculate the current margin, the projected final margin, and a 95% simulation-based interval for the final margin.
+
+<p><strong>Part 2. Visualization</strong></p>
+<p>Create one visualization suitable for senior leadership. Your visualization should make the uncertainty visible rather than hiding it. It should be clean, uncluttered, and easy to interpret.</p>
+
+<p><strong>Part 3. Executive explanation</strong></p>
+<p>Write a short explanation (150–250 words) intended for senior leadership. Your explanation should:</p>
+
+
+<ul><li>Clearly summarize the current results
+Describe the likely final outcome, including any uncertainty</li>
+<li>Interpret what the results mean for decision-making</li>
+<li>Provide a recommendation (e.g., stop the test or continue), and briefly justify it</li></ul>
+<p><strong>Part 4. Ethical reflection</strong></p>
+<p>Write a short reflection of 100 to 150 words explaining how this result could be presented in a misleading way, and what is the risk of presenting the result too confidently.</p>
+
+<p><strong>Submission Requirements:</strong>
+<ol><li>A word document with your executive explanation, the visualization, and ethical reflection</li>
+<li>Your Excel file with calculations or simulation; or your syntax and output if your results were computed in R. </li></ol>
+</div>
+</body>
+</html>

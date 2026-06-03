@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="en"><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Module 1: Micro-Assignment</title>
+<style>
+body { font-family: "Segoe UI", Arial, sans-serif; color:#222831; line-height:1.5; margin:24px; background:#ffffff; }
+h1 { margin-bottom: 0.2rem; }
+h2 { color:#0f6c7b; margin-top: 0; }
+h3 { margin-top: 1rem; }
+.assignment { border:1px solid #d7dde5; border-radius:14px; padding:18px; margin-bottom:26px; background:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.04); }
+.note { background:#f7fbfc; border-left:4px solid #0f6c7b; font-size: 1.02rem;  padding:10px 12px; margin:12px 0; border-radius:6px; }
+.wrapper { max-width: 1180px; margin: 0 auto; }
+.card { background:#fff; border:1px solid #d7dde5; border-radius:16px; padding:16px; margin-bottom:22px; box-shadow:0 4px 14px rgba(0,0,0,.05); }
+.grid2 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid2 figure {
+  min-width: 0;
+}
+.grid2 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.chart {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.chart-wide {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chart-small {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+@media (min-width: 1200px) { .grid2 { grid-template-columns:1fr 1fr; } }
+figure { margin:0; }
+figcaption { margin-top:8px; font-size:0.95rem; color:#44515f; }
+table { width:100%; border-collapse:collapse; margin-top:10px; margin-bottom:20px; }
+th, td { border:1px solid #d7dde5; padding:8px 10px; text-align:left; }
+th { background:#e8f4f6; }
+small { color:#5c6773; }
+</style>
+</head><body>
+<h2>Module 2 Applied Analysis: Signal vs. Noise and Visual Emphasis</h2>
+<p>You are a manager preparing to present department performance data to a senior leader who needs to quickly identify whether any department requires attention. Two team members created charts using the same dataset, but each chart has design issues that make the message less effective.</p>
+<p>Your goal is to evaluate these charts and create a revised version that clearly communicates the most important insight.</p>
+<h3>Dataset: Department Performance Scores</h3>
+<div class="chart-small">
+<table>
+<thead><tr><th>Department</th><th>Performance Score</th></tr></thead>
+<tbody>
+<tr><td>Sales</td><td>78</td></tr><tr><td>Marketing</td><td>81</td></tr><tr><td>Finance</td><td>79</td></tr><tr><td>HR</td><td>77</td></tr><tr><td>Operations</td><td>65</td></tr><tr><td>IT</td><td>80</td></tr>
+</tbody>
+</table>
+</div>
+<div class="grid2">
+<div class="card">
+  <h3>Chart A: Cluttered Visualization</h3>
+  <p>This chart contains many elements that might appear in real workplace charts, but several of them compete for attention and make the key message less clear.</p>
+  <div class="chart">
+    <figure>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" role="img" aria-labelledby="clutter-title clutter-desc" style="width:100%;height:auto;display:block;">
+<title id="clutter-title">Cluttered departmental performance chart with excessive noise and redundant formatting</title>
+<desc id="clutter-desc">Bar chart showing department performance scores for Sales, Marketing, Finance, Human Resources, Operations, and IT. The chart includes a long title, both major and minor gridlines, multiple bright colors without meaning, direct labels, diagonal category labels, a redundant legend, inconsistent number formatting, a decorative background, and a nonessential annotation. Operations has the lowest score at 65, but the clutter makes that message less immediate.</desc>
+<defs><linearGradient id="bggrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f7fafc"/><stop offset="100%" stop-color="#eef3f7"/></linearGradient></defs>
+<rect width="720" height="430" fill="white"/>
+<rect x="0" y="0" width="720" height="430" fill="url(#bggrad)"/>
+<rect x="70" y="90" width="610" height="300" fill="#ffffff" stroke="#e6ebf0"/>
+<text x="18" y="20" font-size="20" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Comprehensive Departmental Performance Score Analysis for Q2 Internal </text>
+<text x="18" y="45" font-size="20" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Benchmarking Review (Preliminary Draft)</text>
+<text x="18" y="66" font-size="14" font-family="Segoe UI, Arial, sans-serif" fill="#5c6773">Prepared for leadership review using compiled departmental reporting extracts</text>
+<line x1="70" y1="390.0" x2="680" y2="390.0" stroke="#c8d3db" stroke-width="1.3"/>
+<text x="60" y="394.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">0</text>
+<line x1="70" y1="360.0" x2="680" y2="360.0" stroke="#c8d3db" stroke-width="1.3"/>
+<text x="60" y="364.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">10</text>
+<line x1="70" y1="330.0" x2="680" y2="330.0" stroke="#c8d3db" stroke-width="1.3"/>
+<text x="60" y="334.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">20</text>
+<line x1="70" y1="300.0" x2="680" y2="300.0" stroke="#c8d3db" stroke-width="1.3"/>
+<text x="60" y="304.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">30</text>
+<line x1="70" y1="270.0" x2="680" y2="270.0" stroke="#c8d3db" stroke-width="1.3"/>
+<text x="60" y="274.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">40</text>
+<line x1="70" y1="240.0" x2="680" y2="240.0" stroke="#c8d3db" stroke-width="1.3"/>
+<text x="60" y="244.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">50</text>
+<line x1="70" y1="210.0" x2="680" y2="210.0" stroke="#c8d3db" stroke-width="1.3"/>
+<text x="60" y="214.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">60</text>
+<line x1="70" y1="180.0" x2="680" y2="180.0" stroke="#c8d3db" stroke-width="1.3"/>
+<text x="60" y="184.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">70</text>
+<line x1="70" y1="150.0" x2="680" y2="150.0" stroke="#c8d3db" stroke-width="1.3"/>
+<text x="60" y="154.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">80</text>
+<line x1="70" y1="120.0" x2="680" y2="120.0" stroke="#c8d3db" stroke-width="1.3"/>
+<text x="60" y="124.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">90</text>
+<line x1="70" y1="90.0" x2="680" y2="90.0" stroke="#c8d3db" stroke-width="1.3"/>
+<text x="60" y="94.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">100</text>
+<line x1="70.0" y1="90" x2="70.0" y2="390" stroke="#d3dce3" stroke-width="1.1"/>
+<line x1="171.7" y1="90" x2="171.7" y2="390" stroke="#d3dce3" stroke-width="1.1"/>
+<line x1="273.3" y1="90" x2="273.3" y2="390" stroke="#d3dce3" stroke-width="1.1"/>
+<line x1="375.0" y1="90" x2="375.0" y2="390" stroke="#d3dce3" stroke-width="1.1"/>
+<line x1="476.7" y1="90" x2="476.7" y2="390" stroke="#d3dce3" stroke-width="1.1"/>
+<line x1="578.3" y1="90" x2="578.3" y2="390" stroke="#d3dce3" stroke-width="1.1"/>
+<line x1="680.0" y1="90" x2="680.0" y2="390" stroke="#d3dce3" stroke-width="1.1"/>
+<line x1="70" y1="90" x2="70" y2="390" stroke="#7a8694" stroke-width="1.5"/>
+<line x1="70" y1="390" x2="680" y2="390" stroke="#7a8694" stroke-width="1.5"/>
+<rect x="94.4" y="156.0" width="52.9" height="234.0" fill="#5b9bd5" rx="2"/>
+<text x="120.8" y="150.0" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">78</text>
+<text x="120.8" y="420" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Sales</text>
+<rect x="196.1" y="147.0" width="52.9" height="243.0" fill="#ed7d31" rx="2"/>
+<text x="222.5" y="141.0" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">81</text>
+<text x="222.5" y="420" text-anchor="middle"  font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Marketing</text>
+<rect x="297.7" y="153.0" width="52.9" height="237.0" fill="#70ad47" rx="2"/>
+<text x="324.2" y="147.0" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">79</text>
+<text x="324.2" y="420" text-anchor="middle"  font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Finance</text>
+<rect x="399.4" y="159.0" width="52.9" height="231.0" fill="#ffc000" rx="2"/>
+<text x="425.8" y="153.0" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">77</text>
+<text x="425.8" y="420" text-anchor="middle"  font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">HR</text>
+<rect x="501.1" y="195.0" width="52.9" height="195.0" fill="#c00000" rx="2"/>
+<text x="527.5" y="189.0" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">65</text>
+<text x="527.5" y="420" text-anchor="middle"  font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Operations</text>
+<rect x="602.7" y="150.0" width="52.9" height="240.0" fill="#7030a0" rx="2"/>
+<text x="629.2" y="144.0" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">80</text>
+<text x="629.2" y="420" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">IT</text>
+<text x="20" y="240.0" transform="rotate(-90 20 240.0)" text-anchor="middle" font-size="14" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Performance Score</text>
+<rect x="514" y="90" width="165" height="156" fill="white" stroke="#d7dde5" rx="6"/>
+<text x="520" y="108" font-size="13" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Legend</text>
+<rect x="530" y="120" width="12" height="12" fill="#5b9bd5"/>
+<text x="550" y="131" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Sales</text>
+<rect x="530" y="142" width="12" height="12" fill="#ed7d31"/>
+<text x="550" y="153" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Marketing</text>
+<rect x="530" y="164" width="12" height="12" fill="#70ad47"/>
+<text x="550" y="175" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Finance</text>
+<rect x="530" y="186" width="12" height="12" fill="#ffc000"/>
+<text x="550" y="197" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">HR</text>
+<rect x="530" y="208" width="12" height="12" fill="#c00000"/>
+<text x="550" y="219" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Operations</text>
+<rect x="530" y="230" width="12" height="12" fill="#7030a0"/>
+<text x="550" y="241" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">IT</text>
+<rect x="78" y="96" width="240" height="24" fill="#fff8d9" stroke="#e2d49a"/>
+<text x="86" y="112" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#7a6b2a">Note: Data compiled from internal systems</text>
+</svg>
+      <figcaption><strong>Chart A.</strong> Cluttered visualization with excessive design elements.</figcaption>
+    </figure>
+  </div>
+</div>
+<div class="card">
+  <h3>Chart B: Plain Visualization</h3>
+  <p>This chart is more readable than Chart A, but it does not use emphasis to direct the viewer toward the most important message.</p>
+  <div class="chart">
+    <figure>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" role="img" aria-labelledby="plain-title plain-desc" style="width:100%;height:auto;display:block;">
+<title id="plain-title">Plain bar chart of department performance scores</title>
+<desc id="plain-desc">Bar chart showing department performance scores for Sales, Marketing, Finance, Human Resources, Operations, and IT. All bars use the same muted color, and no department is visually emphasized. The chart is readable, but the most important message—that Operations has the lowest score—does not stand out immediately.</desc>
+<rect width="720" height="430" fill="white"/>
+<rect x="0" y="0" width="720" height="430" fill="white"/>
+<text x="18" y="20" font-size="24" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Department Performance Scores</text>
+<text x="18" y="40" font-size="18" font-family="Segoe UI, Arial, sans-serif" fill="#5c6773">Q2 internal performance review</text>
+<line x1="70" y1="390.0" x2="680" y2="390.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="60" y="394.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">0</text>
+<line x1="70" y1="330.0" x2="680" y2="330.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="60" y="334.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">20</text>
+<line x1="70" y1="270.0" x2="680" y2="270.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="60" y="274.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">40</text>
+<line x1="70" y1="210.0" x2="680" y2="210.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="60" y="214.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">60</text>
+<line x1="70" y1="150.0" x2="680" y2="150.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="60" y="154.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">80</text>
+<line x1="70" y1="90.0" x2="680" y2="90.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="60" y="94.0" text-anchor="end" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#222831">100</text>
+<line x1="70" y1="90" x2="70" y2="390" stroke="#7a8694" stroke-width="1.5"/>
+<line x1="70" y1="390" x2="680" y2="390" stroke="#7a8694" stroke-width="1.5"/>
+<text x="20" y="240.0" transform="rotate(-90 20 240.0)" text-anchor="middle" font-size="14" font-family="Segoe UI, Arial, sans-serif" fill="#222831">Performance Score</text>
+<rect x="94.4" y="156.0" width="52.9" height="234.0" fill="#b9c3cf" rx="2"/>
+<text x="120.8" y="420" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#44515f">Sales</text>
+<rect x="196.1" y="147.0" width="52.9" height="243.0" fill="#b9c3cf" rx="2"/>
+<text x="222.5" y="420" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#44515f">Marketing</text>
+<rect x="297.7" y="153.0" width="52.9" height="237.0" fill="#b9c3cf" rx="2"/>
+<text x="324.2" y="420" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#44515f">Finance</text>
+<rect x="399.4" y="159.0" width="52.9" height="231.0" fill="#b9c3cf" rx="2"/>
+<text x="425.8" y="420" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#44515f">HR</text>
+<rect x="501.1" y="195.0" width="52.9" height="195.0" fill="#b9c3cf" rx="2"/>
+<text x="527.5" y="420" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#44515f">Operations</text>
+<rect x="602.7" y="150.0" width="52.9" height="240.0" fill="#b9c3cf" rx="2"/>
+<text x="629.2" y="420" text-anchor="middle" font-size="12" font-family="Segoe UI, Arial, sans-serif" fill="#44515f">IT</text>
+</svg>
+      <figcaption><strong>Chart B.</strong> Plain visualization without visual emphasis.</figcaption>
+    </figure>
+  </div>
+</div>
+</div>
+<div class="note">
+  <h3>Your Task:</h3>
+<p>Create one improved chart using the dataset provided. Your chart should:</p>
+<ul><li>
+remove unnecessary elements that create clutter or noise</li>
+<li>use pre-attentive attributes (e.g., color, contrast, position) to clearly highlight the most important message</li></ul>
+
+<p>Then, briefly address the following:</p>
+<ol>
+   <li><strong>Design choices.</strong> Explain what elements from Chart A you chose not to include and why removing them improves clarity.</li>
+   <li><strong>Visual emphasis.</strong>Explain what elements you added or changed compared to Chart B to better direct the viewer’s attention.</li>
+   <li><strong>Managerial insight.</strong> State the key insight the manager should take away from the data.</li>
+   <li><strong>Recommendation.</strong> Provide one concise managerial recommendation based on the insight.</li> </ol>
+<p><strong>Submission:</strong> Upload a Word document with your revised chart and answers for questions 1 through 4.</p><p><strong>Important:</strong> If your chart was not developed in Excel, your document should also include the syntax used for developing the chart. 
+</div>
+</body>
+</html>

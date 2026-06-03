@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Visualization and Communication for Managers</title>
+<style>
+:root {
+  --bg: #f7f8fa;
+  --panel: #ffffff;
+  --ink: #222831;
+  --muted: #5c6773;
+  --line: #d7dde5;
+  --accent: #0f6c7b;
+  --accent-soft: #e8f4f6;
+  --note-bg: #fff7e8;
+  --note-line: #e6cf95;
+    --note:#eef79a;
+  --note2:#f5f8ad;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+}
+
+a { color: #0b5ea8; }
+.layout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4px;
+}
+.sidebar {
+  position: sticky;
+  top: 4px;
+  align-self: start;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 18px 14px;
+  box-shadow: 0 6px 20px rgba(34,40,49,.06);
+}
+.sidebar h2 {
+  margin: 0 0 8px;
+  font-size: 1.45rem;
+}
+.sidebar p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: .95rem;
+}
+.toc-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.toc-list .toc-list {
+  padding-left: 10px;
+  margin-top: 4px;
+}
+.toc-list li {
+  margin: 3px 0;
+}
+.toc-list a {
+  display: block;
+  text-decoration: none;
+  color: #334155;
+  padding: 4px 6px;
+  border-radius: 8px;
+  font-size: .96rem;
+}
+.toc-list a:hover, .toc-list a.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.content {
+  min-width: 0;
+}
+.frontmatter, .module, .subsection {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px 10px;
+  box-shadow: 0 6px 18px rgba(34,40,49,.05);
+  margin-bottom: 15px;
+}
+.frontmatter h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1.15;
+}
+.subtitle {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+h2, h3, h4 {
+  scroll-margin-top: 24px;
+}
+.module > h2 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+.level-2 > h3 {
+  margin: 4px 0 12px;
+  font-size: 1.35rem;
+}
+.level-3 > h4 {
+  margin: 4px 0 10px;
+  font-size: 1.12rem;
+}
+.insight, .insights {
+  background: var(--accent-soft);
+  border-right: 4px solid var(--accent);
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.box-2 > h3 {
+  margin: 4px 0 12px;
+  font-size: 1.35rem;
+}
+
+.wrapper { max-width: 1180px; margin: 0 auto; }
+.card { background:#fff; border:1px solid #d7dde5; border-radius:16px; padding:16px; margin-bottom:22px; box-shadow:0 4px 14px rgba(0,0,0,.05); }
+.grid2 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid2 figure {
+  min-width: 0;
+}
+.grid2 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.chart {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.chart-wide {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chart-small {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+@media (min-width: 1300px) { .grid2 { grid-template-columns:1fr 1fr; } }
+
+.grid3 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid3 figure {
+  min-width: 0;
+}
+.grid3 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (min-width: 1100px) { .grid3 { grid-template-columns:1fr 1fr; } }
+@media (min-width: 1500px) { .grid3 { grid-template-columns:1fr 1fr 1fr; } }
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0 10px;
+  font-size: 1.05rem;
+}
+
+/* Header */
+th {
+  text-align: left;
+  font-weight: 700;
+  padding: 14px 12px;
+  border-bottom: 2px solid #cfd6de;
+  color: #222;
+  background: none;
+}
+
+/* Cells */
+td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #d9dfe6;
+  color: #222;
+  background: none;
+}
+
+
+th, td {
+  border-left: none;
+  border-right: none;
+}
+
+
+caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #111;
+}
+
+.table-note {
+  margin-top: 12px;
+  font-style: italic;
+  color: #444;
+  font-size: 1.05rem;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+   ========================= */
+
+@media (max-width: 600px) {
+
+  thead {
+    display: none;
+  }
+
+  table, tbody, tr, td {
+    display: block;
+    width: 100%;
+  }
+
+  tr {
+    margin-bottom: 14px;
+    padding: 12px;
+    border: 1px solid #d7dde5;
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  td {
+    border: none;
+    padding: 6px 0;
+    font-size: 0.95rem;
+  }
+
+  td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 2px;
+  }
+}
+
+sup { font-size:0.72em; color:#0f6c7b; vertical-align:super; line-height:0; }
+.chart-wrap {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  margin-top:10px;
+}
+
+p {
+  margin: 0 0 14px;
+}
+ul {
+  margin: 0 0 14px 1rem;
+}
+li { margin-bottom: 7px; }
+figure {
+  margin: 20px 0 18px;
+  text-align: center;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+figcaption {
+  margin-top: 10px;
+  font-size: .96rem;
+  color: #44515f;
+  font-style: italic;
+}
+.note {
+  background: var(--note-bg);
+  border-left: 4px solid var(--note-line);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: .95rem;
+  margin-bottom: 12px;
+}
+.source-entry {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+    font-size: .9rem;
+  border-bottom: 1px dashed var(--line);
+}
+.source-entry:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+  font-size: .9rem;
+}
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+    max-height: none;
+  }
+}
+
+.grid-notes {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:22px;
+  margin-top:14px;
+}
+
+@media (min-width:800px) {
+  .grid-notes { grid-template-columns:1fr 1fr; }
+}
+@media (min-width:1000px) {
+  .grid-notes { grid-template-columns:1fr 1fr 1fr; }
+}
+.sticky {
+  background:linear-gradient(180deg,var(--note2),var(--note));
+  border:1px solid #d7df7a;
+  min-height:230px;
+  padding:20px 18px 18px;
+  box-shadow:0 10px 16px rgba(0,0,0,.08);
+  transform:rotate(-1deg);
+  position:relative;
+}
+.sticky:nth-child(2) { transform:rotate(1deg); }
+.sticky:nth-child(3) { transform:rotate(-0.5deg); }
+.sticky:nth-child(4) { transform:rotate(0.8deg); }
+.sticky:nth-child(5) { transform:rotate(-1deg); }
+.sticky:nth-child(6) { transform:rotate(0.5deg); }
+.sticky:before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:22px;
+  background:rgba(255,255,255,.18);
+}
+.sticky h3 {
+  margin:4px 0 12px;
+  font-size:1.15rem;
+  line-height:1.15;
+  font-weight:700;
+  font-family: "Comic Sans MS", Chalkboard SE, Marker Felt, cursive; 
+}
+.sticky p, .sticky li {
+  font-size:0.95rem;
+  line-height:1.45;
+  font-family: "Comic Sans MS", Chalkboard SE, Marker Felt, cursive; 
+}
+.sticky ul {
+  margin:0 0 0 18px;
+  padding:0;
+}
+.chart-wrap {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  margin-top:10px;
+}
+.note {
+  background:#fff7e8;
+  border-left:4px solid #e6cf95;
+  padding:12px 14px;
+  border-radius:8px;
+  font-size:.97rem;
+  margin-top:10px;
+}
+.small {
+  font-size:.93rem;
+  color:#44515f;
+}
+
+/* Citation tooltips: fixed positioning prevents hidden tooltips from widening the page. */
+.cite-ref { position:relative; display:inline-block; cursor:help; }
+.cite-tooltip {
+  visibility:hidden;
+  opacity:0;
+  position:fixed;
+  left:50%;
+  top:24px;
+  transform:translateX(-50%);
+  width:min(360px, calc(100vw - 32px));
+  max-width:calc(100vw - 32px);
+  background:#1f2937;
+  color:#fff;
+  text-align:left;
+  border-radius:8px;
+  padding:10px 12px;
+  font-size:0.82rem;
+  line-height:1.35;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+  z-index:9999;
+  transition:opacity .18s ease, visibility .18s ease;
+}
+.cite-tooltip::after { content:none; }
+.cite-ref:hover .cite-tooltip, .cite-ref:focus .cite-tooltip, .cite-ref:focus-within .cite-tooltip { visibility:visible; opacity:1; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" aria-label="Table of contents">
+    <h2>Contents</h2>
+    <ul class="toc-list"><li><strong><a href="#about-this-document">About This Document</a></strong></li>
+<li><strong><a href="#principles-of-effective-visualization-design">Module 2: Principles of Effective Visualization Design</a></strong><ul class="toc-list"><li><a href="#introduction-2">Introduction</a></li><li><a href="#clarity-and-simplicity-in-data-visualization">Clarity and Simplicity in Data Visualization</a><ul class="toc-list"><li><a href="#pre-attentive-attributes">Pre-attentive Attributes</a></li><li><a href="#visual-hierarchy">Visual Hierarchy</a></li><li><a href="#signal-vs-noise">Signal vs. Noise</a></li></ul></li><li><a href="#identifying-visual-clutter-and-chartjunk">Identifying Visual Clutter and Chartjunk</a></li><li><a href="#ethical-foundations-of-visualization">Ethical Foundations of Visualization</a></li><li><a href="#design-principles-for-managerial-communication">Practical Examples: Applying the Principles of Effective Visualization Design</a></li><li><a href="#key-takeaways-2">Key Takeaways</a></li><li><a href="#managerial-insight-2">Managerial Insight</a></li><li><a href="#key-sources-2">Key Sources</a></li></ul></ul>
+  </aside>
+  <main class="content">
+     <section class="frontmatter" id="about-this-document"><h1>Data Visualization and Communication for Managers</h1><h2>About This Document</h2><p>This document has been developed for students of Data Visualization and Communication for Managers. The topics contained herein have been carefully curated to help us accomplish the course goals; therefore, they are discussed at a high level rather than in depth. To learn about these topics more in-depth, I recommend that you visit the Sources listed at the end of each module.</p><p>This document reflects current research, simulated and real-world examples, and instructor-developed insights. <strong>Please do not share, reproduce, or distribute this document, or any part of it, outside of this class.</strong></p><p>This work is original and unique to this course, and as such, it is protected by copyright and the Digital Millennium Copyright Act (DMCA).</p>
+<p><strong>Copyright © 2026 Silvana Chambers.</strong></p></section>
+<section id="principles-of-effective-visualization-design" class="module level-1"><h2>Module 2: Principles of Effective Visualization Design</h2><section id="introduction-2" class="subsection level-2"><h3>Introduction</h3><p>In managerial settings, the value of a visualization depends on how easily decision makers can understand it. Even when data analysis is accurate, poorly designed charts can obscure insights, confuse audiences, and lead to poor decisions. Effective visualizations therefore require thoughtful design choices that prioritize clarity and comprehension.</p><p>This module focuses on the foundational principles that guide effective visualization design. These principles help ensure that charts communicate information efficiently and accurately rather than distracting viewers with unnecessary visual elements.</p><p>Several key ideas guide effective visual design:</p><ul><li>Visualizations should emphasize clarity rather than decoration</li><li>Important information should stand out immediately</li><li>Unnecessary visual elements should be removed</li><li>Design choices should support ethical communication</li></ul><p>In managerial contexts, visualizations often appear in presentations, dashboards, and reports intended for executives who must interpret information quickly. As a result, visual design must reduce cognitive effort and allow viewers to identify patterns with minimal interpretation.</p><p>The principles discussed in this module provide a framework for creating charts that communicate information effectively while avoiding common design mistakes.</p></section><section id="clarity-and-simplicity-in-data-visualization" class="subsection level-2"><h3>Clarity and Simplicity in Data Visualization</h3><p>Clarity is the most important goal of visualization design. A chart should make the underlying message easier to understand than the raw data itself. Many visualization tools automatically include stylistic features such as gridlines, borders, shading, and background colors. While these elements may appear visually appealing, they often distract from the data.</p><p>Effective visualization design focuses on simplicity. This does not mean removing necessary information but rather eliminating elements that do not contribute to understanding.</p><p>Cole Nussbaumer Knaflic emphasizes this idea in her discussion of decluttering visualizations, noting that default chart settings often introduce unnecessary visual elements that compete with the data for attention. Removing these elements helps viewers focus on the information that matters most.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2019). <em>Declutter! (and question default settings)</em>. Storytelling With Data Blog. https://www.storytellingwithdata.com/blog/2019/5/13/declutter-and-question-defaults</span></span></p><p>Clear charts typically include:<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Mendez, S. (2025). <em>4 Tips for Creating Clear, Understandable Graphs: Guide for Health Communicators</em>. Harvard T.H. Chan School of Public Health. https://hsph.harvard.edu/research/health-communication/resources/tips-for-creating-clear-understandable-graphs/</span></span></p><ul><li>Direct labeling where possible</li><li>Minimal visual distractions</li><li>Consistent scales and formatting</li><li>Emphasis on the most important data points</li></ul><p>The goal is not aesthetic minimalism for its own sake but improving comprehension.</p><section id="pre-attentive-attributes" class="subsection level-3"><h4>Pre-attentive Attributes</h4><p>Pre-attentive attributes are the specific visual properties that our brains process in the <strong>sensory buffer</strong> before we even consciously think about them. This type of low-level vision happens almost instantly, typically in under 250 milliseconds, allowing a viewer to detect patterns, outliers, and trends without cognitive effort.<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Healey, C. G., &amp; Enns, J. T. (2012). Attention and visual memory in visualization. <em>IEEE Transactions on Visualization and Computer Graphics, 18</em>(7), 1170-1188. https://doi.org/10.1109/TVCG.2011.127</span></span> By leveraging these attributes, we can direct the audience's attention to the most important parts of a data. This effectively creates a <strong>visual hierarchy</strong> that guides the user through the information.<span aria-label="Source 9" class="cite-ref" tabindex="0"><sup>9</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span> These attributes are generally categorized into four main groups:</p>
+<ol>
+<li><strong>Form:</strong> This includes features like length, width, size, shape, orientation, and enclosure. For example, a single long bar in a chart will stand out immediately among shorter ones.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span></li>
+<li><strong>Color:</strong> Both hue, which is the specific color, and intensity, which refers to saturation or brightness, are powerful tools for grouping or highlighting specific data points.<span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">Ware, C. (2020). <em>Information visualization: Perception for design</em> (4th ed.). Morgan Kaufmann.</span></span></li>
+<li><strong>Spatial Position:</strong> The 2D location of an object on a plane is often considered the most accurate attribute for humans to perceive quantitative differences. This is why scatter plots and bar charts are so effective.<span aria-label="Source 9" class="cite-ref" tabindex="0"><sup>9</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span></li>
+<li><strong>Motion:</strong> Though less common in static reports, flicker and direction of movement are the most aggressive ways to grab a viewer's attention.<span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">Ware, C. (2020). <em>Information visualization: Perception for design</em> (4th ed.). Morgan Kaufmann.</span></span></li></ol> 
+<p>This efficiency is supported by <strong>Feature Integration Theory</strong>, which suggests that the visual system initially processes individual features in parallel across the visual field before combining them into objects.<span aria-label="Source 10" class="cite-ref" tabindex="0"><sup>10</sup><span class="cite-tooltip" role="tooltip">Treisman, A. M., &amp; Gelade, G. (1980). A feature-integration theory of attention. <em>Cognitive Psychology, 12</em>(1), 97-136. https://doi.org/10.1016/0010-0285(80)90005-5</span></span><span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Healey, C. G., &amp; Enns, J. T. (2012). Attention and visual memory in visualization. <em>IEEE Transactions on Visualization and Computer Graphics, 18</em>(7), 1170-1188. https://doi.org/10.1109/TVCG.2011.127</span></span> Using these cues correctly reduces the <strong>cognitive load</strong> on the viewer. If a visualization lacks clear <strong>pre-attentive processing</strong> triggers, the viewer must use attentive processing. This is a slower, sequential search for information that can lead to <strong>mental fatigue</strong> and missed insights.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span></p>
+
+<p>According to Feature Integration Theory, finding a "red circle" among "red squares" and "blue circles" is difficult because it requires <strong>conjunction search</strong>.<span aria-label="Source 10" class="cite-ref" tabindex="0"><sup>10</sup><span class="cite-tooltip" role="tooltip">Treisman, A. M., &amp; Gelade, G. (1980). A feature-integration theory of attention. <em>Cognitive Psychology, 12</em>(1), 97-136. https://doi.org/10.1016/0010-0285(80)90005-5</span></span> While individual preattentive attributes like "redness" or "circularity" are processed in parallel and instantly, combining them into a single object requires focused attentive processing.<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Healey, C. G., &amp; Enns, J. T. (2012). Attention and visual memory in visualization. <em>IEEE Transactions on Visualization and Computer Graphics, 18</em>(7), 1170-1188. https://doi.org/10.1109/TVCG.2011.127</span></span></p>
+<p>In this scenario, the brain's sensory buffer identifies all the red objects and all the circular objects simultaneously. However, because both the target's color and its shape are shared by other distractors, the "red circle" does not pop out. The viewer must instead scan each item sequentially to verify if it possesses both specific features. This process significantly increases the cognitive load and the time required to interpret the data, illustrating why designers should avoid forcing users to combine multiple attributes to find a single insight.<span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">Ware, C. (2020). <em>Information visualization: Perception for design</em> (4th ed.). Morgan Kaufmann.</span></span></p>
+
+
+<h4>Let's Test It</h4>
+<p>Test yourself: In each image, locate the <strong>red circle</strong> as quickly as possible. Pay attention to how long it takes and how you search. Does the target “pop out,” or do you have to look carefully?</p>
+  <div class="grid2">
+  <div class="card">
+<div class="chart-small">
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 235 229" role="img" aria-labelledby="title desc">
+  <title id="title">Conjunction search: red circle among red squares and blue circles</title>
+  <desc id="desc">
+    A light gray square field containing scattered red squares and blue circles.
+    One red circle appears among the distractors. The shapes are close together but do not overlap.
+  </desc>
+
+  <rect width="235" height="229" fill="#fff"/>
+
+  <!-- Blue circles -->
+  <circle cx="67" cy="25" r="7" fill="#1f77b4"/>
+  <circle cx="98" cy="35" r="7" fill="#1f77b4"/>
+  <circle cx="124" cy="32" r="7" fill="#1f77b4"/>
+  <circle cx="159" cy="26" r="7" fill="#1f77b4"/>
+  <circle cx="22" cy="57" r="7" fill="#1f77b4"/>
+  <circle cx="70" cy="70" r="7" fill="#1f77b4"/>
+  <circle cx="168" cy="55" r="7" fill="#1f77b4"/>
+  <circle cx="213" cy="67" r="7" fill="#1f77b4"/>
+  <circle cx="136" cy="98" r="7" fill="#1f77b4"/>
+  <circle cx="176" cy="106" r="7" fill="#1f77b4"/>
+  <circle cx="27" cy="132" r="7" fill="#1f77b4"/>
+  <circle cx="93" cy="125" r="7" fill="#1f77b4"/>
+  <circle cx="56" cy="171" r="7" fill="#1f77b4"/>
+  <circle cx="178" cy="167" r="7" fill="#1f77b4"/>
+  <circle cx="98" cy="205" r="7" fill="#1f77b4"/>
+  <circle cx="139" cy="206" r="7" fill="#1f77b4"/>
+  <circle cx="206" cy="201" r="7" fill="#1f77b4"/>
+
+  <!-- Red squares -->
+  <rect x="27" y="31" width="13" height="13" fill="#ff0000"/>
+  <rect x="195" y="24" width="13" height="13" fill="#ff0000"/>
+   <rect x="155" y="74" width="13" height="13" fill="#ff0000"/>
+  <rect x="124" y="49" width="13" height="13" fill="#ff0000"/>
+  <rect x="101" y="61" width="13" height="13" fill="#ff0000"/>
+  <rect x="26" y="92" width="13" height="13" fill="#ff0000"/>
+  <rect x="64" y="99" width="13" height="13" fill="#ff0000"/>
+  <rect x="86" y="91" width="13" height="13" fill="#ff0000"/>
+  <rect x="204" y="89" width="13" height="13" fill="#ff0000"/>
+  <rect x="50" y="126" width="13" height="13" fill="#ff0000"/>
+  <rect x="135" y="130" width="13" height="13" fill="#ff0000"/>
+  <rect x="191" y="118" width="13" height="13" fill="#ff0000"/>
+  <rect x="28" y="158" width="13" height="13" fill="#ff0000"/>
+  <rect x="136" y="153" width="13" height="13" fill="#ff0000"/>
+  <rect x="196" y="151" width="13" height="13" fill="#ff0000"/>
+  <rect x="91" y="168" width="13" height="13" fill="#ff0000"/>
+  <rect x="17" y="196" width="13" height="13" fill="#ff0000"/>
+  <rect x="50" y="191" width="13" height="13" fill="#ff0000"/>
+  <rect x="168" y="194" width="13" height="13" fill="#ff0000"/>
+
+  <!-- Target: red circle -->
+  <circle cx="170" cy="135" r="7" fill="#ff0000"/>
+</svg><figcaption>Figure 2-1. Conjunction search: The target (red circle) shares its color with some objects and its shape with others, requiring slow, attentive scanning.</figcaption>
+</figure>
+</div></div>
+  <div class="card">
+<div class="chart-small">
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 229" role="img" aria-labelledby="title desc">
+  <title id="title">Single-feature search: red circle among red squares</title>
+  <desc id="desc">
+    A dense field of red squares on a light gray background with one red circle among them.
+    The circle stands out immediately because shape is the only differing feature.
+  </desc>
+
+  <rect width="236" height="229" fill="#fff"/>
+
+  <!-- Red squares -->
+  <rect x="27" y="16" width="12" height="12" fill="#ff0000"/>
+  <rect x="51" y="22" width="12" height="12" fill="#ff0000"/>
+  <rect x="88" y="18" width="12" height="12" fill="#ff0000"/>
+  <rect x="132" y="20" width="12" height="12" fill="#ff0000"/>
+  <rect x="160" y="12" width="12" height="12" fill="#ff0000"/>
+  <rect x="188" y="14" width="12" height="12" fill="#ff0000"/>
+
+  <rect x="30" y="45" width="12" height="12" fill="#ff0000"/>
+  <rect x="56" y="52" width="12" height="12" fill="#ff0000"/>
+  <rect x="92" y="60" width="12" height="12" fill="#ff0000"/>
+  <rect x="122" y="42" width="12" height="12" fill="#ff0000"/>
+  <rect x="154" y="64" width="12" height="12" fill="#ff0000"/>
+  <rect x="200" y="48" width="12" height="12" fill="#ff0000"/>
+
+  <rect x="22" y="88" width="12" height="12" fill="#ff0000"/>
+  <rect x="48" y="78" width="12" height="12" fill="#ff0000"/>
+  <rect x="92" y="86" width="12" height="12" fill="#ff0000"/>
+  <rect x="118" y="94" width="12" height="12" fill="#ff0000"/>
+  <rect x="144" y="96" width="12" height="12" fill="#ff0000"/>
+  <rect x="182" y="86" width="12" height="12" fill="#ff0000"/>
+
+  <rect x="26" y="118" width="12" height="12" fill="#ff0000"/>
+  <rect x="92" y="118" width="12" height="12" fill="#ff0000"/>
+  <rect x="116" y="120" width="12" height="12" fill="#ff0000"/>
+  <rect x="160" y="118" width="12" height="12" fill="#ff0000"/>
+  <rect x="186" y="120" width="12" height="12" fill="#ff0000"/>
+
+  <rect x="26" y="142" width="12" height="12" fill="#ff0000"/>
+  <rect x="48" y="150" width="12" height="12" fill="#ff0000"/>
+  <rect x="82" y="150" width="12" height="12" fill="#ff0000"/>
+  <rect x="120" y="150" width="12" height="12" fill="#ff0000"/>
+  <rect x="144" y="150" width="12" height="12" fill="#ff0000"/>
+  <rect x="188" y="150" width="12" height="12" fill="#ff0000"/>
+
+  <rect x="18" y="176" width="12" height="12" fill="#ff0000"/>
+  <rect x="50" y="190" width="12" height="12" fill="#ff0000"/>
+  <rect x="88" y="188" width="12" height="12" fill="#ff0000"/>
+  <rect x="128" y="196" width="12" height="12" fill="#ff0000"/>
+  <rect x="160" y="180" width="12" height="12" fill="#ff0000"/>
+  <rect x="190" y="188" width="12" height="12" fill="#ff0000"/>
+
+  <!-- Target: red circle -->
+  <circle cx="52" cy="122" r="6" fill="#ff0000"/>
+</svg><figcaption>Figure 2-2. Single-feature (pop-out) search: The target differs by shape alone, allowing it to be detected instantly and effortlessly.</figcaption>
+</figure></div></div></div>
+<p class="note"><strong>Note.</strong> In the first image, the target is defined by a conjunction of features (color and shape). Because neither feature is unique, the visual system cannot detect the target pre-attentively. Instead, viewers must engage in serial search, inspecting items one at a time, which increases cognitive load and search time. In the second image, the target differs from all other items by a single visual attribute (shape). This allows the visual system to process it pre-attentively, causing the target to "pop out" immediately. This contrast illustrates why effective data visualization should rely on distinct, singular visual cues to guide attention rather than forcing viewers to combine multiple attributes.</p>
+
+</section>
+<section id="visual-hierarchy" class="subsection level-3"><h4>Visual Hierarchy</h4><p>Visual hierarchy is a foundational design principle that dictates the arrangement of visual elements to ensure viewers naturally focus on the most important information first.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Nielsen Norman Group. (n.d.). <em>Visual Hierarchy in UX</em>. https://www.nngroup.com/articles/visual-hierarchy-ux-definition</span></span> By organizing content according to importance, designers create a path for the human eye, which research in user experience design suggests can reduce the effort required to process complex information.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Nielsen Norman Group. (n.d.). <em>Visual Hierarchy in UX</em>. https://www.nngroup.com/articles/visual-hierarchy-ux-definition</span></span> Without a clear hierarchy, viewers are forced into a state of attentive processing, where they must spend additional time and mental energy searching for meaning within a chart.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span></p>
+<p>We establish this hierarchy by leveraging specific visual cues that trigger preattentive processing. Key cues include:</p>
+<ul><li><strong>Size.</strong> Larger elements are perceived as more important than smaller ones.<span aria-label="Source 9" class="cite-ref" tabindex="0"><sup>9</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span></li>
+<li><strong>Color and Contrast.</strong> Bright colors or high-contrast elements draw the eye's focal point before muted or gray-scale items.<span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">Ware, C. (2020). <em>Information visualization: Perception for design</em> (4th ed.). Morgan Kaufmann.</span></span></li>
+<li><strong>Position.</strong> Placing critical information in the top-left or center of a display aligns with natural scanning patterns.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Nielsen Norman Group. (n.d.). <em>Visual Hierarchy in UX</em>. https://www.nngroup.com/articles/visual-hierarchy-ux-definition</span></span></li>
+<li><strong>Typography.</strong> Using different font weights or styles creates a clear distinction between titles, labels, and secondary data.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span></li></ul><p>For example, a chart title might be larger and darker than axis labels so that it captures attention first, while important data points may be highlighted in a distinct <strong>hue</strong> while less relevant information appears in gray.<span aria-label="Source 9" class="cite-ref" tabindex="0"><sup>9</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span> In <strong>managerial communication</strong>, establishing a visual hierarchy is particularly critical. Because decision-makers often scan information quickly rather than studying charts in detail, a well-structured hierarchy ensures the <strong>key message</strong> is communicated immediately, even during a brief glance.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span></p>
+
+<div class="card">
+<h4>Creating Hierarchy in a Table</h4>
+<p>To create a visual hierarchy within a table, you must move beyond just displaying data and start "storytelling" with your text. Without these cues, a table becomes a "data dump" where every cell competes for the viewer's limited attentive processing resources.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span>
+By using typography and font weight, you can guide a manager’s eye directly to the most critical rows or columns without needing to add extra colors or graphics.</p>
+<ul>
+<li><strong>Font Weight (Bold vs. Regular):</strong> Use bold weight only for headers and the primary "message" row (like a total or a specific target). This creates a clear focal point. When everything is bold, nothing is bold.<span aria-label="Source 9" class="cite-ref" tabindex="0"><sup>9</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span></li>
+<li><strong>Typeface Size:</strong> Increasing the size of the title or summary statistics by just 2 points can establish them as the top level of the visual hierarchy.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span>
+<li><strong>Color Saturation in Text:</strong> Use "de-emphasizing" techniques. Set secondary data (like unit labels or dates) in a medium gray rather than black. This keeps the information legible but pushes it to the background, allowing the black high-contrast data to stand out.<span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">Ware, C. (2020). <em>Information visualization: Perception for design</em> (4th ed.). Morgan Kaufmann.</span></span></li>
+<li><strong>Alignment and White Space:</strong> Proper alignment (right-aligning numbers and left-aligning text) creates "invisible" lines that the brain processes pre-attentively as structure, reducing the need for heavy grid lines which often cause visual clutter.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span></li></ul>
+
+
+
+<table>
+<caption>Table 2-1. Example: Sales Performance Table</caption>
+<title>Sales Performance by Region</title>
+  <tr>
+    <th>Region</th>
+    <th>Q1 Revenue</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <td><strong>North America</strong></td>
+    <td><strong>$4.2M</strong></td>
+    <td><strong>Exceeded</strong></td>
+  </tr>
+  <tr>
+    <td>Western Europe</td>
+    <td>$3.1M</td>
+    <td>Target</td>
+</tr>
+  <tr>
+    <td>East Asia</td>
+    <td>$2.8M</td>
+    <td>Target</td>
+</tr>
+</table>
+
+<tablecaption>
+Note: All figures in USD.</tablecaption>
+<p class="note"><strong>Note.</strong> In this example, the bold weight on the top row immediately identifies "North America" as the key takeaway, while the italics and grayed-out note at the bottom signal it is secondary information.</p>
+</div>
+<div class="card">
+<h4>Creating Hierarchy in a Chart</h4>
+<p>To create a visual hierarchy within a chart, you must move beyond simply plotting data points and begin to intentionally direct the viewer's gaze. Without these hierarchical cues, a chart remains a collection of values that the viewer must manually parse, which significantly increases cognitive load.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span>
+By strategically applying preattentive attributes, you can ensure that a manager or student understands the "so what" of the data within seconds of looking at the visualization.<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Healey, C. G., &amp; Enns, J. T. (2012). Attention and visual memory in visualization. <em>IEEE Transactions on Visualization and Computer Graphics, 18</em>(7), 1170-1188. https://doi.org/10.1109/TVCG.2011.127</span></span></p>
+<ul>
+<li><strong>Strategic Use of Color (Hue and Intensity):</strong> Use a single bold color (e.g., orange or dark blue) to highlight the most important data point, while setting all other data in a muted gray. This creates an immediate preattentive pop-out effect, signaling where the viewer should look first.<span aria-label="Source 9" class="cite-ref" tabindex="0"><sup>9</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span></li>
+<li><strong>Text Hierarchy (Size and Weight):</strong> The chart title should be the largest and boldest text on the page, serving as the first level of the visual hierarchy. Subtitles and annotations should be smaller, providing context without competing for attention.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span></li>
+<li><strong>Decluttering (The Data-to-Ink Ratio):</strong> Remove unnecessary elements like heavy grid lines, borders, and redundant tick marks. This reduces visual noise, allowing the core data to stand out more clearly against the background white space.<span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">Ware, C. (2020). <em>Information visualization: Perception for design</em> (4th ed.). Morgan Kaufmann.</span></span><span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Tufte, E. R. (2001). <em>The visual display of quantitative information</em> (2nd ed.). Graphics Press.</span></span></li>
+<li><strong>Direct Labeling:</strong> Instead of using a separate legend that requires the viewer's eye to move back and forth (increasing attentive processing time), place labels directly next to the data they describe. This creates a stronger spatial grouping.<span aria-label="Source 9" class="cite-ref" tabindex="0"><sup>9</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span></li></ul>
+<div class="chart">
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 500" role="img" aria-labelledby="title desc">
+  <title id="title">Quarterly revenue growth chart showing visual hierarchy</title>
+  <desc id="desc">
+    A decluttered horizontal bar chart titled North America outperformed all other regions in Q4.
+    North America is highlighted in saturated orange, while the other regional bars are light gray.
+    Direct labels are placed beside each bar, and minimal axis labels provide context without competing for attention.
+  </desc>
+
+  <rect width="820" height="500" fill="#ffffff"/>
+
+  <!-- Main title -->
+  <text x="70" y="55" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#111111">
+    North America outperformed all other regions in Q4
+  </text>
+
+  <!-- Subtitle -->
+  <text x="70" y="85" font-family="Arial, sans-serif" font-size="16" fill="#666666">
+    Quarterly revenue growth, in millions USD
+  </text>
+
+  <!-- Plot baseline -->
+  <line x1="230" y1="390" x2="720" y2="390" stroke="#d9d9d9" stroke-width="1"/>
+
+  <!-- Minimal x-axis labels -->
+  <text x="230" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#777777">0</text>
+  <text x="350" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#777777">50</text>
+  <text x="470" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#777777">100</text>
+  <text x="590" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#777777">150</text>
+  <text x="710" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#777777">200</text>
+
+  <!-- Region labels -->
+  <text x="70" y="145" font-family="Arial, sans-serif" font-size="14" fill="#555555">North America</text>
+  <text x="70" y="205" font-family="Arial, sans-serif" font-size="14" fill="#777777">Europe</text>
+  <text x="70" y="265" font-family="Arial, sans-serif" font-size="14" fill="#777777">Asia-Pacific</text>
+  <text x="70" y="325" font-family="Arial, sans-serif" font-size="14" fill="#777777">Latin America</text>
+
+  <!-- Bars -->
+  <rect x="230" y="122" width="456" height="34" rx="3" fill="#f97316"/>
+  <rect x="230" y="182" width="312" height="34" rx="3" fill="#d4d4d4"/>
+  <rect x="230" y="242" width="264" height="34" rx="3" fill="#d4d4d4"/>
+  <rect x="230" y="302" width="192" height="34" rx="3" fill="#d4d4d4"/>
+
+  <!-- Direct value labels -->
+  <text x="700" y="145" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#f97316">
+    $190M
+  </text>
+  <text x="560" y="205" font-family="Arial, sans-serif" font-size="13" fill="#777777">
+    $130M
+  </text>
+  <text x="512" y="265" font-family="Arial, sans-serif" font-size="13" fill="#777777">
+    $110M
+  </text>
+  <text x="440" y="325" font-family="Arial, sans-serif" font-size="13" fill="#777777">
+    $80M
+  </text>
+
+  <!-- Annotation -->
+  <text x="680" y="113" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#f97316">
+    Highest Q4 revenue
+  </text>
+
+  <!-- Design note -->
+  <rect x="70" y="445" width="680" height="34" rx="8" fill="#fff7ed"/>
+  <text x="88" y="467" font-family="Arial, sans-serif" font-size="13" fill="#444444">
+    Visual hierarchy: bold title → highlighted bar → direct labels → muted supporting context.
+  </text>
+</svg><figcaption>
+Figure 2-3. Example of visual hierarchy in a chart</figcaption></figure>
+</div>
+<p class="note"><strong>Note.</strong> In this chart, visual hierarchy directs attention from the bold title to the highlighted orange bar, immediately signaling North America as the key takeaway. The remaining bars are muted in gray to reduce distraction, while direct labels and minimal axis markings provide context without competing for attention.</p>
+</div></section>
+<section id="signal-vs-noise" class="subsection level-3"><h4>Signal vs. Noise</h4><p>A useful concept in visualization design is the distinction between signal and noise. <strong>Signal</strong> refers to the meaningful information in the visualization (e.g., the patterns, trends, or comparisons that the viewer should interpret). Think of the signal as the "what" that the viewer needs to know (e.g., "sales dropped in June"). It is important to highlight the signal of a visualization to prevent the audience from having to process and filter through noise to find the important information. To ensure that the signal pops out from the noise of surrounding data, consider using <strong>pre-attentive attributes</strong>. The Practical Examples section of this module provides several examples of signal amplifiers used in visualization design.</p><p> <strong>Noise</strong> refers to <strong>any visual element</strong> that distracts from the signal. Noise can take many forms:</p><ul><li>Excessive gridlines</li><li>Decorative backgrounds</li><li>Unnecessary labels</li><li>Redundant legends</li><li>3-dimensional chart effects</li></ul><p>Effective visualizations maximize the signal while minimizing the noise. Some of the most common types of noise can be grouped in a subset, often referred to as clutter or chartjunk. Edward Tufte describes these unnecessary elements as chartjunk, meaning visual decorations that do not improve the viewer’s understanding of the data.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Tufte, E. R. (2001). <em>The visual display of quantitative information</em> (2nd ed.). Graphics Press.</span></span> For example, 3-D pie charts may look visually impressive but often distort the relative size of the slices, making it harder to interpret the data accurately. We discuss this topic in more detail in the next section.</section></section><section id="identifying-visual-clutter-and-chartjunk" class="subsection level-2"><h3>Identifying Visual Clutter and Chartjunk</h3><p>As mentioned previously, visual clutter or chartjunk are a subset of noise that occurs when charts contain too many elements competing for attention. Common sources of clutter include:</p><ul><li>Too many colors</li><li>Excessive gridlines</li><li>Overlapping labels</li><li>Decorative effects</li><li>Unnecessary chart elements</li></ul><p>Clutter increases cognitive load and slows interpretation. Unlike noise, which includes any distracting element, including the data itself, Tufte’s concept of chartjunk highlights how non-data decorative features can interfere with data interpretation. These elements may appear visually appealing but provide little informational value.</p><p>Similarly, many <strong>default chart settings</strong> in spreadsheet software introduce visual clutter that designers should remove.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2019). <em>Declutter! (and question default settings)</em>. Storytelling With Data Blog. https://www.storytellingwithdata.com/blog/2019/5/13/declutter-and-question-defaults</span></span> For example, unnecessary borders, background shading, or heavy gridlines can distract from the data.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Mendez, S. (2025). <em>4 Tips for Creating Clear, Understandable Graphs: Guide for Health Communicators</em>. Harvard T.H. Chan School of Public Health. https://hsph.harvard.edu/research/health-communication/resources/tips-for-creating-clear-understandable-graphs/</span></span> <strong>Decluttering</strong> a chart often involves simplifying design choices so that the data itself becomes the central focus.</p></section>
+
+<section id="ethical-foundations-of-visualization" class="subsection level-2"><h3>Ethical Foundations of Visualization</h3><p>Visualization design is not only a technical skill but also an ethical responsibility. Because visualizations can strongly influence interpretation, designers must ensure that their charts represent data honestly and transparently.</p><p>Poor design choices can unintentionally mislead viewers. In some cases, visualizations are intentionally manipulated to exaggerate trends or hide important information. Common ways charts can mislead include:</p><ul><li>Manipulating axis scales to exaggerate differences</li><li>Using truncated axes without explanation</li><li>Choosing chart types that distort comparisons</li><li>Omitting relevant context</li></ul><p>The resource "How to Lie with Charts" illustrates several examples of misleading visualizations and shows how small design choices can dramatically change interpretation.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Dougherty, J., &amp; Ilyankou, I. (2021). <em>How to Lie with Charts</em>. Hands-On Data Visualization. https://handsondataviz.org/how-to-lie-with-charts.html</span></span></p><p>Ethical visualization requires consideration of how visualization choices influence the viewer’s understanding.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Dougherty, J., &amp; Ilyankou, I. (2021). <em>How to Lie with Charts</em>. Hands-On Data Visualization. https://handsondataviz.org/how-to-lie-with-charts.html</span></span> A chart should clarify the data rather than manipulate the audience’s perception. We will revisit these ideas later when we discuss more advanced communication choices.</p><p>In managerial contexts, ethical visualization is particularly important because decisions based on misleading visuals may affect employees, customers, investors, and other stakeholders.</p></section>
+
+<section id="design-principles-for-managerial-communication" class="subsection level-2"><h3>Practical Examples: Applying the Principles of Effective Visualization Design</h3><p>The principles discussed in this module can be summarized through several practical guidelines for managers. Effective visualizations should:<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Mendez, S. (2025). <em>4 Tips for Creating Clear, Understandable Graphs: Guide for Health Communicators</em>. Harvard T.H. Chan School of Public Health. https://hsph.harvard.edu/research/health-communication/resources/tips-for-creating-clear-understandable-graphs/</span></span><span aria-label="Source 9" class="cite-ref" tabindex="0"><sup>9</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span></p><ul><li>Emphasize clarity and simplicity</li><li>Highlight the most important insights</li><li>Reduce unnecessary visual elements</li><li>Guide attention using visual hierarchy</li><li>Avoid design choices that distort interpretation</li></ul><p>These principles help ensure that visualizations function as tools for decision support rather than sources of confusion.</p><p>In the next modules, we will apply these principles to specific chart types and explore how visualizations can support persuasive communication and storytelling in managerial contexts.</p>
+
+<div class="card">
+<h4>Example 1. Using Pre-attentive Attributes to  Amplify the Signal</h4>
+  <div class="grid2">
+  <div class="chart-small">
+   <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-1 svg-desc-1" style="width:100%;height:auto;display:block;"><title id="svg-title-1">Pre-attentive Attributes Example 1</title><desc id="svg-desc-1">Bar chart showing year-to-date sales quota attainment for five locations. All bars are gray, so no single store is emphasized. Orlando has the lowest score.</desc><rect width="560" height="360" fill="white"/><text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Sales Quota Attainment by Location (YTD)</text><line x1="60" y1="305.0" x2="535" y2="305.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="310.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">0</text><line x1="60" y1="253.0" x2="535" y2="253.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="258.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">20</text><line x1="60" y1="201.0" x2="535" y2="201.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="206.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">40</text><line x1="60" y1="149.0" x2="535" y2="149.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="154.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">60</text><line x1="60" y1="97.0" x2="535" y2="97.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="102.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">80</text><line x1="60" y1="45.0" x2="535" y2="45.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="50.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">100</text>
+    <line x1="60" y1="45" x2="60" y2="305" stroke="#7a8694" stroke-width="1.5"/><line x1="60" y1="305" x2="535" y2="305" stroke="#7a8694" stroke-width="1.5"/><rect x="78.5" y="84.2" width="58" height="220.8" fill="#b9c3cf" stroke="#6b7785" stroke-width="0"/><text x="107.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Atlanta</text><rect x="173.5" y="88" width="58" height="216.4" fill="#b9c3cf" stroke="#6b7785" stroke-width="0"/><text x="202.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Denver</text><rect x="268.5" y="106" width="58" height="199" fill="#b9c3cf" stroke="#6b7785" stroke-width="0"/><text x="297.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Houston</text><rect x="363.5" y="140" width="58" height="165.4" fill="#b9c3cf" stroke="#6b7785" stroke-width="0"/><text x="392.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Orlando</text><rect x="458.5" y="95.5" width="58" height="210" fill="#b9c3cf" stroke="#6b7785" stroke-width="0"/><text x="487.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Nashville</text>
+
+  <text x="107.5" y="79" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">83%</text><text x="202.5" y="84" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">82%</text><text x="297.5" y="102.5" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">78%</text><text x="392.5" y="136.6" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">62%</text><text x="487.5" y="93.0" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">80%</text>
+
+<text x="520" y="108" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#222831"></text>
+<text x="60" y="37" font-family="Segoe UI, Arial" font-size="14" fill="#445">The Orlando store underperforms compared to others</text></svg><figcaption>Figure 2-4. Example of a Chart Without Pre-Attentive Attributes.</figcaption></figure></div>
+<div class="chart-small">  
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-2 svg-desc-2" style="width:100%;height:auto;display:block;"><title id="svg-title-2">Pre-attentive Attributes Example 1</title><desc id="svg-desc-2">Bar chart showing year-to-date sales quota attainment for five locations. Orlando is highlighted in red to draw attention to its lower score.</desc><rect width="560" height="360" fill="white"/><text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Sales Quota Attainment by Location (YTD)</text><line x1="60" y1="305.0" x2="535" y2="305.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="310.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">0</text><line x1="60" y1="253.0" x2="535" y2="253.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="258.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">20</text><line x1="60" y1="201.0" x2="535" y2="201.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="206.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">40</text><line x1="60" y1="149.0" x2="535" y2="149.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="154.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">60</text><line x1="60" y1="97.0" x2="535" y2="97.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="102.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">80</text><line x1="60" y1="45.0" x2="535" y2="45.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="50.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">100</text><line x1="60" y1="45" x2="60" y2="305" stroke="#7a8694" stroke-width="1.5"/><line x1="60" y1="305" x2="535" y2="305" stroke="#7a8694" stroke-width="1.5"/>
+    
+    <rect x="78.5" y="84.2" width="58" height="220.8" fill="#b9c3cf" stroke="#6b7785" stroke-width="0"/><text x="107.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Atlanta</text><rect x="173.5" y="88" width="58" height="216.4" fill="#b9c3cf" stroke="#6b7785" stroke-width="0"/><text x="202.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Denver</text><rect x="268.5" y="106" width="58" height="199" fill="#b9c3cf" stroke="#6b7785" stroke-width="0"/><text x="297.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Houston</text><rect x="363.5" y="140" width="58" height="165.4" fill="#ff5a5f" stroke="#6b7785" stroke-width="0"/><text x="392.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Orlando</text><rect x="458.5" y="95.5" width="58" height="210" fill="#b9c3cf" stroke="#6b7785" stroke-width="0"/><text x="487.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Nashville</text>
+
+    <line x1="60" y1="110" x2="525" y2="110" stroke="#222222" stroke-width="1" stroke-dasharray="8 8"/>
+<text x="520" y="108" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#222831"></text>
+<text x="60" y="37" font-family="Segoe UI, Arial" font-size="14" fill="#445">The Orlando store underperforms compared to others</text></svg><figcaption>Figure 2-5. Example of a chart with a pre-attentive attribute: using a different color draws attention to the low score we want to highlight.</figcaption></figure></div></div>
+<p class="note">Note: While both charts are free of clutter, only the second one uses color as a pre-attentive attribute that brings the viewer's attention to the key message of the chart. When pre-attentive attributes are used to highlight the signal, visualizations are more effective.<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Healey, C. G., &amp; Enns, J. T. (2012). Attention and visual memory in visualization. <em>IEEE Transactions on Visualization and Computer Graphics, 18</em>(7), 1170-1188. https://doi.org/10.1109/TVCG.2011.127</span></span></p>
+  </div>
+<div class="card">
+<h4>Example 2. When Used Incorrectly, Pre-attentive Attributes Can Create Noise</h4>
+  <div class="grid2">
+  <div class="chart-small">  
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-3 svg-desc-3" style="width:100%;height:auto;display:block;"><title id="svg-title-3">Signal vs Noise Example 2</title><desc id="svg-desc-3">Monthly retention rate shown in a noisy line chart with a decorative background, heavy gridlines, repeated labels, markers, and a legend that distract from the key message.</desc><rect width="560" height="360" fill="white"/><text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Employee Retention Trend</text><defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#e3f0ff"/><stop offset="100%" stop-color="#fff4e8"/></linearGradient></defs><rect x="55" y="45" width="485" height="260" fill="url(#g)" stroke="#9aa7b6" stroke-width="2"/><line x1="55" y1="305.0" x2="540" y2="305.0" stroke="#b8c4d2" stroke-width="2"/><text x="47" y="309.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">70%</text><line x1="55" y1="261.7" x2="540" y2="261.7" stroke="#b8c4d2" stroke-width="2"/><text x="47" y="265.7" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">75%</text><line x1="55" y1="218.3" x2="540" y2="218.3" stroke="#b8c4d2" stroke-width="2"/><text x="47" y="222.3" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">80%</text><line x1="55" y1="175.0" x2="540" y2="175.0" stroke="#b8c4d2" stroke-width="2"/><text x="47" y="179.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">85%</text><line x1="55" y1="131.7" x2="540" y2="131.7" stroke="#b8c4d2" stroke-width="2"/><text x="47" y="135.7" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">90%</text><line x1="55" y1="88.3" x2="540" y2="88.3" stroke="#b8c4d2" stroke-width="2"/><text x="47" y="92.3" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">95%</text><line x1="55" y1="45.0" x2="540" y2="45.0" stroke="#b8c4d2" stroke-width="2"/><text x="47" y="49.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">100%</text><path d="M 55.0 79.7 L 152.0 88.3 L 249.0 97.0 L 346.0 227.0 L 443.0 218.3 L 540.0 209.7" fill="none" stroke="#5b9bd5" stroke-width="5" /><circle cx="55.0" cy="79.7" r="6" fill="#ff5a5f" stroke="white" stroke-width="2"/><text x="55.0" y="67.7" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">96%</text><text x="55.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">Jan</text><circle cx="152.0" cy="88.3" r="6" fill="#ff5a5f" stroke="white" stroke-width="2"/><text x="152.0" y="76.3" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">95%</text><text x="152.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">Feb</text><circle cx="249.0" cy="97.0" r="6" fill="#ff5a5f" stroke="white" stroke-width="2"/><text x="249.0" y="85.0" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">94%</text><text x="249.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">Mar</text><circle cx="346.0" cy="227.0" r="6" fill="#ff5a5f" stroke="white" stroke-width="2"/><text x="346.0" y="215.0" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">79%</text><text x="346.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">Apr</text><circle cx="443.0" cy="218.3" r="6" fill="#ff5a5f" stroke="white" stroke-width="2"/><text x="443.0" y="206.3" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">80%</text><text x="443.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">May</text><circle cx="540.0" cy="209.7" r="6" fill="#ff5a5f" stroke="white" stroke-width="2"/><text x="540.0" y="197.7" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">81%</text><text x="540.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">Jun</text><rect x="415" y="48" width="120" height="42" fill="white" stroke="#aeb7c2"/><line x1="425" y1="62" x2="455" y2="62" stroke="#5b9bd5" stroke-width="4"/><text x="462" y="66" font-size="12" font-family="Segoe UI, Arial">Retention</text><text x="55" y="37" font-family="Segoe UI, Arial" font-size="14" fill="#445">Monthly retention rate for one business unit</text></svg><figcaption>Figure 2-6. Example of a chart with chartjunk that clutters the visualization and creates noise. The decorative background, repeated labels, heavy gridlines, markers, and legend compete with the actual trend, obscuring the signal.</figcaption></figure></div>
+<div class="chart-small">  
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-4 svg-desc-4" style="width:100%;height:auto;display:block;"><title id="svg-title-4">Signal vs Noise Example 2</title><desc id="svg-desc-4">Cleaner line chart showing monthly retention. April is highlighted and annotated to emphasize the sharp drop in retention.</desc><rect width="560" height="360" fill="white"/><text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Employee Retention Trend</text><line x1="55" y1="305.0" x2="540" y2="305.0" stroke="#d7dde5" stroke-width="1"/><text x="47" y="309.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">70%</text><line x1="55" y1="261.7" x2="540" y2="261.7" stroke="#d7dde5" stroke-width="1"/><text x="47" y="265.7" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">75%</text><line x1="55" y1="218.3" x2="540" y2="218.3" stroke="#d7dde5" stroke-width="1"/><text x="47" y="222.3" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">80%</text><line x1="55" y1="175.0" x2="540" y2="175.0" stroke="#d7dde5" stroke-width="1"/><text x="47" y="179.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">85%</text><line x1="55" y1="131.7" x2="540" y2="131.7" stroke="#d7dde5" stroke-width="1"/><text x="47" y="135.7" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">90%</text><line x1="55" y1="88.3" x2="540" y2="88.3" stroke="#d7dde5" stroke-width="1"/><text x="47" y="92.3" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">95%</text><line x1="55" y1="45.0" x2="540" y2="45.0" stroke="#d7dde5" stroke-width="1"/><text x="47" y="49.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">100%</text><path d="M 55.0 79.7 L 152.0 88.3 L 249.0 97.0 L 346.0 227.0 L 443.0 218.3 L 540.0 209.7" fill="none" stroke="#5b9bd5" stroke-width="3" /><circle cx="55.0" cy="79.7" r="4" fill="#5b9bd5"/><text x="55.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">Jan</text><circle cx="152.0" cy="88.3" r="4" fill="#5b9bd5"/><text x="152.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">Feb</text><circle cx="249.0" cy="97.0" r="4" fill="#5b9bd5"/><text x="249.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">Mar</text><circle cx="346.0" cy="227.0" r="6" fill="#ff5a5f"/><text x="346.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">Apr</text><circle cx="443.0" cy="218.3" r="4" fill="#5b9bd5"/><text x="443.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">May</text><circle cx="540.0" cy="209.7" r="4" fill="#5b9bd5"/><text x="540.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">Jun</text><text x="55" y="37" font-family="Segoe UI, Arial" font-size="14" fill="#445">Retention drops sharply in April, then stabilizes.</text><text x="343.0" y="210.0" font-family="Segoe UI, Arial" font-size="15" font-weight="700"  fill="#ff5a5f">&#9660; 15% </text></svg><figcaption>Figure 2-7. The annotation, lighter scaffolding and intentional use of color serve as pre-attentive attributes that emphasize the signal.</figcaption></figure></div>
+  </div>
+    <p class="note">Note: These charts highlight the importance of using pre-attentive attributes sparingly and strategically. When they are used on elements other than the key message, they compete for attention and become noise, making the visualization less effective.</p>
+</div>  
+<div class="card">
+<h4>Example 3. Less Is More: Removing Visual Noise</h4>
+  <div class="grid2">
+  <div class="chart-small">  
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-5 svg-desc-5" style="width:100%;height:auto;display:block;"><title id="svg-title-5">Signal vs Noise Example 1</title><desc id="svg-desc-5">Department scores in a noisy bar chart and a cleaner version.</desc><rect width="560" height="360" fill="white"/><text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Employee Performance by Department</text><defs><pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#dfe7f2"/></pattern></defs><rect x="60" y="45" width="475" height="260" fill="url(#dots)" stroke="#9aa7b6" stroke-width="3"/><line x1="60" y1="305.0" x2="535" y2="305.0" stroke="#b8c4d2" stroke-width="2"/><text x="52" y="310.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">0</text><line x1="60" y1="292.0" x2="535" y2="292.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="279.0" x2="535" y2="279.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="266.0" x2="535" y2="266.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="253.0" x2="535" y2="253.0" stroke="#b8c4d2" stroke-width="2"/><text x="52" y="258.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">1</text><line x1="60" y1="240.0" x2="535" y2="240.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="227.0" x2="535" y2="227.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="214.0" x2="535" y2="214.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="201.0" x2="535" y2="201.0" stroke="#b8c4d2" stroke-width="2"/><text x="52" y="206.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">2</text><line x1="60" y1="188.0" x2="535" y2="188.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="175.0" x2="535" y2="175.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="162.0" x2="535" y2="162.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="149.0" x2="535" y2="149.0" stroke="#b8c4d2" stroke-width="2"/><text x="52" y="154.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">3</text><line x1="60" y1="136.0" x2="535" y2="136.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="123.0" x2="535" y2="123.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="110.0" x2="535" y2="110.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="97.0" x2="535" y2="97.0" stroke="#b8c4d2" stroke-width="2"/><text x="52" y="102.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">4</text><line x1="60" y1="84.0" x2="535" y2="84.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="71.0" x2="535" y2="71.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="58.0" x2="535" y2="58.0" stroke="#e6edf5" stroke-width="1"/><line x1="60" y1="45.0" x2="535" y2="45.0" stroke="#b8c4d2" stroke-width="2"/><text x="52" y="50.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">5</text><line x1="60" y1="45" x2="60" y2="305" stroke="#7a8694" stroke-width="1.5"/><line x1="60" y1="305" x2="535" y2="305" stroke="#7a8694" stroke-width="1.5"/><rect x="84.5" y="106.2" width="54" height="202.8" fill="#d1d9e3" opacity="0.6"/><rect x="80.5" y="102.2" width="54" height="202.8" fill="#5b9bd5" stroke="#6b7785" stroke-width="1"/><text x="107.5" y="94.2" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">3.9</text><text x="107.5" y="80.2" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#445">Score</text><text x="107.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Sales</text><rect x="179.5" y="95.8" width="54" height="213.2" fill="#d1d9e3" opacity="0.6"/><rect x="175.5" y="91.8" width="54" height="213.2" fill="#70ad47" stroke="#6b7785" stroke-width="1"/><text x="202.5" y="83.8" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">4.1</text><text x="202.5" y="69.8" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#445">Score</text><text x="202.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Mktg</text><rect x="274.5" y="98.4" width="54" height="210.6" fill="#d1d9e3" opacity="0.6"/><rect x="270.5" y="94.4" width="54" height="210.6" fill="#ffc000" stroke="#6b7785" stroke-width="1"/><text x="297.5" y="86.4" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">4.05</text><text x="297.5" y="72.4" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#445">Score</text><text x="297.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Fin.</text><rect x="369.5" y="168.6" width="54" height="140.4" fill="#d1d9e3" opacity="0.6"/><rect x="365.5" y="164.6" width="54" height="140.4" fill="#db272d" stroke="#6b7785" stroke-width="1"/><text x="392.5" y="156.6" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">2.7</text><text x="392.5" y="142.6" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#445">Score</text><text x="392.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Ops.</text><rect x="464.5" y="57.0" width="54" height="248.0" fill="#d1d9e3" opacity="0.6"/><rect x="460.5" y="97.0" width="54" height="208.0" fill="#8064a2" stroke="#6b7785" stroke-width="1"/><text x="487.5" y="89.0" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">4.75</text><text x="487.5" y="75.0" text-anchor="middle" font-family="Segoe UI, Arial" font-size="10" fill="#445">Score</text><text x="487.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">HR</text><rect x="405" y="42" width="135" height="58" fill="white" stroke="#aeb7c2"/><rect x="415" y="56" width="12" height="12" fill="#5b9bd5"/><text x="434" y="66" font-size="12" font-family="Segoe UI, Arial">Scores</text><rect x="415" y="78" width="12" height="12" fill="#db272d"/><text x="434" y="88" font-size="12" font-family="Segoe UI, Arial">Problem dept.</text><text x="60" y="37" font-family="Segoe UI, Arial" font-size="14" fill="#445">Department performance scores</text></svg><figcaption>Figure 2-8. Example of a noisy bar chart: excessive gridlines, patterned background, unnecessary labels, shadow effects, and a redundant legend draw attention away from the main comparison.</figcaption></figure></div>
+    <div class="chart-small">  
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-6 svg-desc-6" style="width:100%;height:auto;display:block;"><title id="svg-title-6">Example 3. Decluttered Chart</title><desc id="svg-desc-6">Department scores in a noisy bar chart and a cleaner version.</desc><rect width="560" height="360" fill="white"/><text x="14" y="16" font-family="Segoe UI, Arial" font-size="20" fill="#222">Employee Performance by Department</text><line x1="60" y1="305.0" x2="535" y2="305.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="310.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">0</text><line x1="60" y1="253.0" x2="535" y2="253.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="258.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">1</text><line x1="60" y1="201.0" x2="535" y2="201.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="206.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">2</text><line x1="60" y1="149.0" x2="535" y2="149.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="154.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">3</text><line x1="60" y1="97.0" x2="535" y2="97.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="102.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">4</text><line x1="60" y1="45.0" x2="535" y2="45.0" stroke="#d7dde5" stroke-width="1"/><text x="52" y="50.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">5</text><line x1="60" y1="45" x2="60" y2="305" stroke="#7a8694" stroke-width="1.5"/><line x1="60" y1="305" x2="535" y2="305" stroke="#7a8694" stroke-width="1.5"/><rect x="78.5" y="102.2" width="58" height="202.8" fill="#c3e0e0" stroke="#6b7785" stroke-width="0"/><text x="107.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Sales</text><rect x="173.5" y="91.8" width="58" height="213.2" fill="#c3e0e0" stroke="#6b7785" stroke-width="0"/><text x="202.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Mktg</text><rect x="268.5" y="94.4" width="58" height="210.6" fill="#c3e0e0" stroke="#6b7785" stroke-width="0"/><text x="297.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Fin.</text><rect x="363.5" y="164.6" width="58" height="140.4" fill="#db272d" stroke="#6b7785" stroke-width="0"/><text x="392.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">Ops.</text><rect x="458.5" y="57" width="58" height="248.0" fill="#c3e0e0" stroke="#6b7785" stroke-width="0"/><text x="487.5" y="344" text-anchor="middle" font-family="Segoe UI, Arial" font-size="14" fill="#223">HR</text>
+    <line x1="60" y1="102.2" x2="525" y2="102.2" stroke="#222222" stroke-width="1" stroke-dasharray="8 8"/>
+<text x="520" y="96" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#222831">Mean</text>
+<text x="60" y="37" font-family="Segoe UI, Arial" font-size="14" fill="#445">Operations lags significantly compared to the organization</text></svg><figcaption>Figure 2-9. Example of a decluttered bar chart with fewer non-data elements make the low Operations score immediately visible.</figcaption></figure>
+  </div></div>
+  <p class="note">Note: These examples highlight that simplicity and clarity should be prioritized over decoration. In visualization, less is more; any elements included in a chart should help convey the key message or insight that supports a recommendation.</p>
+</div>
+
+
+<div class="card">
+<h4>Example 4. Decluttering Involves Removing Unecessary Elements (Data and Non-Data)</h4>
+  <div class="grid2">
+<div class="chart-small">  
+    <figure>
+      <svg viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-7 svg-desc-7" style="width:100%;height:auto;display:block;">
+        <title id="svg-title-7">Noisy pie chart with unnecessary labels and visual clutter</title>
+        <desc id="svg-desc-7">
+          A pie chart showing category shares A 24 percent, B 23 percent, C 21 percent, D 19 percent, and E 13 percent. The chart includes excessive labels around the slices, a redundant legend, and visual effects that make it harder to compare proportions.
+        </desc>
+
+        <rect width="560" height="360" fill="white"/>
+
+        <text x="14" y="16" font-size="20">Share of Sales by Team</text>
+
+<g transform="translate(300,200)">
+  <!-- Company A (20%) -->
+  <path d="M0,0 L0,-140 A140,140 0 0,1 133.15,-43.26 Z" fill="#7fbaf0" stroke="white" stroke-width="2"/>
+  
+  <!-- Company B (13%) -->
+  <path d="M0,0 L137.15,-43.26 A140,140 0 0,1 102.06,95.84 Z" fill="#f7888b" stroke="white" stroke-width="2"/>
+  
+  <!-- Our Company (19%) -->
+  <path d="M0,0 L102.06,95.84 A140,140 0 0,1 -51.31,130.26 Z" fill="#b8dba0" stroke="white" stroke-width="2"/>
+  
+  <!-- Company D (21%) -->
+  <path d="M0,0 L-51.31,130.26 A140,140 0 0,1 -138.89,-17.54 Z" fill="#ffc000" stroke="white" stroke-width="2"/>
+  
+  <!-- Company C (23%) -->
+  <path d="M0,0 L-138.89,-17.54 A140,140 0 0,1 0,-140 Z" fill="#aba3f7" stroke="white" stroke-width="2"/>
+</g>
+        <!-- cluttered labels -->
+        <text x="210" y="130" font-size="14">A 24%</text>
+        <text x="340" y="130" font-size="14">C 21%</text>
+        <text x="380" y="220" font-size="14">D 19%</text>
+        <text x="210" y="250" font-size="14">B 23%</text>
+        <text x="305" y="290" font-size="14">E 13%</text>
+
+        <!-- redundant legend -->
+        <rect x="450" y="80" width="100" height="120" fill="white" stroke="#ccc"/>
+        <text x="460" y="110" font-size="12">A (24%)</text>
+        <text x="460" y="130" font-size="12">B (23%)</text>
+        <text x="460" y="150" font-size="12">C (21%)</text>
+        <text x="460" y="170" font-size="12">D (19%)</text>
+        <text x="460" y="190" font-size="12">E (13%)</text>
+        
+        <text x="60" y="37" font-family="Segoe UI, Arial" font-size="14" fill="#445">Team A is the leader in sales performace</text>
+      </svg>
+
+      <figcaption>
+        Figure 2-10. Multiple colors, excessive labels, redundant legend, and clutter make comparison difficult.
+      </figcaption>
+    </figure>
+</div>
+    <!-- CLEAN VERSION -->
+    <div class="chart-small">  
+    <figure>
+      <svg viewBox="0 0 560 360" role="img" aria-labelledby="svg-title-8 svg-desc-8" style="width:100%;height:auto;display:block;">
+        <title id="svg-title-8">Clean bar chart showing category comparisons clearly</title>
+        <desc id="svg-desc-8">
+          A bar chart showing category shares A 24 percent, B 23 percent, C 21 percent, D 19 percent, and E 13 percent. The bar chart makes it easy to compare values and identify rankings across categories.
+        </desc>
+
+        <rect width="560" height="360" fill="white"/>
+
+        <text x="14" y="16" font-size="20">Share of Sales by Team</text>
+
+        <!-- axes -->
+        <line x1="60" y1="300" x2="520" y2="300" stroke="#444"/>
+        <line x1="60" y1="60" x2="60" y2="300" stroke="#444"/>
+
+        <!-- bars -->
+        <rect x="90" y="150" width="50" height="150" fill="#5b9bd5"/>
+        <rect x="170" y="160" width="50" height="140" fill="#b9c3cf"/>
+        <rect x="250" y="180" width="50" height="120" fill="#b9c3cf"/>
+        <rect x="330" y="200" width="50" height="100" fill="#b9c3cf"/>
+        <rect x="410" y="240" width="50" height="60" fill="#b9c3cf"/>
+
+        <!-- labels -->
+        <text x="115" y="140" text-anchor="middle">24%</text>
+        <text x="195" y="150" text-anchor="middle">23%</text>
+        <text x="275" y="170" text-anchor="middle">21%</text>
+        <text x="355" y="190" text-anchor="middle">19%</text>
+        <text x="435" y="230" text-anchor="middle">13%</text>
+
+        <text x="115" y="320" text-anchor="middle">A</text>
+        <text x="195" y="320" text-anchor="middle">B</text>
+        <text x="275" y="320" text-anchor="middle">C</text>
+        <text x="355" y="320" text-anchor="middle">D</text>
+        <text x="435" y="320" text-anchor="middle">E</text>
+                <text x="60" y="37" font-family="Segoe UI, Arial" font-size="14" fill="#445">Team A is the leader in sales performace</text>
+      </svg>
+
+      <figcaption>
+        Figure 2-11. Values are easier to compare because lengths share a common baseline, and the use of color emphasizes the key message.
+      </figcaption>
+    </figure></div>
+  </div>
+    <p class="note">Note: These examples highlight the importance of keeping visualizations clean, avoiding redundant elements, and highlighting the signal.</p>
+</div>  
+
+<div class="card">
+<h4>Example 5. Avoid 3D Charts and Other Chart Types That Distort or Exaggerate the Message</h4>
+<div class="grid2">
+<div class="chart-small"> 
+  <figure>
+    <svg xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 2250 1442"
+         role="img"
+         aria-labelledby="svg-title-9 svg-desc-9"
+         preserveAspectRatio="xMidYMid meet"
+         style="width:100%;height:auto;display:block;">
+      <title id="svg-title-9">Distorted 3D pie chart example</title>
+          <desc id="svg-desc-9">A 3D exploded pie chart comparing companies A, B, C, D, and Our Company. The front slice appears much larger because perspective exaggerates its size.</desc>
+
+<rect width="100%" height="100%" fill="#fff"/>
+        <text x="40" y="60" font-size="75">Medical-Grade Wearable Technology Market Share Distribution</text>
+<defs>
+  <linearGradient id="frontGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#4f96b8"/>
+    <stop offset="100%" stop-color="#2a5769"/>
+  </linearGradient>
+  <style>
+    .stroke { stroke:#efefef; stroke-width:7; stroke-linejoin:round; stroke-linecap:round; }
+    .labelbox { fill:#f2f2f2; }
+    .label { font-family: Arial, Helvetica, sans-serif; font-size:58px; fill:#111; }
+    .anno { font-family: Arial, Helvetica, sans-serif; fill:#111; }
+  </style>
+</defs>
+
+<!-- back pie outer side -->
+<path class="stroke" fill="#9bb3c6" d="M 470 392
+  C 470 580, 545 616, 706 695
+  L 680 536
+  C 580 500, 594 445, 570 492 Z"/>
+
+<path class="stroke" fill="#38596d" d="M 1114 321 L 1624 522 L 1589 735 L 1114 516 Z"/>
+
+<!-- Front of company B -->
+<path class="stroke" fill="#304d5f" d="M 1624 522
+  C 1708 487, 1761 446, 1778 399
+  C 1767 522, 1741 607, 1703 660
+  C 1668 682, 1628 709, 1589 735 Z"/>
+
+<!-- back pie top -->
+<ellipse cx="1124" cy="392" rx="654" ry="211" fill="#adc3d6" class="stroke"/>
+
+<!-- top slice overlays -->
+<path class="stroke" fill="#78b5d4" d="M 1114 321 L 1778 399
+  A 654 211 0 0 1 1624 522
+  L 1114 321 Z"/>
+
+<path class="stroke" fill="#95b4d2" d="M 1114 321 L 1200 181
+  A 654 211 0 0 1 1778 399
+  L 1114 321 Z"/>
+
+<!-- back pie radial separators -->
+<path d="M 1114 321 L 1200 181
+
+         M 1114 321 L 1624 522
+
+         M 1114 321 L 577 274"
+      fill="none"
+      stroke="#efefef"
+      stroke-width="7"
+      stroke-linecap="round"/>
+
+<!-- Interior cut face between Company D and Our Company -->
+<path fill="#8aa0b3"
+      stroke="#efefef"
+      stroke-width="7"
+      stroke-linejoin="round"
+      d="M 684 546
+         L 1114 321
+         L 1118 433
+         L 705 784
+         Z"/>
+
+<!-- Interior cut face between Our Company and Company B -->
+<path fill="#35576a"
+      stroke="#efefef"
+      stroke-width="7"
+      stroke-linejoin="round"
+      d="M 1114 321
+         L 1624 522
+         L 1585 744
+         L 1118 433
+         Z"/>
+
+<!-- exploded slice side faces -->
+<path class="stroke" fill="#4d85a0" d="M 576 774 L 1118 433 L 1118 627 L 604 987 Z"/>
+<path class="stroke" fill="#2d5567" d="M 1118 433 L 1785 744 L 1733 955 L 1118 627 Z"/>
+
+<!-- exploded slice front band on top of sides -->
+<path class="stroke" fill="url(#frontGrad)" d="M 576 774
+  C 728 836, 949 873, 1266 867
+  C 1448 863, 1618 829, 1785 744
+  L 1733 955
+  C 1590 1048, 1413 1084, 1188 1088
+  C 934 1091, 742 1055, 604 987
+  Z"/>
+
+<!-- exploded slice top -->
+<path class="stroke" fill="#58b0d8" d="M 576 774
+  L 1118 433
+  L 1785 744
+  C 1618 829, 1448 863, 1266 867
+  C 949 873, 728 836, 576 774 Z"/>
+  
+  
+<!-- widened Company B overlay -->
+<path class="stroke" fill="#78b5d4" d="M 1114 321 L 1755 343
+  A 654 211 0 0 1 1624 522
+  L 1114 321 Z"/>
+  
+<!-- labels -->
+<rect x="505" y="115" width="360" height="82" class="labelbox"/>
+<text x="525" y="173" class="label">Company C</text>
+
+<rect x="1505" y="140" width="360" height="82" class="labelbox"/>
+<text x="1525" y="198" class="label">Company A</text>
+
+<rect x="1770" y="475" width="360" height="82" class="labelbox"/>
+<text x="1790" y="533" class="label">Company B</text>
+
+<rect x="165" y="474" width="360" height="82" class="labelbox"/>
+<text x="185" y="532" class="label">Company D</text>
+
+<!-- annotation -->
+<rect x="775" y="1110" width="920" height="285" fill="#f4f4f4"/>
+<text x="845" y="1245" class="anno" font-size="110" font-weight="700">34</text>
+<text x="995" y="1240" class="anno" font-size="48">thousand units sold in 2025</text>
+<text x="795" y="1308" class="anno" font-size="50">doubled </text>
+<text x="980" y="1308" class="anno" font-size="50" font-weight="700">Our Company</text>
+<text x="1306" y="1308" class="anno" font-size="50">'s market share</text>
+</svg>
+    <figcaption>Figure 2-12. A 3D pie chart can distort perception by making the front slice appear much larger than it is. Additionally, the large "34" number is a pre-attentive attribute that the viewer notices immediately, yet it is misleading.</figcaption>
+  </figure></div>
+  <div class="chart-small">  
+ <figure> <svg viewBox="0 0 600 400" role="img" aria-labelledby="svg-title-10 svg-desc-10" style="width:100%; max-width:800px; height:auto; display:block;">
+
+<title id="svg-title-10">Market share distribution across five companies</title>
+<desc id="svg-desc-10">
+A pie chart showing market share distribution: Company C has 23 percent, Company D 21 percent, Company A 20 percent, Our Company 19 percent, and Company B 17 percent. The shares are relatively similar, with no dominant company.
+</desc>
+
+<!-- Background -->
+<rect width="600" height="400" fill="white"/>
+       <text x="14" y="15" font-size="20">Medical-Grade Wearable Technology Market Share Distribution</text>
+<!-- Pie slices -->
+<g transform="translate(300,200)">
+  <!-- Company A (20%) -->
+  <path d="M0,0 L0,-140 A140,140 0 0,1 133.15,-43.26 Z" fill="#1f7ea1" stroke="white" stroke-width="2"/>
+  
+  <!-- Company B (17%) -->
+  <path d="M0,0 L133.15,-43.26 A140,140 0 0,1 102.06,95.84 Z" fill="#2b8fb5" stroke="white" stroke-width="2"/>
+  
+  <!-- Our Company (19%) -->
+  <path d="M0,0 L102.06,95.84 A140,140 0 0,1 -51.31,130.26 Z" fill="#349ec7" stroke="white" stroke-width="2"/>
+  
+  <!-- Company D (21%) -->
+  <path d="M0,0 L-51.31,130.26 A140,140 0 0,1 -138.89,-17.54 Z" fill="#7ea6c4" stroke="white" stroke-width="2"/>
+  
+  <!-- Company C (23%) -->
+  <path d="M0,0 L-138.89,-17.54 A140,140 0 0,1 0,-140 Z" fill="#a7c0d4" stroke="white" stroke-width="2"/>
+</g>
+
+<!-- Labels -->
+
+<!-- Company A -->
+<line x1="415" y1="120" x2="460" y2="80" stroke="#b0b7c3" stroke-width="2"/>
+<rect x="440" y="60" width="110" height="40" fill="#f2f2f2" stroke="#ccc"/>
+<text x="495" y="78" text-anchor="middle" font-size="14" fill="#555">Company A</text>
+<text x="495" y="94" text-anchor="middle" font-size="14" fill="#555">20%</text>
+
+<!-- Company B -->
+<line x1="440" y1="210" x2="470" y2="210" stroke="#b0b7c3" stroke-width="2"/>
+<rect x="470" y="190" width="110" height="40" fill="#f2f2f2" stroke="#ccc"/>
+<text x="525" y="210" text-anchor="middle" font-size="14" fill="#555">Company B</text>
+<text x="525" y="226" text-anchor="middle" font-size="14" fill="#555">17%</text>
+
+<!-- Our Company -->
+<line x1="300" y1="340" x2="300" y2="360" stroke="#b0b7c3" stroke-width="2"/>
+<rect x="240" y="360" width="120" height="40" fill="#f2f2f2" stroke="#ccc"/>
+<text x="300" y="380" text-anchor="middle" font-size="14" fill="#555">Our Company</text>
+<text x="300" y="396" text-anchor="middle" font-size="14" fill="#555">19%</text>
+
+<!-- Company D -->
+<line x1="130" y1="240" x2="170" y2="240" stroke="#b0b7c3" stroke-width="2"/>
+<rect x="40" y="220" width="110" height="40" fill="#f2f2f2" stroke="#ccc"/>
+<text x="95" y="240" text-anchor="middle" font-size="14" fill="#555">Company D</text>
+<text x="95" y="256" text-anchor="middle" font-size="14" fill="#555">21%</text>
+
+<!-- Company C -->
+<line x1="230" y1="90" x2="180" y2="50" stroke="#b0b7c3" stroke-width="2"/>
+<rect x="140" y="30" width="110" height="40" fill="#f2f2f2" stroke="#ccc"/>
+<text x="195" y="50" text-anchor="middle" font-size="14" fill="#555">Company C</text>
+<text x="195" y="66" text-anchor="middle" font-size="14" fill="#555">23%</text>
+
+</svg><figcaption>Figure 2-13. A clean 2D pie chart generated with the same data shows the same shares more accurately.</figcaption></figure></div></div>
+<p class="note">Note: These pie charts, which were generated with the same data; the 3D chart misleads the viewer by suggesting that the company has a significantly larger market share than it actually does. The 2D pie makes distortion evident. This example highlights the ethical responsibility of data visualization, as chart design can be used to mislead the viewer by distorting or exaggerating figures.</p>
+  </div></section>
+<section id="key-takeaways-2" class="subsection level-2"><h3>Key Takeaways</h3><p>Several important lessons emerge from this module.</p><ul><li>Effective visualization design prioritizes clarity and comprehension rather than visual decoration.</li><li>The human visual system processes certain visual cues almost instantly, allowing designers to guide attention using pre-attentive attributes such as color, position, and size.</li><li>Unnecessary visual elements create noise that distracts from the signal contained in the data.</li><li>Visual hierarchy organizes charts so that viewers quickly identify the most important information.</li><li>Visualization design carries ethical responsibilities because charts can strongly influence interpretation.</li></ul><p>By applying these principles, managers can design visualizations that communicate information clearly and support sound decision making.</p></section>
+
+<section id="managerial-insight-2" class="insights box-2"><h3>Managerial Insight</h3><p>In many organizations, data dashboards and presentations contain far more information than decision makers can realistically process. When visuals include unnecessary labels, excessive colors, or redundant elements, the result is visual clutter, which makes it harder for managers to identify the key insight.</p><p>Good visualization design reduces cognitive load by emphasizing the most important information while removing unnecessary distractions. For managers, this means that the most effective visualizations are not the most complex ones, they are the ones that allow decision makers to see the most important insight immediately.</p><p>Managers who understand principles such as visual hierarchy, clarity, and simplicity are better equipped to evaluate reports, dashboards, and presentations and ensure that critical insights are not lost in poorly designed visuals.</p></section>
+<section id="key-sources-2" class="subsection level-2"><h3>Key Sources</h3><div class="source-entry"><sup>1</sup> Knaflic, C. N. (2019). <em>Declutter! (and question default settings)</em>. Storytelling With Data Blog. https://www.storytellingwithdata.com/blog/2019/5/13/declutter-and-question-defaults</div><div class="source-entry"><sup>2</sup> Mendez, S. (2025). <em>4 Tips for Creating Clear, Understandable Graphs: Guide for Health Communicators</em>. Harvard T.H. Chan School of Public Health. https://hsph.harvard.edu/research/health-communication/resources/tips-for-creating-clear-understandable-graphs/</div><div class="source-entry"><sup>3</sup> Dougherty, J., &amp; Ilyankou, I. (2021). <em>How to Lie with Charts</em>. Hands-On Data Visualization. https://handsondataviz.org/how-to-lie-with-charts.html</div><div class="source-entry"><sup>4</sup> Nielsen Norman Group. (n.d.). <em>Visual Hierarchy in UX</em>. https://www.nngroup.com/articles/visual-hierarchy-ux-definition</div><div class="source-entry"><sup>5</sup> Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</div><div class="source-entry"><sup>6</sup> Tufte, E. R. (2001). <em>The visual display of quantitative information</em> (2nd ed.). Graphics Press.</div><div class="source-entry"><sup>7</sup> Healey, C. G., &amp; Enns, J. T. (2012). Attention and visual memory in visualization. <em>IEEE Transactions on Visualization and Computer Graphics, 18</em>(7), 1170-1188. https://doi.org/10.1109/TVCG.2011.127</div><div class="source-entry"><sup>8</sup> Ware, C. (2020). <em>Information visualization: Perception for design</em> (4th ed.). Morgan Kaufmann.</div><div class="source-entry"><sup>9</sup> Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</div><div class="source-entry"><sup>10</sup> Treisman, A. M., &amp; Gelade, G. (1980). A feature-integration theory of attention. <em>Cognitive Psychology, 12</em>(1), 97-136. https://doi.org/10.1016/0010-0285(80)90005-5</div></section>
+</section>
+  </main>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const links = Array.from(document.querySelectorAll('.sidebar a'));
+  const sections = links
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.getAttribute('id');
+      const link = document.querySelector('.sidebar a[href="#' + id + '"]');
+      if (!link) return;
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(section => observer.observe(section));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="en"><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Module 3: Concept Check</title>
+<style>
+body { font-family: "Segoe UI", Arial, sans-serif; color:#222831; line-height:1.5; margin:24px; background:#ffffff; }
+h1 { margin-bottom: 0.2rem; }
+h2 { color:#0f6c7b; margin-top: 0; }
+h3 { margin-top: 1rem; }
+.assignment { border:1px solid #d7dde5; border-radius:14px; padding:18px; margin-bottom:26px; background:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.04); }
+.note { background:#f7fbfc; border-left:4px solid #0f6c7b; font-size: 1.02rem;  padding:10px 12px; margin:12px 0; border-radius:6px; }
+.downloads a {
+  display:inline-block; margin-right:14px; margin-bottom:8px; padding:8px 12px; border:1px solid #d7dde5;
+  border-radius:10px; text-decoration:none; background:white; color:#0b5ea8;
+}
+.wrapper { max-width: 1180px; margin: 0 auto; }
+.card { background:#fff; border:1px solid #d7dde5; border-radius:16px; padding:16px; margin-bottom:22px; box-shadow:0 4px 14px rgba(0,0,0,.05); }
+.grid2 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid2 figure {
+  min-width: 0;
+}
+.grid2 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.chart {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.chart-wide {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chart-small {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+@media (min-width: 1200px) { .grid2 { grid-template-columns:1fr 1fr; } }
+figure { margin:0; }
+figcaption { margin-top:8px; font-size:0.95rem; color:#44515f; }
+table { width:100%; border-collapse:collapse; margin-top:10px; margin-bottom:20px; }
+th, td { border:1px solid #d7dde5; padding:8px 10px; text-align:left; }
+th { background:#e8f4f6; }
+small { color:#5c6773; }
+</style>
+</head><body>
+   <section class="frontmatter" id="micro-assignment 3">
+<h2>Module 3 Concept Check: Choosing the Right Visualization</h2>
+    <p>A manager wants to understand how customer satisfaction relates to customer retention across twelve customer segments. Several charts could be created from the same data, but not all of them would communicate the relationship clearly. </p><p>Use the small dataset below to evaluate the candidate visualizations.</p>
+
+<div class='downloads'>
+<a href='Module3_dataset.csv'>Download dataset (CSV)</a>
+</div>
+
+    <h3>Dataset: Customer Satisfaction and Retention by Customer Segments </h3>
+    
+    <div class="chart">
+    <table>
+      <tr><th>Customer Segment</th><th>Satisfaction Score (1–10)</th><th>Retention Rate (%)</th></tr>
+      <tr><td>A</td><td>4.2</td><td>61</td></tr><tr><td>B</td><td>4.8</td><td>64</td></tr><tr><td>C</td><td>5.1</td><td>66</td></tr><tr><td>D</td><td>5.5</td><td>68</td></tr><tr><td>E</td><td>5.9</td><td>71</td></tr><tr><td>F</td><td>6.2</td><td>73</td></tr><tr><td>G</td><td>6.8</td><td>77</td></tr><tr><td>H</td><td>7.1</td><td>79</td></tr><tr><td>I</td><td>7.5</td><td>82</td></tr><tr><td>J</td><td>7.9</td><td>84</td></tr><tr><td>K</td><td>8.3</td><td>87</td></tr><tr><td>L</td><td>8.8</td><td>91</td></tr>
+    </table>
+    </div>
+
+<div class="card">
+    <h3>Visualizations</h3>
+    <div class="grid2">
+    <div class="chart">
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="c1t c1d" style="width:100%;height:auto;display:block;">
+<title id="c1t">Chart A</title>
+<desc id="c1d">Scatter plot showing customer satisfaction and retention with a clear positive relationship. Higher satisfaction aligns with higher retention.</desc>
+<rect width="560" height="360" fill="white"/>
+<text x="14" y="28" font-family="Segoe UI, Arial" font-size="20" fill="#222">Chart A</text>
+<text x="14" y="48" font-family="Segoe UI, Arial" font-size="14" fill="#5c6773">Scatter plot option</text>
+<line x1="50.0" y1="58" x2="50.0" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="50.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">4</text>
+<line x1="148.4" y1="58" x2="148.4" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="148.4" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">5</text>
+<line x1="246.8" y1="58" x2="246.8" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="246.8" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">6</text>
+<line x1="345.2" y1="58" x2="345.2" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="345.2" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">7</text>
+<line x1="443.6" y1="58" x2="443.6" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="443.6" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">8</text>
+<line x1="542.0" y1="58" x2="542.0" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="542.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">9</text>
+<line x1="50" y1="308.0" x2="542" y2="308.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="312.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">55</text>
+<line x1="50" y1="245.5" x2="542" y2="245.5" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="249.5" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">65</text>
+<line x1="50" y1="183.0" x2="542" y2="183.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="187.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">75</text>
+<line x1="50" y1="120.5" x2="542" y2="120.5" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="124.5" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">85</text>
+<line x1="50" y1="58.0" x2="542" y2="58.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="62.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">95</text>
+<line x1="50" y1="58" x2="50" y2="308" stroke="#7a8694" stroke-width="1.5"/>
+<line x1="50" y1="308" x2="542" y2="308" stroke="#7a8694" stroke-width="1.5"/>
+<text x="296.0" y="358" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#223">Customer satisfaction score</text>
+<text x="14" y="183.0" transform="rotate(-90 14 183.0)" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#223">Retention rate (%)</text>
+<line x1="69.7" y1="276.8" x2="522.3" y2="83.0" stroke="#b9c3cf" stroke-width="2.5" stroke-dasharray="7 5"/>
+<circle cx="69.7" cy="270.5" r="4.2" fill="#5b9bd5"/>
+<circle cx="128.7" cy="251.8" r="4.2" fill="#5b9bd5"/>
+<circle cx="158.2" cy="239.2" r="4.2" fill="#5b9bd5"/>
+<circle cx="197.6" cy="226.8" r="4.2" fill="#5b9bd5"/>
+<circle cx="237.0" cy="208.0" r="4.2" fill="#5b9bd5"/>
+<circle cx="266.5" cy="195.5" r="4.2" fill="#5b9bd5"/>
+<circle cx="325.5" cy="170.5" r="4.2" fill="#5b9bd5"/>
+<circle cx="355.0" cy="158.0" r="4.2" fill="#5b9bd5"/>
+<circle cx="394.4" cy="139.2" r="4.2" fill="#5b9bd5"/>
+<circle cx="433.8" cy="126.8" r="4.2" fill="#5b9bd5"/>
+<circle cx="473.1" cy="108.0" r="4.2" fill="#5b9bd5"/>
+<circle cx="522.3" cy="83.0" r="4.2" fill="#5b9bd5"/>
+</svg><figcaption><strong>Chart A.</strong> Scatter plot with a positive relationship.</figcaption></figure></div>
+      <div class="chart"><figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="c2t c2d" style="width:100%;height:auto;display:block;">
+<title id="c2t">Chart B</title>
+<desc id="c2d">Scatter plot showing customer satisfaction and retention with a negative relationship, which does not fit the provided data.</desc>
+<rect width="560" height="360" fill="white"/>
+<text x="14" y="28" font-family="Segoe UI, Arial" font-size="20" fill="#222">Chart B</text>
+<text x="14" y="48" font-family="Segoe UI, Arial" font-size="14" fill="#5c6773">Scatter plot option</text>
+<line x1="50.0" y1="58" x2="50.0" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="50.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">4</text>
+<line x1="148.4" y1="58" x2="148.4" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="148.4" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">5</text>
+<line x1="246.8" y1="58" x2="246.8" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="246.8" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">6</text>
+<line x1="345.2" y1="58" x2="345.2" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="345.2" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">7</text>
+<line x1="443.6" y1="58" x2="443.6" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="443.6" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">8</text>
+<line x1="542.0" y1="58" x2="542.0" y2="308" stroke="#eef2f6" stroke-width="1"/>
+<text x="542.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#344">9</text>
+<line x1="50" y1="308.0" x2="542" y2="308.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="312.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">55</text>
+<line x1="50" y1="245.5" x2="542" y2="245.5" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="249.5" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">65</text>
+<line x1="50" y1="183.0" x2="542" y2="183.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="187.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">75</text>
+<line x1="50" y1="120.5" x2="542" y2="120.5" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="124.5" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">85</text>
+<line x1="50" y1="58.0" x2="542" y2="58.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="42" y="62.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">95</text>
+<line x1="50" y1="58" x2="50" y2="308" stroke="#7a8694" stroke-width="1.5"/>
+<line x1="50" y1="308" x2="542" y2="308" stroke="#7a8694" stroke-width="1.5"/>
+<text x="296.0" y="358" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#223">Customer satisfaction score</text>
+<text x="14" y="183.0" transform="rotate(-90 14 183.0)" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#223">Retention rate (%)</text>
+<line x1="69.7" y1="83.0" x2="522.3" y2="276.8" stroke="#d9b0b2" stroke-width="2.5" stroke-dasharray="7 5"/>
+<circle cx="69.7" cy="83.0" r="4.2" fill="#5b9bd5"/>
+<circle cx="128.7" cy="108.0" r="4.2" fill="#5b9bd5"/>
+<circle cx="158.2" cy="126.8" r="4.2" fill="#5b9bd5"/>
+<circle cx="197.6" cy="139.2" r="4.2" fill="#5b9bd5"/>
+<circle cx="237.0" cy="158.0" r="4.2" fill="#5b9bd5"/>
+<circle cx="266.5" cy="170.5" r="4.2" fill="#5b9bd5"/>
+<circle cx="325.5" cy="195.5" r="4.2" fill="#5b9bd5"/>
+<circle cx="355.0" cy="208.0" r="4.2" fill="#5b9bd5"/>
+<circle cx="394.4" cy="226.8" r="4.2" fill="#5b9bd5"/>
+<circle cx="433.8" cy="239.2" r="4.2" fill="#5b9bd5"/>
+<circle cx="473.1" cy="251.8" r="4.2" fill="#5b9bd5"/>
+<circle cx="522.3" cy="270.5" r="4.2" fill="#5b9bd5"/>
+</svg><figcaption><strong>Chart B.</strong> Scatter plot with a negative relationship.</figcaption></figure></div>
+ <div class="chart">
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="c3t c3d" style="width:100%;height:auto;display:block;">
+<title id="c3t">Chart C</title>
+<desc id="c3d">Pie chart showing proportions across segments. It does not show the relationship between satisfaction and retention.</desc>
+<rect width="560" height="360" fill="white"/>
+<text x="14" y="28" font-family="Segoe UI, Arial" font-size="20" fill="#222">Chart C</text>
+<text x="14" y="48" font-family="Segoe UI, Arial" font-size="14" fill="#5c6773">Pie chart option</text>
+<path d="M 190 200 L 190.0 105.0 A 95 95 0 0 1 283.3 182.2 Z" fill="#5b9bd5" stroke="white"/>
+<path d="M 190 200 L 283.3 182.2 A 95 95 0 0 1 213.6 292.0 Z" fill="#b9c3cf" stroke="white"/>
+<path d="M 190 200 L 213.6 292.0 A 95 95 0 0 1 96.7 217.8 Z" fill="#8fd3c7" stroke="white"/>
+<path d="M 190 200 L 96.7 217.8 A 95 95 0 0 1 190.0 105.0 Z" fill="#f3c97d" stroke="white"/>
+<rect x="360" y="120" width="12" height="12" fill="#5b9bd5"/>
+<text x="378" y="131" font-family="Segoe UI, Arial" font-size="12" fill="#223">Segment A (22%)</text>
+<rect x="360" y="148" width="12" height="12" fill="#b9c3cf"/>
+<text x="378" y="159" font-family="Segoe UI, Arial" font-size="12" fill="#223">Segment B (24%)</text>
+<rect x="360" y="176" width="12" height="12" fill="#8fd3c7"/>
+<text x="378" y="187" font-family="Segoe UI, Arial" font-size="12" fill="#223">Segment C (26%)</text>
+<rect x="360" y="204" width="12" height="12" fill="#f3c97d"/>
+<text x="378" y="215" font-family="Segoe UI, Arial" font-size="12" fill="#223">Segment D (28%)</text>
+</svg><figcaption><strong>Chart C.</strong> Pie chart showing proportions.</figcaption></figure></div>
+ <div class="chart">
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" role="img" aria-labelledby="c4t c4d" style="width:100%;height:auto;display:block;">
+<title id="c4t">Chart D</title>
+<desc id="c4d">Bar chart showing retention rate by customer segment. It allows category comparison, but it does not communicate the relationship between satisfaction and retention as directly as a scatter plot.</desc>
+<rect width="560" height="360" fill="white"/>
+<text x="14" y="28" font-family="Segoe UI, Arial" font-size="20" fill="#222">Chart D</text>
+<text x="14" y="48" font-family="Segoe UI, Arial" font-size="14" fill="#5c6773">Bar chart option</text>
+<line x1="55" y1="308.0" x2="542" y2="308.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="312.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">0</text>
+<line x1="55" y1="258.0" x2="542" y2="258.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="262.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">20</text>
+<line x1="55" y1="208.0" x2="542" y2="208.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="212.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">40</text>
+<line x1="55" y1="158.0" x2="542" y2="158.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="162.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">60</text>
+<line x1="55" y1="108.0" x2="542" y2="108.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="112.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">80</text>
+<line x1="55" y1="58.0" x2="542" y2="58.0" stroke="#d7dde5" stroke-width="1"/>
+<text x="47" y="62.0" text-anchor="end" font-family="Segoe UI, Arial" font-size="12" fill="#344">100</text>
+<line x1="55" y1="58" x2="55" y2="308" stroke="#7a8694" stroke-width="1.5"/>
+<line x1="55" y1="308" x2="542" y2="308" stroke="#7a8694" stroke-width="1.5"/>
+<rect x="63.1" y="155.5" width="24.4" height="152.5" fill="#b9c3cf" rx="2"/>
+<text x="75.3" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">A</text>
+<rect x="103.7" y="148.0" width="24.4" height="160.0" fill="#b9c3cf" rx="2"/>
+<text x="115.9" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">B</text>
+<rect x="144.3" y="143.0" width="24.4" height="165.0" fill="#b9c3cf" rx="2"/>
+<text x="156.5" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">C</text>
+<rect x="184.9" y="138.0" width="24.4" height="170.0" fill="#b9c3cf" rx="2"/>
+<text x="197.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">D</text>
+<rect x="225.5" y="130.5" width="24.4" height="177.5" fill="#b9c3cf" rx="2"/>
+<text x="237.6" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">E</text>
+<rect x="266.0" y="125.5" width="24.4" height="182.5" fill="#b9c3cf" rx="2"/>
+<text x="278.2" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">F</text>
+<rect x="306.6" y="115.5" width="24.4" height="192.5" fill="#b9c3cf" rx="2"/>
+<text x="318.8" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">G</text>
+<rect x="347.2" y="110.5" width="24.4" height="197.5" fill="#b9c3cf" rx="2"/>
+<text x="359.4" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">H</text>
+<rect x="387.8" y="103.0" width="24.4" height="205.0" fill="#b9c3cf" rx="2"/>
+<text x="400.0" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">I</text>
+<rect x="428.4" y="98.0" width="24.4" height="210.0" fill="#b9c3cf" rx="2"/>
+<text x="440.5" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">J</text>
+<rect x="469.0" y="90.5" width="24.4" height="217.5" fill="#b9c3cf" rx="2"/>
+<text x="481.1" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">K</text>
+<rect x="509.5" y="80.5" width="24.4" height="227.5" fill="#5b9bd5" rx="2"/>
+<text x="521.7" y="342" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#223">L</text>
+</svg><figcaption><strong>Chart D.</strong> Bar chart comparing retention across segments.</figcaption></figure>
+    </div></div>
+</div>
+
+<div class="note">
+    <h3>Your Task</h3>
+    <p>After reviewing the scenario and the data provided, work through the following steps to guide your analysis:</p>
+    <ol>
+      <li>Decide which chart best represents the managerial question.  Explain why.</li>
+      <li>Identify which chart or charts are less appropriate and determine what they fail to communicate clearly.</li>
+      <li>Based on the dataset, identify the the most likely relationship between customer satisfaction and retention.</li>
+      <li>Determine the most appropriate managerial response based on the customer satisfaction and retention relationship.</li>
+    </ol>
+    <p style="margin-top:10px;">
+<strong>Important:</strong> These steps are intended to guide your thinking as you complete the concept check questions. 
+</p>
+</div>
+  </section>
+
+</body>
+</html>

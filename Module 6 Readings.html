@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Visualization and Communication for Managers</title>
+<style>
+:root {
+  --bg: #f7f8fa;
+  --panel: #ffffff;
+  --ink: #222831;
+  --muted: #5c6773;
+  --line: #d7dde5;
+  --accent: #0f6c7b;
+  --accent-soft: #e8f4f6;
+  --note-bg: #fff7e8;
+  --note-line: #e6cf95;
+    --note:#eef79a;
+  --note2:#f5f8ad;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+}
+
+a { color: #0b5ea8; }
+.layout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4px;
+}
+.sidebar {
+  position: sticky;
+  top: 4px;
+  align-self: start;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 18px 14px;
+  box-shadow: 0 6px 20px rgba(34,40,49,.06);
+}
+.sidebar h2 {
+  margin: 0 0 8px;
+  font-size: 1.45rem;
+}
+.sidebar p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: .95rem;
+}
+.toc-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.toc-list .toc-list {
+  padding-left: 10px;
+  margin-top: 4px;
+}
+.toc-list li {
+  margin: 3px 0;
+}
+.toc-list a {
+  display: block;
+  text-decoration: none;
+  color: #334155;
+  padding: 4px 6px;
+  border-radius: 8px;
+  font-size: .96rem;
+}
+.toc-list a:hover, .toc-list a.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.content {
+  min-width: 0;
+}
+.frontmatter, .module, .subsection {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px 10px;
+  box-shadow: 0 6px 18px rgba(34,40,49,.05);
+  margin-bottom: 15px;
+}
+.frontmatter h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1.15;
+}
+.subtitle {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+h2, h3, h4 {
+  scroll-margin-top: 24px;
+}
+.module > h2 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+.level-2 > h3 {
+  margin: 4px 0 12px;
+  font-size: 1.35rem;
+}
+.level-3 > h4 {
+  margin: 4px 0 10px;
+  font-size: 1.12rem;
+}
+.insight, .insights {
+  background: var(--accent-soft);
+  border-right: 4px solid var(--accent);
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.box-2 > h3 {
+  margin: 4px 0 12px;
+  font-size: 1.35rem;
+}
+
+.wrapper { max-width: 1180px; margin: 0 auto; }
+.card { background:#fff; border:1px solid #d7dde5; border-radius:16px; padding:16px; margin-bottom:22px; box-shadow:0 4px 14px rgba(0,0,0,.05); }
+.grid2 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid2 figure {
+  min-width: 0;
+}
+.grid2 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.chart {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.chart-wide {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chart-small {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+@media (min-width: 1300px) { .grid2 { grid-template-columns:1fr 1fr; } }
+
+.grid3 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid3 figure {
+  min-width: 0;
+}
+.grid3 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (min-width: 1100px) { .grid3 { grid-template-columns:1fr 1fr; } }
+@media (min-width: 1500px) { .grid3 { grid-template-columns:1fr 1fr 1fr; } }
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0 10px;
+  font-size: 1.05rem;
+}
+
+/* Header */
+th {
+  text-align: left;
+  font-weight: 700;
+  padding: 14px 12px;
+  border-bottom: 2px solid #cfd6de;
+  color: #222;
+  background: none;
+}
+
+/* Cells */
+td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #d9dfe6;
+  color: #222;
+  background: none;
+}
+
+
+th, td {
+  border-left: none;
+  border-right: none;
+}
+
+
+caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #111;
+}
+
+.table-note {
+  margin-top: 12px;
+  font-style: italic;
+  color: #444;
+  font-size: 1.05rem;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+   ========================= */
+
+@media (max-width: 600px) {
+
+  thead {
+    display: none;
+  }
+
+  table, tbody, tr, td {
+    display: block;
+    width: 100%;
+  }
+
+  tr {
+    margin-bottom: 14px;
+    padding: 12px;
+    border: 1px solid #d7dde5;
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  td {
+    border: none;
+    padding: 6px 0;
+    font-size: 0.95rem;
+  }
+
+  td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 2px;
+  }
+}
+
+sup { font-size:0.72em; color:#0f6c7b; vertical-align:super; line-height:0; }
+.chart-wrap {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  margin-top:10px;
+}
+
+p {
+  margin: 0 0 14px;
+}
+ul {
+  margin: 0 0 14px 1rem;
+}
+li { margin-bottom: 7px; }
+figure {
+  margin: 20px 0 18px;
+  text-align: center;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+figcaption {
+  margin-top: 10px;
+  font-size: .96rem;
+  color: #44515f;
+  font-style: italic;
+}
+.note {
+  background: var(--note-bg);
+  border-left: 4px solid var(--note-line);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: .95rem;
+  margin-bottom: 12px;
+}
+.source-entry {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+    font-size: .9rem;
+  border-bottom: 1px dashed var(--line);
+}
+.source-entry:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+  font-size: .9rem;
+}
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+    max-height: none;
+  }
+}
+
+.grid-notes {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:22px;
+  margin-top:14px;
+}
+
+@media (min-width:800px) {
+  .grid-notes { grid-template-columns:1fr 1fr; }
+}
+@media (min-width:1000px) {
+  .grid-notes { grid-template-columns:1fr 1fr 1fr; }
+}
+.sticky {
+  background:linear-gradient(180deg,var(--note2),var(--note));
+  border:1px solid #d7df7a;
+  min-height:230px;
+  padding:20px 18px 18px;
+  box-shadow:0 10px 16px rgba(0,0,0,.08);
+  transform:rotate(-1deg);
+  position:relative;
+}
+.sticky:nth-child(2) { transform:rotate(1deg); }
+.sticky:nth-child(3) { transform:rotate(-0.5deg); }
+.sticky:nth-child(4) { transform:rotate(0.8deg); }
+.sticky:nth-child(5) { transform:rotate(-1deg); }
+.sticky:nth-child(6) { transform:rotate(0.5deg); }
+.sticky:before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:22px;
+  background:rgba(255,255,255,.18);
+}
+.sticky h3 {
+  margin:4px 0 12px;
+  font-size:1.15rem;
+  line-height:1.15;
+  font-weight:700;
+  font-family: "Comic Sans MS", Chalkboard SE, Marker Felt, cursive; 
+}
+.sticky p, .sticky li {
+  font-size:0.95rem;
+  line-height:1.45;
+  font-family: "Comic Sans MS", Chalkboard SE, Marker Felt, cursive; 
+}
+.sticky ul {
+  margin:0 0 0 18px;
+  padding:0;
+}
+.chart-wrap {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  margin-top:10px;
+}
+.note {
+  background:#fff7e8;
+  border-left:4px solid #e6cf95;
+  padding:12px 14px;
+  border-radius:8px;
+  font-size:.97rem;
+  margin-top:10px;
+}
+.small {
+  font-size:.93rem;
+  color:#44515f;
+}
+
+/* Citation tooltips: fixed positioning prevents hidden tooltips from widening the page. */
+.cite-ref { position:relative; display:inline-block; cursor:help; }
+.cite-tooltip {
+  visibility:hidden;
+  opacity:0;
+  position:fixed;
+  left:50%;
+  top:24px;
+  transform:translateX(-50%);
+  width:min(360px, calc(100vw - 32px));
+  max-width:calc(100vw - 32px);
+  background:#1f2937;
+  color:#fff;
+  text-align:left;
+  border-radius:8px;
+  padding:10px 12px;
+  font-size:0.82rem;
+  line-height:1.35;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+  z-index:9999;
+  transition:opacity .18s ease, visibility .18s ease;
+}
+.cite-tooltip::after { content:none; }
+.cite-ref:hover .cite-tooltip, .cite-ref:focus .cite-tooltip, .cite-ref:focus-within .cite-tooltip { visibility:visible; opacity:1; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" aria-label="Table of contents">
+    <h2>Contents</h2>
+    <ul class="toc-list"><li><strong><a href="#about-this-document">About This Document</a></strong></li>
+   <li><strong><a href="#framing-evidence-based-requests">Module 6: Framing Evidence-Based Requests</a></strong><ul class="toc-list"><li><a href="#introduction-6">Introduction</a></li><li><a href="#from-analysis-to-decision">From Analysis to Decision</a></li><li><a href="#claim-evidence-implication-recommendation">Claim → Evidence → Implication → Recommendation</a><ul class="toc-list"><li><a href="#claim">Claim</a></li><li><a href="#evidence">Evidence</a></li><li><a href="#implication">Implication</a></li><li><a href="#recommendation">Recommendation</a></li></ul></li><li><a href="#aligning-evidence-with-kpis">Aligning Evidence with KPIs</a></li><li><a href="#anticipating-objections">Anticipating Objections</a></li><li><a href="#the-role-of-visualization-in-decision-support">The Role of Visualization in Decision Support</a></li><li><a href="#best-practices-for-framing-evidence-based-requests">Best Practices for Framing Evidence-Based Requests</a></li><li><a href="#key-takeaways-6">Key Takeaways</a></li><li><a href="#managerial-insight-6">Managerial Insight</a></li><li><a href="#key-sources-6">Key Sources</a></li></ul></ul>
+  </aside>
+  <main class="content">
+   <section class="frontmatter" id="about-this-document"><h1>Data Visualization and Communication for Managers</h1><h2>About This Document</h2><p>This document has been developed for students of Data Visualization and Communication for Managers. The topics contained herein have been carefully curated to help us accomplish the course goals; therefore, they are discussed at a high level rather than in depth. To learn about these topics more in-depth, I recommend that you visit the Sources listed at the end of each module.</p><p>This document reflects current research, simulated and real-world examples, and instructor-developed insights. <strong>Please do not share, reproduce, or distribute this document, or any part of it, outside of this class.</strong></p><p>This work is original and unique to this course, and as such, it is protected by copyright and the Digital Millennium Copyright Act (DMCA).</p>
+<p><strong>Copyright © 2026 Silvana Chambers.</strong></p></section>
+<section id="framing-evidence-based-requests" class="module level-1"><h2>Module 6: Framing Evidence-Based Requests</h2><section id="introduction-6" class="subsection level-2"><h3>Introduction</h3><p>Managers increasingly rely on dashboards, reports, and analytical presentations when making decisions about strategy, operations, and resource allocation.</p><p>In modern organizations, the challenge for managers is not the <em>acquisition</em> of data, but the <strong>interpretation</strong> of evidence. While visualizations help identify patterns, they rarely "speak for themselves." Effective decision-making requires the ability to evaluate whether analytical findings justify a specific course of action.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Berinato, S. (2019). A data scientist’s guide to presenting to executives. <em>Harvard Business Review</em>.</span></span></p><p>In many organizations, analysts prepare visualizations and reports to help inform managerial decisions. However, the way analytical findings are presented does not always clearly explain their implications for organizational performance. Charts may show patterns or trends, but decision makers still need to understand what those patterns mean and whether they justify a specific course of action.</p><p>For this reason, effective managerial decision making requires more than the ability to read charts. Managers must be able to evaluate whether analytical evidence:</p><ul><li>clearly supports a claim,</li><li>explains the implications for organizational outcomes, and</li><li>justifies a recommended action.</li></ul><p>Research on Distributed Cognition (DCog) in data visualization indicates that visualizations serve as <strong>external cognitive aids</strong>. By offloading data storage to a visual display, managers can use their limited <strong>working memory</strong> for higher-order reasoning, such as evaluating trade-offs and strategic alignment. Visualizations that help individuals identify patterns and compare alternatives more quickly than numerical tables alone can facilitate decision-making.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Padilla, L. M., Creem-Regehr, S. H., Hegarty, M., &amp; Stefanucci, J. K. (2018). Decision making with visualizations: A cognitive framework across disciplines. <em>Cognitive Research: Principles and Implications</em>, 3(1), 29.</span></span><span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Streeb, D., El-Assady, M., Keim, D. A., &amp; Chen, M. (2021). Why visualize? Arguments for visual support in decision making. <em>IEEE Computer Graphics and Applications</em>, 41(2), 17–22.</span></span> However, visualizations rarely speak for themselves. Decision makers still require interpretation that connects visual evidence to organizational objectives and performance metrics.</p><p>In this module, we examine how analytical evidence can be framed as evidence-based requests that support managerial decision making. Understanding how these arguments are structured allows managers to evaluate analytical presentations more effectively and ensure that organizational decisions are grounded in clear and relevant evidence.<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Schwartzberg, J. (2020). Present your data like a pro. <em>Harvard Business Review</em>.</span></span></p></section>
+
+<section id="from-analysis-to-decision" class="subsection level-2"><h3>From Analysis to Decision</h3><p>One of the most common challenges in organizations is bridging the gap between analysis and decision making. Analysts may present charts, models, or statistical results that accurately describe patterns in the data. However, managers are ultimately responsible for determining whether those findings justify changes in strategy, operations, or policy. For managers, the critical question is not simply what the data show, but rather:</p><ul><li>What does this mean for the organization?</li><li>How does it affect key performance indicators?</li><li>What decision should we make in response?</li></ul><p>When analytical findings are presented without clear interpretation, managers may struggle to determine how the evidence should influence their decisions.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Berinato, S. (2019). A data scientist’s guide to presenting to executives. <em>Harvard Business Review</em>.</span></span> As a result, even high-quality analysis can fail to inform action if the implications are not clearly explained.</p><p>Effective data communication therefore requires connecting visual evidence to organizational outcomes and decision criteria.<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Schwartzberg, J. (2020). Present your data like a pro. <em>Harvard Business Review</em>.</span></span> Managers who understand how evidence-based arguments are structured are better equipped to evaluate analytical presentations and determine whether the evidence truly supports the proposed recommendation.</p></section><section id="claim-evidence-implication-recommendation" class="subsection level-2"><h3>Claim → Evidence → Implication → Recommendation</h3><p>To bridge the gap between analysis and action, managers should evaluate arguments using a structure derived from the <strong>Toulmin Model of Argumentation</strong>.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Toulmin, S. E. (1958). <em>The uses of argument</em>. Cambridge University Press.</span></span> Toulmin’s model explains how claims are supported by evidence and justified through underlying assumptions, or warrants. In managerial contexts, the claim → evidence → implication → recommendation structure operationalizes this logic by making explicit how data supports decisions and proposed courses of action.</p>
+<div class="table-wrap">
+<table>
+<caption>The Toulmin Model of Argumentation  Applied to Data Visualization
+    <thead>
+        <tr>
+            <th>Component</th>
+            <th>Managerial Critical Question</th>
+            <th>Cognitive Function</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Claim</td>
+            <td>What conclusion am I being asked to accept?</td>
+            <td>Sets the <strong>mental schema</strong> for the viewer.</td>
+        </tr>
+        <tr>
+            <td>Evidence</td>
+            <td>Does the <strong>graphical perception</strong> of the chart (e.g., length, position) truly support the trend?</td>
+            <td>Triggers <strong>preattentive processing</strong> to confirm the pattern.</td>
+        </tr>
+        <tr>
+            <td>Warrant/KPI</td>
+            <td>Why does this data point matter to our specific objectives?</td>
+            <td>Connects the evidence to organizational <strong>Warrants</strong> (Decision Criteria).</td>
+        </tr>
+        <tr>
+            <td>Implication</td>
+            <td>What is the cost of inaction or the benefit of the move?</td>
+            <td>Translates abstract data into <strong>Organizational Outcomes</strong>.</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<section id="claim" class="subsection level-3"><h4>Claim</h4><p>The claim is the central insight derived from the analysis. For managers reviewing an analytical presentation, the first question to ask is: What conclusion is the analyst asking us to accept?</p><p>A clear claim allows decision makers to understand the key point of the analysis before reviewing the supporting evidence.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Toulmin, S. E. (1958). <em>The uses of argument</em>. Cambridge University Press.</span></span></p></section><section id="evidence" class="subsection level-3"><h4>Evidence</h4><p>Evidence consists of the visualizations, metrics, or analyses used to support the claim. Managers should evaluate whether the evidence actually supports the stated conclusion. This may involve asking questions such as:</p><ul><li>Does the chart clearly demonstrate the pattern being described?</li><li>Are the relevant comparisons included?</li><li>Are there alternative explanations for the pattern?</li></ul><p>Strong evidence allows managers to confidently interpret the findings.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span></p></section><section id="implication" class="subsection level-3"><h4>Implication</h4><p>The implication explains why the finding matters for the organization. This step is particularly important for managers because it connects analytical findings to organizational outcomes such as:</p><ul><li>revenue</li><li>operational efficiency</li><li>customer experience</li><li>strategic positioning</li></ul><p>Managers should look for clear explanations of how the observed pattern affects organizational performance.<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Schwartzberg, J. (2020). Present your data like a pro. <em>Harvard Business Review</em>.</span></span></p></section><section id="recommendation" class="subsection level-3"><h4>Recommendation</h4><p>The recommendation describes the action that decision makers should consider based on the evidence presented. Managers should evaluate whether the recommendation logically follows from the evidence and whether it aligns with organizational priorities and constraints.</p><p>A well-framed recommendation typically answers the question: <strong>What should the organization do next?</strong><span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Berinato, S. (2019). A data scientist’s guide to presenting to executives. <em>Harvard Business Review</em>.</span></span></p></section></section>
+<section id="aligning-evidence-with-kpis" class="subsection level-2"><h3>Assessing The Logic of the Request: The Toulmin Model</h3>
+<p>To evaluate an analytical argument, managers can use the Toulmin Model of Argumentation, which identifies the functional parts of any logical claim. In a managerial context, the most critical part of this model is the warrant.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Toulmin, S. E. (1958). <em>The uses of argument</em>. Cambridge University Press.</span></span></p>
+<ul>
+<li><strong>Claim:</strong> The specific insight or conclusion (e.g., "We should increase our ad spend in North America").</li>
+<li><strong>Evidence (Grounds):</strong> The data or visualizations that support the claim (e.g., a bar chart showing a 20% higher ROI in that region).</li>
+<li><strong>Warrant:</strong> The underlying assumption or "bridge" that connects the evidence to the claim.</li></ul>
+
+<p class="note"><strong>What is an "Organizational Warrant"?</strong> In business, the Warrant is almost always an organizational objective or KPI. It is the shared understanding of what constitutes "success." For example, if an analyst presents data showing a decrease in customer churn, the organizational warrant is: "Reducing churn is a priority because it directly impacts our long-term profitability". Without a clear warrant, a manager might look at a chart and ask, "So what?" By identifying the warrant, the manager can determine if the evidence is being applied to the correct organizational priority.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Toulmin, S. E. (1958). <em>The uses of argument</em>. Cambridge University Press.</span></span></p>
+<div class="card">
+<h3>The Power of the Warrant</h3>
+    <p>Compare these two ways of presenting the same analytical finding. Notice how the addition of a <strong>Warrant</strong> transforms a simple data observation into a strategic recommendation.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Toulmin, S. E. (1958). <em>The uses of argument</em>. Cambridge University Press.</span></span></p>
+
+    <div style="display: flex; gap: 20px;">
+        <div style="flex: 1; border: 1px solid #e74c3c; padding: 15px; border-radius: 8px;">
+            <h3 style="color: #c0392b;">Scenario A: Data-Only</h3>
+            <p><strong>Claim:</strong> We should move our ad budget to LinkedIn.</p>
+            <p><strong>Evidence:</strong> LinkedIn's Cost-Per-Lead (CPL) is $4.00 lower than Facebook's.</p>
+        <p><strong>Implication:</strong> This shift will reduce our monthly acquisition costs by $45,000.</p>
+            <p><strong>Result: <em>"So What?"</em></strong> The decision-maker may ignore this because they value the <strong>volume</strong> of leads over the <strong>cost</strong> of leads.</p>
+        </div>
+
+        <div style="flex: 1; border: 1px solid #0f6c7b; padding: 15px; border-radius: 8px;">
+            <h3 style="color: #0f6c7b;">Scenario B: Warrant-Driven</h3>
+            <p><strong>Claim:</strong> We should move our ad budget to LinkedIn.</p>
+            <p><strong>Evidence:</strong> LinkedIn's CPL is $4.00 lower than Facebook's.</p>
+           <p><strong>Implication:</strong> This shift will reduce our monthly acquisition costs by $45,000.</p>
+        <p><strong>Organizational Warrant:</strong> Our Q4 strategic priority is <strong>improving acquisition margins</strong> to reach profitability before the next funding round.</p>
+            <p><strong>Result: <em>Alignment.</em></strong> The decision-maker sees exactly how the data supports the most urgent organizational objective.</p>
+        </div>
+</div>
+</div>
+</section>
+<section id="aligning-evidence-with-kpis" class="subsection level-2"><h3>Aligning Evidence with KPIs</h3>
+<p>In most organizations, performance is evaluated using Key Performance Indicators (KPIs). KPIs represent measurable metrics used to assess progress toward strategic goals.<span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">Tableau. (n.d.). What is a KPI dashboard?</span></span> In managerial communication, the <strong>Warrant</strong> is almost always a <strong>Key Performance Indicator (KPI)</strong>. Without a KPI, a visualization is merely a "fact" rather than "evidence." Managers must evaluate the <strong>Signal-to-Noise Ratio</strong>, i.e., determining if a change in a chart is a meaningful trend that impacts revenue or efficiency, or simply random variance.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span> 
+Examples include:</p><ul><li>revenue growth</li><li>customer retention</li><li>operational costs</li><li>conversion rates</li><li>employee productivity</li></ul><p>When reviewing analytical presentations, managers often interpret findings in terms of their potential impact on these metrics. For example, a visualization showing an increase in website traffic may initially appear positive. However, if conversion rates decline at the same time, the increase in traffic may not translate into improved revenue performance.</p><p>Understanding how analytical findings relate to KPIs helps managers evaluate whether the evidence presented is relevant to the organization’s strategic objectives.<span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">Tableau. (n.d.). What is a KPI dashboard?</span></span> Managers should therefore ask:</p><ul><li>Which KPI does this analysis affect?</li><li>How significant is the impact on that metric?</li><li>Does the evidence justify a change in strategy or operations?</li></ul><p>When analytical findings are clearly connected to performance indicators, decision makers can more easily determine the importance and urgency of the issue being analyzed.</p></section><section id="anticipating-objections" class="subsection level-2"><h3>Anticipating Objections</h3><p>Managers must often evaluate analytical findings in environments where decisions involve uncertainty, risk, and competing priorities; it is common for decision makers to raise questions or objections when reviewing analytical presentations. Decision-making under uncertainty requires managers to anticipate <strong>Counter-Arguments</strong>. Persuasive evidence-based requests address specific areas of risk:<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Toulmin, S. E. (1958). <em>The uses of argument</em>. Cambridge University Press.</span></span></p>
+<ul>
+    <li><strong>Data Integrity:</strong> Is the source reliable?</li>
+    <li><strong>Alternative Explanations:</strong> Could another variable (confounder) explain this pattern?</li>
+    <li><strong>Sensitivity:</strong> If our assumptions change by 10%, does the recommendation still hold?</li>
+</ul>
+<p>Analytical presentations that address these questions proactively tend to be more persuasive because they demonstrate that the evidence has been carefully evaluated.<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Schwartzberg, J. (2020). Present your data like a pro. <em>Harvard Business Review</em>.</span></span> Managers who understand these common concerns are better equipped to ask the right questions and ensure that decisions are based on robust and well-supported evidence.</p></section><section id="the-role-of-visualization-in-decision-support" class="subsection level-2"><h3>The Role of Visualization in Decision Support</h3><p>Visualizations play an important role in managerial decision making because they allow decision makers to quickly recognize patterns and relationships in complex data. Cognitive research on visualization shows that visual representations support reasoning by helping individuals compare alternatives, evaluate trade-offs, and integrate information from multiple sources.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Padilla, L. M., Creem-Regehr, S. H., Hegarty, M., &amp; Stefanucci, J. K. (2018). Decision making with visualizations: A cognitive framework across disciplines. <em>Cognitive Research: Principles and Implications</em>, 3(1), 29.</span></span><span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Streeb, D., El-Assady, M., Keim, D. A., &amp; Chen, M. (2021). Why visualize? Arguments for visual support in decision making. <em>IEEE Computer Graphics and Applications</em>, 41(2), 17–22.</span></span></p><p>For managers, this means that well-designed visualizations can significantly improve the speed and quality of decision making.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Streeb, D., El-Assady, M., Keim, D. A., &amp; Chen, M. (2021). Why visualize? Arguments for visual support in decision making. <em>IEEE Computer Graphics and Applications</em>, 41(2), 17–22.</span></span> Dashboards, charts, and performance reports allow leaders to quickly identify trends, detect potential problems, and evaluate the potential impact of different actions.</p><p>However, visualizations alone rarely provide sufficient guidance for action. Even when patterns are visible, managers must still interpret what those patterns mean for the organization and determine whether they justify a change in strategy, operations, or policy.</p><p>For this reason, visualizations are most effective when they are combined with clear explanations of their implications for organizational performance. When charts are integrated into an evidence-based argument that explains the claim, supporting evidence, and recommended course of action, they become powerful tools for supporting managerial decisions.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Toulmin, S. E. (1958). <em>The uses of argument</em>. Cambridge University Press.</span></span><span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span></p>
+    <p class="note"><strong>The Role of Visual Hierarchy:</strong> Research in <strong>User Experience (UX)</strong> shows that a clear <strong>Visual Hierarchy</strong> allows managers to scan for these risks quickly. By using <strong>size, color, and position</strong>, analysts can guide the manager’s eye toward the most critical "stress tests" of the data.<span aria-label="Source 5" class="cite-ref" tabindex="0"><sup>5</sup><span class="cite-tooltip" role="tooltip">Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</span></span></p>
+    </section><section id="best-practices-for-framing-evidence-based-requests" class="subsection level-2"><h3>Best Practices for Framing Evidence-Based Requests</h3><p>Several principles can help managers ensure that analytical findings are communicated in ways that support effective decision making. Managers should:</p><ul><li>begin by clarifying the decision that the analysis is intended to support. This ensures that analytical work remains focused on the information that is most relevant to the organization’s objectives.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Berinato, S. (2019). A data scientist’s guide to presenting to executives. <em>Harvard Business Review</em>.</span></span></li><li>use a clear structure such as claim–evidence–implication–recommendation when evaluating analytical presentations. This framework helps decision makers determine whether the analysis logically supports the proposed recommendation.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Toulmin, S. E. (1958). <em>The uses of argument</em>. Cambridge University Press.</span></span></li><li>ensure that analytical findings are connected to relevant organizational performance metrics, such as key performance indicators (KPIs). When insights are linked to measurable outcomes, it becomes easier to assess their significance and prioritize potential actions.<span aria-label="Source 8" class="cite-ref" tabindex="0"><sup>8</sup><span class="cite-tooltip" role="tooltip">Tableau. (n.d.). What is a KPI dashboard?</span></span></li><li>anticipate potential objections or uncertainties associated with the analysis. Asking questions about data reliability, assumptions, or alternative explanations helps ensure that decisions are based on robust evidence.</li><li>focus on the broader goal of analytical communication: using evidence to guide informed organizational decisions. The purpose of data analysis is not simply to present information but to help leaders understand the implications of the evidence and determine the most appropriate course of action.<span aria-label="Source 7" class="cite-ref" tabindex="0"><sup>7</sup><span class="cite-tooltip" role="tooltip">Schwartzberg, J. (2020). Present your data like a pro. <em>Harvard Business Review</em>.</span></span></li></ul><p>Data visualization allows managers to recognize patterns and relationships in complex information more quickly than numerical reports alone.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Padilla, L. M., Creem-Regehr, S. H., Hegarty, M., &amp; Stefanucci, J. K. (2018). Decision making with visualizations: A cognitive framework across disciplines. <em>Cognitive Research: Principles and Implications</em>, 3(1), 29.</span></span> However, effective managerial decision making requires more than interpreting charts.</p><p>Managers must evaluate whether <strong>analytical evidence clearly supports a claim, explains its implications for organizational performance, and justifies a recommended action</strong>. Frameworks such as <strong>claim → evidence → implication → recommendation</strong> help decision-makers determine whether an analysis logically connects visual evidence to a proposed course of action.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Toulmin, S. E. (1958). <em>The uses of argument</em>. Cambridge University Press.</span></span> When analytical findings are clearly linked to organizational goals and performance indicators, visualizations become powerful tools that support evidence-based managerial decisions.</p></section><section id="key-takeaways-6" class="subsection level-2"><h3>Key Takeaways</h3><ul><li>Data analysis should support managerial decision making, not simply describe patterns in data.</li><li>Managers must be able to evaluate whether analytical evidence clearly supports a claim and justifies a recommended action.</li><li>The claim → evidence → implication → recommendation framework helps managers assess whether analytical presentations logically support decision requests.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Toulmin, S. E. (1958). <em>The uses of argument</em>. Cambridge University Press.</span></span></li><li>Visualizations provide evidence, but decision makers must interpret what those visuals mean for organizational outcomes and performance metrics.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Padilla, L. M., Creem-Regehr, S. H., Hegarty, M., &amp; Stefanucci, J. K. (2018). Decision making with visualizations: A cognitive framework across disciplines. <em>Cognitive Research: Principles and Implications</em>, 3(1), 29.</span></span></li><li>Connecting analysis to Key Performance Indicators (KPIs) helps managers understand how findings affect strategic objectives.</li><li>Managers should anticipate potential objections or uncertainties and ask questions about data reliability, assumptions, and alternative explanations.</li><li>Effective analytical communication focuses on implications and decisions, not only on analytical methods.</li><li>When visualizations are integrated into clear evidence-based arguments, they become powerful tools for supporting managerial decision making.</li></ul></section><section id="managerial-insight-6" class="insights box-2"><h3>Managerial Insight</h3><p>Managers frequently rely on dashboards, reports, and analytical presentations when making decisions about strategy, operations, and performance improvement. However, charts alone rarely provide enough information to determine what action should be taken.</p><p>Effective managers therefore look beyond the visualization itself and evaluate whether the analysis clearly explains why the findings matter and what decision they support.<span aria-label="Source 6" class="cite-ref" tabindex="0"><sup>6</sup><span class="cite-tooltip" role="tooltip">Berinato, S. (2019). A data scientist’s guide to presenting to executives. <em>Harvard Business Review</em>.</span></span> By asking how the evidence relates to key performance indicators and organizational objectives, managers can ensure that analytical insights translate into meaningful action.</p><p>When managers consistently request evidence-based explanations that connect data to decisions, they help create an organizational culture in which analysis supports clear, informed, and accountable decision making.</p></section><section id="key-sources-6" class="subsection level-2"><h3>Key Sources</h3>
+<div class="source-entry"><sup>1</sup> Padilla, L. M., Creem-Regehr, S. H., Hegarty, M., &amp; Stefanucci, J. K. (2018). Decision making with visualizations: A cognitive framework across disciplines. <em>Cognitive Research: Principles and Implications</em>, 3(1), 29.</div>
+<div class="source-entry"><sup>2</sup> Streeb, D., El-Assady, M., Keim, D. A., &amp; Chen, M. (2021). Why visualize? Arguments for visual support in decision making. <em>IEEE Computer Graphics and Applications</em>, 41(2), 17–22.</div>
+<div class="source-entry"><sup>3</sup> Toulmin, S. E. (1958). <em>The uses of argument</em>. Cambridge University Press.</div>
+<div class="source-entry"><sup>4</sup> Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</div>
+<div class="source-entry"><sup>5</sup> Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</div>
+<div class="source-entry"><sup>6</sup> Berinato, S. (2019). A data scientist’s guide to presenting to executives. <em>Harvard Business Review</em>.<br><a href="https://hbr.org/2019/08/a-data-scientists-guide-to-presenting-to-executives" target="_blank" rel="noopener">https://hbr.org/2019/08/a-data-scientists-guide-to-presenting-to-executives</a></div>
+<div class="source-entry"><sup>7</sup> Schwartzberg, J. (2020). Present your data like a pro. <em>Harvard Business Review</em>.<br><a href="https://hbr.org/2020/02/present-your-data-like-a-pro" target="_blank" rel="noopener">https://hbr.org/2020/02/present-your-data-like-a-pro</a></div>
+<div class="source-entry"><sup>8</sup> Tableau. (n.d.). What is a KPI dashboard? <a href="https://www.tableau.com/kpi/what-is-kpi-dashboard" target="_blank" rel="noopener">https://www.tableau.com/kpi/what-is-kpi-dashboard</a></div></section></section>  
+</main>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const links = Array.from(document.querySelectorAll('.sidebar a'));
+  const sections = links
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.getAttribute('id');
+      const link = document.querySelector('.sidebar a[href="#' + id + '"]');
+      if (!link) return;
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(section => observer.observe(section));
+});
+</script>
+</body>
+</html>

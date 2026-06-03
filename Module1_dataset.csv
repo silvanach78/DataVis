@@ -1,0 +1,26 @@
+Employee ID,Team,Complaints Handled,Resolution Time (Hours)
+E001,Team A,22,8
+E002,Team A,21,8.2
+E003,Team A,21,8.3
+E004,Team A,21,8.1
+E005,Team A,22,8
+E006,Team B,20,8.7
+E007,Team B,20,8.5
+E008,Team B,20,8.6
+E009,Team B,20,8.8
+E010,Team B,21,8.4
+E011,Team C,22,7.8
+E012,Team C,22,8
+E013,Team C,22,7.9
+E014,Team C,22,7.7
+E015,Team C,21,8.1
+E016,Team D,12,15.2
+E017,Team D,11,15.6
+E018,Team D,11,15.3
+E019,Team D,11,15.5
+E020,Team D,11,15.4
+E021,Team E,21,8.2
+E022,Team E,20,8.4
+E023,Team E,21,8.3
+E024,Team E,21,8.1
+E025,Team E,20,8.5

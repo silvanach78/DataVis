@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Visualization and Communication for Managers</title>
+<style>
+:root {
+  --bg: #f7f8fa;
+  --panel: #ffffff;
+  --ink: #222831;
+  --muted: #5c6773;
+  --line: #d7dde5;
+  --accent: #0f6c7b;
+  --accent-soft: #e8f4f6;
+  --note-bg: #fff7e8;
+  --note-line: #e6cf95;
+    --note:#eef79a;
+  --note2:#f5f8ad;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+}
+
+a { color: #0b5ea8; }
+.layout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4px;
+}
+.sidebar {
+  position: sticky;
+  top: 4px;
+  align-self: start;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 18px 14px;
+  box-shadow: 0 6px 20px rgba(34,40,49,.06);
+}
+.sidebar h2 {
+  margin: 0 0 8px;
+  font-size: 1.45rem;
+}
+.sidebar p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: .95rem;
+}
+.toc-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.toc-list .toc-list {
+  padding-left: 10px;
+  margin-top: 4px;
+}
+.toc-list li {
+  margin: 3px 0;
+}
+.toc-list a {
+  display: block;
+  text-decoration: none;
+  color: #334155;
+  padding: 4px 6px;
+  border-radius: 8px;
+  font-size: .96rem;
+}
+.toc-list a:hover, .toc-list a.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.content {
+  min-width: 0;
+}
+.frontmatter, .module, .subsection {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px 10px;
+  box-shadow: 0 6px 18px rgba(34,40,49,.05);
+  margin-bottom: 15px;
+}
+.frontmatter h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1.15;
+}
+.subtitle {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+h2, h3, h4 {
+  scroll-margin-top: 24px;
+}
+.module > h2 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+.level-2 > h3 {
+  margin: 4px 0 12px;
+  font-size: 1.35rem;
+}
+.level-3 > h4 {
+  margin: 4px 0 10px;
+  font-size: 1.12rem;
+}
+.insight, .insights {
+  background: var(--accent-soft);
+  border-right: 4px solid var(--accent);
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.box-2 > h3 {
+  margin: 4px 0 12px;
+  font-size: 1.35rem;
+}
+
+.wrapper { max-width: 1180px; margin: 0 auto; }
+.card { background:#fff; border:1px solid #d7dde5; border-radius:16px; padding:16px; margin-bottom:22px; box-shadow:0 4px 14px rgba(0,0,0,.05); }
+.grid2 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid2 figure {
+  min-width: 0;
+}
+.grid2 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.chart {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.chart-wide {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chart-small {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+@media (min-width: 1300px) { .grid2 { grid-template-columns:1fr 1fr; } }
+
+.grid3 { display:grid; grid-template-columns:1fr; gap:18px; }
+.grid3 figure {
+  min-width: 0;
+}
+.grid3 figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (min-width: 1100px) { .grid3 { grid-template-columns:1fr 1fr; } }
+@media (min-width: 1500px) { .grid3 { grid-template-columns:1fr 1fr 1fr; } }
+
+
+p {
+  margin: 0 0 14px;
+}
+ul {
+  margin: 0 0 14px 1rem;
+}
+li { margin-bottom: 7px; }
+figure {
+  margin: 20px 0 18px;
+  text-align: center;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+figcaption {
+  margin-top: 10px;
+  font-size: .96rem;
+  color: #44515f;
+  font-style: italic;
+}
+.note {
+  background: var(--note-bg);
+  border-left: 4px solid var(--note-line);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: .95rem;
+  margin-bottom: 12px;
+}
+.source-entry {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+    font-size: .9rem;
+  border-bottom: 1px dashed var(--line);
+}
+.source-entry:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+  font-size: .9rem;
+}
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+    max-height: none;
+  }
+}
+
+.grid-notes {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:22px;
+  margin-top:14px;
+}
+
+@media (min-width:800px) {
+  .grid-notes { grid-template-columns:1fr 1fr; }
+}
+@media (min-width:1000px) {
+  .grid-notes { grid-template-columns:1fr 1fr 1fr; }
+}
+.sticky {
+  background:linear-gradient(180deg,var(--note2),var(--note));
+  border:1px solid #d7df7a;
+  min-height:230px;
+  padding:20px 18px 18px;
+  box-shadow:0 10px 16px rgba(0,0,0,.08);
+  transform:rotate(-1deg);
+  position:relative;
+}
+.sticky:nth-child(2) { transform:rotate(1deg); }
+.sticky:nth-child(3) { transform:rotate(-0.5deg); }
+.sticky:nth-child(4) { transform:rotate(0.8deg); }
+.sticky:nth-child(5) { transform:rotate(-1deg); }
+.sticky:nth-child(6) { transform:rotate(0.5deg); }
+.sticky:before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:22px;
+  background:rgba(255,255,255,.18);
+}
+.sticky h3 {
+  margin:4px 0 12px;
+  font-size:1.15rem;
+  line-height:1.15;
+  font-weight:700;
+  font-family: "Comic Sans MS", Chalkboard SE, Marker Felt, cursive; 
+}
+.sticky p, .sticky li {
+  font-size:0.95rem;
+  line-height:1.45;
+  font-family: "Comic Sans MS", Chalkboard SE, Marker Felt, cursive; 
+}
+.sticky ul {
+  margin:0 0 0 18px;
+  padding:0;
+}
+.chart-wrap {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  margin-top:10px;
+}
+.note {
+  background:#fff7e8;
+  border-left:4px solid #e6cf95;
+  padding:12px 14px;
+  border-radius:8px;
+  font-size:.97rem;
+  margin-top:10px;
+}
+.small {
+  font-size:.93rem;
+  color:#44515f;
+}
+
+/* Citation tooltips: fixed positioning prevents hidden tooltips from widening the page. */
+.cite-ref { position:relative; display:inline-block; cursor:help; }
+.cite-tooltip {
+  visibility:hidden;
+  opacity:0;
+  position:fixed;
+  left:50%;
+  top:24px;
+  transform:translateX(-50%);
+  width:min(360px, calc(100vw - 32px));
+  max-width:calc(100vw - 32px);
+  background:#1f2937;
+  color:#fff;
+  text-align:left;
+  border-radius:8px;
+  padding:10px 12px;
+  font-size:0.82rem;
+  line-height:1.35;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+  z-index:9999;
+  transition:opacity .18s ease, visibility .18s ease;
+}
+.cite-tooltip::after { content:none; }
+.cite-ref:hover .cite-tooltip, .cite-ref:focus .cite-tooltip, .cite-ref:focus-within .cite-tooltip { visibility:visible; opacity:1; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" aria-label="Table of contents">
+    <h2>Contents</h2>
+    <ul class="toc-list"><li><strong><a href="#about-this-document">About This Document</a></strong></li>
+   <li><strong><a href="#dashboards-for-managerial-decision-making">Module 7: Dashboards for Managerial Decision-Making</a></strong><ul class="toc-list"><li><a href="#introduction-7">Introduction</a></li><li><a href="#the-role-of-dashboards-in-organizations">The Role of Dashboards in Organizations</a></li><li><a href="#monitoring-vs-decision-dashboards">Monitoring vs Decision Dashboards</a><ul class="toc-list"><li><a href="#monitoring-dashboards">Monitoring Dashboards</a></li><li><a href="#decision-dashboards">Decision Dashboards</a></li><li><a href="#Example-monitoring-dashboard">Example of a Monitoring Dashboard</a></li></ul></li><li><a href="#designing-dashboards-for-managers">Designing Dashboards for Managers</a><ul class="toc-list"><li><a href="#focus-on-key-performance-indicators">Focus on Key Performance Indicators</a></li><li><a href="#organize-information-clearly">Organize Information Clearly</a></li><li><a href="#use-appropriate-visualization-types">Use Appropriate Visualization Types</a></li><li><a href="#avoid-visual-clutter">Avoid Visual Clutter</a></li></ul></li><li><a href="#interpreting-dashboards-as-a-manager">Interpreting Dashboards as a Manager</a></li><li><a href="#best-practices-for-managerial-dashboards">Best Practices for Managerial Dashboards</a></li><li><a href="#key-takeaways-7">Key Takeaways</a></li><li><a href="#managerial-insight-7">Managerial Insight</a></li><li><a href="#key-sources-7">Key Sources</a></li></ul></ul>
+  </aside>
+  <main class="content">
+   <section class="frontmatter" id="about-this-document"><h1>Data Visualization and Communication for Managers</h1><h2>About This Document</h2><p>This document has been developed for students of Data Visualization and Communication for Managers. The topics contained herein have been carefully curated to help us accomplish the course goals; therefore, they are discussed at a high level rather than in depth. To learn about these topics more in-depth, I recommend that you visit the Sources listed at the end of each module.</p><p>This document reflects current research, simulated and real-world examples, and instructor-developed insights. <strong>Please do not share, reproduce, or distribute this document, or any part of it, outside of this class.</strong></p><p>This work is original and unique to this course, and as such, it is protected by copyright and the Digital Millennium Copyright Act (DMCA).</p>
+<p><strong>Copyright © 2026 Silvana Chambers.</strong></p></section>
+<section id="dashboards-for-managerial-decision-making" class="module level-1"><h2>Module 7: Dashboards for Managerial Decision-Making</h2><section id="introduction-7" class="subsection level-2"><h3>Introduction</h3><p>Organizations increasingly rely on dashboards to monitor performance, track progress toward strategic goals, and support data-driven decision making. Advances in data systems and visualization tools have made it possible for managers to access real-time performance information across many areas of the organization.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</span></span></p><p>In simple terms, a dashboard can be defined as <strong>a way of displaying various types of visual data in one place</strong>. Dashboards bring together multiple metrics and visualizations into a single interface, allowing managers to quickly assess whether performance is meeting expectations and identify areas that may require attention. However, simply displaying many charts on one screen does not guarantee that a dashboard will support effective decision making. Poorly designed dashboards can overwhelm users with excessive information, obscure key patterns, or emphasize metrics that are not directly relevant to organizational objectives.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</span></span></p><p>For managers, the value of a dashboard lies not in the volume of information it displays but in its ability to highlight the most important indicators of organizational performance. Effective dashboards provide a clear overview of performance trends, enable comparisons across units or time periods, and support timely decisions when performance deviates from expectations.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Tableau. (n.d.). <em>What is a KPI dashboard?</em></span></span></p><p>In this module, we examine how dashboards support managerial decision making and explore principles that help ensure dashboards communicate performance information clearly and effectively.</p></section><section id="the-role-of-dashboards-in-organizations" class="subsection level-2"><h3>The Role of Dashboards in Organizations</h3><p>Dashboards are visual interfaces that present key performance indicators and other relevant metrics in a concise and easily interpretable format.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</span></span> Managers commonly use dashboards to:</p><ul><li>monitor operational performance</li><li>track progress toward strategic goals</li><li>identify emerging problems or risks</li><li>compare performance across teams, products, or regions</li></ul><p>Because dashboards often display multiple metrics simultaneously, they provide a high-level overview of organizational performance. For example, a marketing dashboard might include metrics such as:</p><ul><li>website traffic</li><li>conversion rates</li><li>customer acquisition costs</li><li>campaign performance</li></ul><p>A supply chain dashboard might track:</p><ul><li>inventory levels</li><li>delivery times</li><li>supplier performance</li><li>production efficiency</li></ul><p>In both cases, the dashboard enables managers to quickly assess whether performance is improving, declining, or remaining stable. Dashboards therefore function as decision-support tools, helping managers focus attention on areas that may require further investigation or action.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Tableau. (n.d.). <em>What is a KPI dashboard?</em></span></span></p></section>
+<section id="monitoring-vs-decision-dashboards" class="subsection level-2"><h3>Monitoring vs Decision Dashboards</h3>
+<p>Dashboards are not inherently different types of tools, but they can be used in different ways depending on managerial needs. In practice, the same dashboard may support both <strong>monitoring</strong> and <strong>decision-making</strong> activities.</p>
+
+<p>When used for <strong>monitoring</strong>, dashboards rely heavily on <strong>preattentive processing</strong> to allow managers to quickly detect patterns, trends, and deviations from expected performance. Through effective <strong>visual hierarchy</strong> and simplified design, managers can identify signals with minimal cognitive effort. When used for <strong>decision-making</strong>, those same visualizations require deeper interpretation, where managers move beyond detection to evaluate evidence, assess implications, and determine appropriate actions.</p>
+
+<p>Rather than representing separate categories, monitoring and decision-making reflect different levels of engagement with the same information. Monitoring answers the question <em>“Is something changing or off track?”</em>, while decision-making addresses <em>“What should we do about it?”</em>. In this way, monitoring often serves as a trigger for deeper analysis and action.</p>
+
+<section id="monitoring-dashboards" class="subsection level-3"><h4>Monitoring Dashboards</h4>
+
+<p>Monitoring dashboards track key metrics over time and help managers detect deviations from expected performance.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</span></span> These dashboards are designed to support rapid, at-a-glance interpretation.</p>
+
+<p>Monitoring dashboards typically display:</p>
+<ul>
+<li>historical trends</li>
+<li>current performance levels</li>
+<li>comparisons against targets or benchmarks</li>
+</ul>
+
+<p>Their primary purpose is to answer questions such as:</p>
+<ul>
+<li>Are we meeting our performance targets?</li>
+<li>Are any indicators showing unusual changes?</li>
+<li>Do we need to investigate potential problems?</li>
+</ul>
+
+<p>Because they rely on quick pattern recognition, monitoring dashboards are closely aligned with principles from earlier modules, such as <strong>preattentive attributes</strong> and <strong>visual hierarchy</strong>, which reduce cognitive load and allow managers to detect meaningful signals efficiently. However, while monitoring dashboards are effective at identifying when attention is needed, they do not by themselves explain why a change has occurred or what action should be taken.</p>
+</section>
+
+<section id="decision-dashboards" class="subsection level-3"><h4>Decision Dashboards</h4>
+<p>Decision dashboards support managerial evaluation and action by organizing information in ways that facilitate comparison, trade-off analysis, and interpretation.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</span></span> Rather than simply displaying performance metrics, these dashboards help managers construct <strong>evidence-based requests</strong> by linking data to decisions.</p>
+
+<p>In this context, dashboards provide the <strong>evidence</strong> component of the decision-making process described in Module 6. Managers must then interpret that evidence to form a <strong>claim</strong>, evaluate its <strong>implications</strong> for organizational performance, and determine an appropriate <strong>recommendation</strong>.</p>
+
+<p>For example, a pricing dashboard might display:</p>
+<ul>
+<li>sales volume by price level</li>
+<li>profit margins across products</li>
+<li>demand sensitivity to price changes</li>
+</ul>
+
+<p>These visualizations allow managers to compare alternatives and evaluate potential outcomes. Unlike monitoring, which emphasizes rapid detection, decision-oriented use of dashboards involves deeper analytical processing, where managers integrate multiple indicators, assess trade-offs, and justify action.</p>
+
+<p>In practice, decision-making often builds directly on monitoring. Once a dashboard signals a deviation from expectations, managers use the same or related visualizations to investigate causes, evaluate options, and develop evidence-based recommendations.</p>
+</section>
+<section id="Example-monitoring-dashboard" class="subsection level-3">
+<h4>Example of a Dashboard</h4>
+<p>Below is a dashboard containing visualizations that can help managers monitor key workforce metrics and make decisions. The interactive nature of the dashboard allows quick access to customized graphs in seconds.</p> 
+
+  <div class="tableauPlaceholder" id="viz1774387738620" style="position: relative; width: 100%; max-width: 100%;">
+    <noscript>
+      <a href="#">
+        <img alt="Workforce Profile Dashboard"
+             src="https://public.tableau.com/static/images/Mo/MonitoringDashboard_17743877152750/WorkforceProfileDashboard/1_rss.png"
+             style="border: none; width: 100%; height: auto;" />
+      </a>
+    </noscript>
+    <object class="tableauViz" style="display:none;">
+      <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+      <param name="embed_code_version" value="3" />
+      <param name="site_root" value="" />
+      <param name="name" value="MonitoringDashboard_17743877152750/WorkforceProfileDashboard" />
+      <param name="tabs" value="no" />
+      <param name="toolbar" value="yes" />
+      <param name="static_image" value="https://public.tableau.com/static/images/Mo/MonitoringDashboard_17743877152750/WorkforceProfileDashboard/1.png" />
+      <param name="animate_transition" value="yes" />
+      <param name="display_static_image" value="yes" />
+      <param name="display_spinner" value="yes" />
+      <param name="display_overlay" value="yes" />
+      <param name="display_count" value="yes" />
+      <param name="language" value="en-US" />
+      <param name="filter" value="publish=yes" />
+    </object>
+  </div>
+
+  <script type="text/javascript">
+    var divElement = document.getElementById("viz1774387738620");
+    var vizElement = divElement.getElementsByTagName("object")[0];
+
+    function resizeTableau() {
+      var width = divElement.offsetWidth;
+      vizElement.style.width = "100%";
+      vizElement.style.height = (width * 0.8) + "px"; // adjust ratio as needed
+    }
+
+    resizeTableau();
+    window.addEventListener("resize", resizeTableau);
+
+    var scriptElement = document.createElement("script");
+    scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
+    vizElement.parentNode.insertBefore(scriptElement, vizElement);
+  </script></section></section>
+<section id="designing-dashboards-for-managers" class="subsection level-2">
+<h3>Designing Dashboards for Managers</h3>
+<p>Effective dashboards translate complex data into visual structures that align with how humans perceive information and make decisions. Because dashboards are used by decision makers who often face significant time constraints, effective design is essential. Dashboard design should not be viewed simply as a visual task, but as a way to support how managers <strong>perceive, interpret, and act on information</strong>. The principles below ensure that dashboards reduce cognitive load, highlight meaningful signals, and support evidence-based decision making.</p>
+
+<section id="focus-on-key-performance-indicators" class="subsection level-3">
+<h4>Focus on Key Performance Indicators</h4>
+
+<p>Dashboards should emphasize metrics that directly reflect organizational objectives.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Tableau. (n.d.). <em>What is a KPI dashboard?</em></span></span> Key Performance Indicators (KPIs) represent measurable outcomes used to assess progress toward strategic goals.</p>
+
+<p>Examples include:</p>
+<ul>
+<li>revenue growth</li>
+<li>profit margins</li>
+<li>customer retention</li>
+<li>production efficiency</li>
+<li>employee turnover</li>
+</ul>
+
+<p>From the perspective of evidence-based decision making (see Module 6), KPIs function as <strong>organizational warrants</strong>. A warrant represents the shared understanding of what constitutes success within the organization. It answers the critical managerial question: <em>“Why does this evidence matter?”</em></p>
+
+<p>For example, if a dashboard shows a decrease in customer churn, the underlying warrant is that <em>reducing churn is important because it improves long-term profitability</em>. Without a clear warrant, a manager may observe a change in a metric but be unable to determine whether it justifies action.</p>
+
+<p>By aligning dashboards with KPIs, organizations ensure that the <strong>evidence</strong> presented in visualizations can be meaningfully connected to <strong>claims</strong>, <strong>implications</strong>, and ultimately <strong>recommendations</strong>. In this way, KPIs transform raw data into strategically relevant information that supports decision making.</p>
+
+<p>Including too many metrics reduces the signal-to-noise ratio, making it more difficult to identify meaningful patterns and weakening the effectiveness of the dashboard.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</span></span></p>
+</section>
+
+<section id="organize-information-clearly" class="subsection level-3">
+<h4>Organize Information Clearly</h4>
+
+<p>The layout of a dashboard should guide the viewer’s attention toward the most important information. Effective dashboards use <strong>visual hierarchy</strong> to emphasize key metrics, placing the most important indicators in prominent positions such as the top or center of the display.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span></p>
+
+<p>Grouping related metrics together improves comprehension by allowing managers to interpret relationships between indicators more easily. These design choices build on principles from earlier modules, where visual hierarchy and spatial organization help reduce cognitive load and support faster, more accurate interpretation.</p>
+</section>
+
+<section id="use-appropriate-visualization-types" class="subsection level-3">
+<h4>Use Appropriate Visualization Types</h4>
+
+<p>The choice of visualization should match the type of information being presented.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Yau, N. (2013). <em>Data points: Visualization that means something</em>. Wiley.</span></span> Selecting appropriate visual encodings allows managers to leverage <strong>preattentive processing</strong> to quickly detect patterns and differences.</p>
+
+<p>For example:</p>
+<ul>
+<li>line charts work well for showing trends over time</li>
+<li>bar charts are useful for comparing categories</li>
+<li>bullet charts are effective for comparing performance against targets</li>
+</ul>
+
+<p>Using consistent chart types across the dashboard improves readability and reduces the cognitive effort required to interpret information.<span aria-label="Source 3" class="cite-ref" tabindex="0"><sup>3</sup><span class="cite-tooltip" role="tooltip">Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</span></span> Poorly chosen visualizations can obscure patterns and make it more difficult to construct accurate interpretations.</p>
+</section>
+
+<section id="avoid-visual-clutter" class="subsection level-3">
+<h4>Avoid Visual Clutter</h4>
+
+<p>Because dashboards often contain multiple charts and indicators, excessive visual elements can quickly overwhelm the viewer.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</span></span> Visual clutter increases cognitive load and makes it more difficult to distinguish meaningful signals from noise.</p>
+
+<p>Common sources of clutter include:</p>
+<ul>
+<li>unnecessary gridlines</li>
+<li>excessive colors</li>
+<li>decorative graphics</li>
+<li>redundant labels</li>
+</ul>
+
+<p>Reducing unnecessary elements improves clarity and ensures that the most important information stands out. This aligns with earlier principles related to signal-to-noise ratio and supports more effective monitoring and decision-making.</p>
+</section>
+<section id="ensure-accurate-and-focused-communication" class="subsection level-3">
+<h4>Ensure Accurate and Focused Communication</h4>
+
+<p>Dashboards must not only present information clearly, but also ensure that the information is <strong>accurate, trustworthy, and meaningful</strong>. Because dashboards often support managerial decisions, misleading or poorly constructed visualizations can lead to ineffective or costly outcomes.</p>
+
+<p>From the perspective of Module 4, dashboards should communicate data <strong>ethically and accurately</strong>. This includes avoiding misleading design choices, such as distorted axes or inappropriate comparisons, and ensuring that <strong>uncertainty is appropriately represented</strong> when relevant. When variability, incomplete data, or estimation is involved, dashboards should provide sufficient context to prevent overconfidence in the results.</p>
+
+<p>At the same time, dashboards should reflect principles from Module 5 related to <strong>storytelling and focus</strong>. Effective dashboards do not attempt to show everything. Instead, they present a carefully selected set of visualizations that together communicate a clear and coherent message.</p>
+
+<p>Including too many charts or metrics can overwhelm decision makers and obscure the most important insights. Each visualization should contribute to answering a meaningful managerial question or supporting an evidence-based recommendation. In this way, dashboards function not only as reporting tools, but as structured narratives that guide interpretation and decision making.</p>
+
+<p>By combining accurate representation of data with a focused and intentional design, dashboards help ensure that managers can both trust the information presented and understand its implications for action.</p>
+</section>
+<div class="note">
+<strong>Instructor Note.</strong> The principles in this section build directly on concepts introduced in earlier modules. Visual hierarchy and preattentive processing (Modules 2–3) explain how dashboards support rapid perception, while principles of ethical and accurate data representation (Module 4) ensure that the information can be trusted. Storytelling and focus (Module 5) guide the selection and organization of visualizations so that dashboards communicate a clear message, and the claim → evidence → implication → recommendation framework (Module 6) explains how managers use that information to make decisions. In this sense, an effective dashboard is not defined by how much information it contains, but by how effectively it supports accurate interpretation and informed decision making.
+</div>
+
+</section>
+
+<section id="interpreting-dashboards-as-a-manager" class="subsection level-2">
+<h3>Interpreting Dashboards as a Manager</h3>
+
+<p>Managers should approach dashboards as tools for identifying patterns and guiding further inquiry, rather than as complete explanations of organizational performance.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Tableau. (n.d.). <em>What is a KPI dashboard?</em></span></span> While dashboards make patterns visible, effective decision making requires interpreting those patterns within a broader analytical framework.</p>
+
+<p>From the perspective of evidence-based decision making (Module 6), dashboards provide the <strong>evidence</strong> that managers use to construct claims, evaluate implications, and determine appropriate recommendations. Interpreting a dashboard therefore involves moving beyond observation to structured reasoning.</p>
+
+<p>When reviewing a dashboard, managers may ask questions such as:</p>
+<ul>
+<li>Which metrics show significant changes?</li>
+<li>Are any indicators deviating from their targets?</li>
+<li>Do these changes align with our key performance indicators (warrants)?</li>
+<li>What are the potential implications for organizational performance?</li>
+<li>What actions, if any, should be considered?</li>
+</ul>
+
+<p>Dashboards often serve as starting points for deeper analysis. When a metric signals a potential issue, managers should evaluate whether the evidence is sufficient, consider sources of uncertainty, and determine whether additional analysis is needed before taking action.</p>
+
+<p>By combining pattern recognition with structured reasoning, dashboards support more informed and proactive managerial decision making.<span aria-label="Source 2" class="cite-ref" tabindex="0"><sup>2</sup><span class="cite-tooltip" role="tooltip">Tableau. (n.d.). <em>What is a KPI dashboard?</em></span></span></p>
+</section>
+<section id="best-practices-for-managerial-dashboards" class="subsection level-2">
+<h3>Best Practices for Managerial Dashboards</h3>
+
+<ul>
+<li>Focus on a limited number of meaningful metrics aligned with organizational objectives (KPIs).</li>
+<li>Design visualizations to support rapid perception using visual hierarchy and preattentive attributes.</li>
+<li>Ensure that data is represented accurately and ethically, and that uncertainty is communicated when relevant.</li>
+<li>Use dashboards to communicate a clear and focused message rather than displaying all available data.</li>
+<li>Provide context for interpreting performance, such as benchmarks, targets, or historical comparisons.</li>
+</ul>
+
+<p>Dashboards should support inquiry and discussion rather than simply presenting static information.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</span></span> When dashboards prompt managers to ask questions and investigate underlying patterns, they become valuable tools for continuous improvement.</p>
+
+<p>Effective dashboards integrate principles from across the course. They leverage perceptual principles to make patterns visible (Modules 2–3), ensure that information is accurate and trustworthy (Module 4), communicate insights clearly and concisely (Module 5), and support structured decision making (Module 6).</p>
+
+<p>By using dashboards thoughtfully, managers can transform complex data into actionable insights that support informed decision making.<span aria-label="Source 4" class="cite-ref" tabindex="0"><sup>4</sup><span class="cite-tooltip" role="tooltip">Yau, N. (2013). <em>Data points: Visualization that means something</em>. Wiley.</span></span> In this way, dashboards do not replace managerial judgment; they enhance it by making relevant information visible, interpretable, and actionable.</p>
+</section>
+<section id="key-takeaways-7" class="subsection level-2">
+<h3>Key Takeaways</h3>
+<ul>
+<li>Dashboards provide managers with a visual interface for monitoring organizational performance and supporting decision making.</li>
+<li>The same dashboard can support both monitoring and decision-making, depending on how managers interpret and use the information.</li>
+<li>Effective dashboards focus on Key Performance Indicators (KPIs), which function as organizational warrants that define what constitutes success.</li>
+<li>Visual hierarchy and preattentive attributes (Modules 2–3) enable rapid detection of patterns and deviations.</li>
+<li>Accurate and ethical data representation (Module 4) ensures that dashboard information can be trusted and that uncertainty is appropriately considered.</li>
+<li>Storytelling and focus (Module 5) ensure that dashboards communicate a clear and meaningful message rather than overwhelming the viewer.</li>
+<li>Dashboards provide the evidence that supports structured decision making through the claim → evidence → implication → recommendation framework (Module 6).</li>
+<li>Managers should use dashboards not as final answers, but as tools for identifying patterns, guiding inquiry, and supporting evidence-based decisions.</li>
+</ul>
+</section>
+<section id="managerial-insight-7" class="insights box-2">
+<h3>Managerial Insight</h3>
+
+<p>Managers today operate in environments where decisions must often be made quickly and under conditions of uncertainty. Dashboards help address this challenge by summarizing large amounts of information into a format that can be interpreted rapidly.<span aria-label="Source 1" class="cite-ref" tabindex="0"><sup>1</sup><span class="cite-tooltip" role="tooltip">Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</span></span></p>
+
+<p>However, effective managers do not treat dashboards as answers. Instead, they use dashboards as inputs into a broader decision-making process. Visualizations provide <strong>evidence</strong>, but managers must interpret that evidence in relation to organizational goals (warrants), evaluate its implications, and determine appropriate actions.</p>
+
+<p>This requires not only the ability to recognize patterns, but also the ability to question them. Managers must consider whether the data is accurate, whether uncertainty may affect interpretation, and whether the dashboard highlights the most relevant information or obscures important context.</p>
+
+<p>In this way, dashboards become more than reporting tools. They become platforms that support continuous monitoring, critical thinking, and evidence-based decision making. When used effectively, dashboards help managers move from simply observing performance to understanding its implications and acting on it strategically.</p>
+
+</section>
+<section id="key-sources-7" class="subsection level-2"><h3>Key Sources</h3><div class="source-entry"><sup>1</sup> Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</div><div class="source-entry"><sup>2</sup> Tableau. (n.d.). <em>What is a KPI dashboard?</em> <a href="https://www.tableau.com/kpi/what-is-kpi-dashboard" target="_blank" rel="noopener">https://www.tableau.com/kpi/what-is-kpi-dashboard</a></div><div class="source-entry"><sup>3</sup> Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</div><div class="source-entry"><sup>4</sup> Yau, N. (2013). <em>Data points: Visualization that means something</em>. Wiley.</div></section></section>
+  </main>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const links = Array.from(document.querySelectorAll('.sidebar a'));
+  const sections = links
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.getAttribute('id');
+      const link = document.querySelector('.sidebar a[href="#' + id + '"]');
+      if (!link) return;
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(section => observer.observe(section));
+});
+</script>
+</body>
+</html>
